@@ -16,7 +16,6 @@ export default {
   auth: true,
 
   async action({ user }) {
-    console.log(user);
     if (!user) throw new Error('User Object missing.');
     return <ServerList user={user} />
   },

@@ -11,14 +11,15 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './ServerList.css';
 
-const title = 'React Starter Kit';
+const title = 'Server List';
 
 let iconURL = [`https://discordapp.com/api/guilds/`, `/icons/`, `8d7a71e1507514e9ab4345056c8b5cc3.jpg`];
 
 
 function ServerList({ user }, context) {
-  let avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
+  let avatarURL = `https://discordapp.com/api/users/${user.id}/avatars/${user.avatar}.jpg`;
   context.setTitle(title);
+
   return (
     <div className={s.root}>
       <div className={s.container}>
@@ -48,23 +49,7 @@ function ServerList({ user }, context) {
 }
 
 ServerList.propTypes = {
-  user: {
-    username: PropTypes.string.isRequired,
-    verified: PropTypes.bool.isRequired,
-    mfa_enabled: PropTypes.bool.isRequired,
-    id: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
-    discriminator: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    provider: PropTypes.string.isRequired,
-    guilds: PropTypes.arrayOf(PropTypes.shape({
-      owner: PropTypes.bool.isRequired,
-      permissions: PropTypes.number.isRequired,
-      icon: PropTypes.string,
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })).isRequired,
-  }
+  user: PropTypes.object,
 };
 
 ServerList.contextTypes = { setTitle: PropTypes.func.isRequired };

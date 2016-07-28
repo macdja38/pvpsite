@@ -56,6 +56,7 @@ function Navigation({ className, user }) {
 
 Navigation.propTypes = {
   className: PropTypes.string,
+  user: PropTypes.object
 };
 
 export default withStyles(s)(Navigation);

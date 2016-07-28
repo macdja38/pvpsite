@@ -29,25 +29,11 @@ function Server({ user, server_id }, context) {
   );
 }
 
-/*Server.propTypes = {
-  user: {
-    username: PropTypes.string.isRequired,
-    verified: PropTypes.bool.isRequired,
-    mfa_enabled: PropTypes.bool.isRequired,
-    id: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
-    discriminator: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    provider: PropTypes.string.isRequired,
-    guilds: PropTypes.arrayOf(PropTypes.shape({
-      owner: PropTypes.bool.isRequired,
-      permissions: PropTypes.number.isRequired,
-      icon: PropTypes.string,
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })).isRequired,
-  }
-};*/
+Server.propTypes = {
+  user: PropTypes.object,
+  server_id: PropTypes.string,
+};
+
 Server.contextTypes = { setTitle: PropTypes.func.isRequired };
 
 export default withStyles(s)(Server);
