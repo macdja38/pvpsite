@@ -29,6 +29,7 @@ function Navigation({ className, user }) {
     <div className={cx(s.root, className)} role="navigation">
       <Link className={s.link} to="/about">About</Link>
       <Link className={s.link} to="/contact">Contact</Link>
+      <Link className={s.link} to="/server">Servers</Link>
       <span className={s.spacer}> | </span>
       <div className={cx(s.link, s.highlight)}>
         <img className={s.avatar} height="32px" width="32px" src={`https://discordapp.com/api/users/${user.id}/avatars/${user.avatar}.jpg`}/>
