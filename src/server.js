@@ -33,7 +33,7 @@ import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth } from './config';
 //import db from './db';
 
-var scopes = ['identify', 'email', /* 'connections', (it is currently broken) */ 'guilds', 'guilds.join'];
+var scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds'];
 
 const app = express();
 
