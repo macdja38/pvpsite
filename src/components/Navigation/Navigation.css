@@ -28,6 +28,14 @@
   color: rgba(255, 255, 255, 1);
 }
 
+.avatar {
+  padding: 3px 8px;
+}
+
+.username {
+
+}
+
 .highlight {
   margin-right: 8px;
   margin-left: 8px;

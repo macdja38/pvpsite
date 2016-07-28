@@ -24,6 +24,7 @@ class App extends Component {
     }),
     children: PropTypes.element.isRequired,
     error: PropTypes.object,
+    user: PropTypes.object,
   };
 
   static childContextTypes = {
@@ -53,7 +54,7 @@ class App extends Component {
   render() {
     return !this.props.error ? (
       <div>
-        <Header />
+        <Header user={this.props.context.user}/>
         {this.props.children}
         <Feedback />
         <Footer />

@@ -17,7 +17,6 @@ let iconURL = [`https://discordapp.com/api/guilds/`, `/icons/`, `8d7a71e1507514e
 
 
 function ServerList({ user }, context) {
-  console.log(user);
   let avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   context.setTitle(title);
   return (
@@ -67,6 +66,7 @@ ServerList.propTypes = {
     })).isRequired,
   }
 };
+
 ServerList.contextTypes = { setTitle: PropTypes.func.isRequired };
 
 export default withStyles(s)(ServerList);

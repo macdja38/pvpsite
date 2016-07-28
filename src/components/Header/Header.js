@@ -7,18 +7,18 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Header.css';
 import Link from '../Link';
 import Navigation from '../Navigation';
 import logoUrl from './logo-small.png';
 
-function Header() {
+function Header(user) {
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <Navigation className={s.nav} />
+        <Navigation className={s.nav} user={user} />
         <Link className={s.brand} to="/">
           <img src={logoUrl} width="128" height="128" alt="React" />
           <span className={s.brandTxt}>PvPCraft</span>
@@ -31,5 +31,25 @@ function Header() {
     </div>
   );
 }
+
+Header.propTypes = {
+  user: {
+    username: PropTypes.string.isRequired,
+    verified: PropTypes.bool.isRequired,
+    mfa_enabled: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    discriminator: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    provider: PropTypes.string.isRequired,
+    guilds: PropTypes.arrayOf(PropTypes.shape({
+      owner: PropTypes.bool.isRequired,
+      permissions: PropTypes.number.isRequired,
+      icon: PropTypes.string,
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })).isRequired,
+  }
+};
 
 export default withStyles(s)(Header);
