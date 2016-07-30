@@ -30,8 +30,11 @@ import models from './data/models';
 import schema from './data/schema';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
-import { port, auth } from './config';
-//import db from './db';
+import { port, auth, database } from './config';
+import prefix from './api/v1/prefix'
+import r from 'rethinkdb';
+
+var db = {r: r, conn: r.connect(database.reThinkDB)};
 
 var scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds'];
 
@@ -79,7 +82,7 @@ passport.use(new DiscordStrategy(
 
 app.use(session({
   secret: 'keyboard cat-acomb',
-  resave: false,
+  resave: true,
   saveUninitialized: false
 }));
 app.use(passport.initialize());
@@ -107,6 +110,7 @@ app.use('/graphql', expressGraphQL(req => ({
   rootValue: { request: req },
   pretty: process.env.NODE_ENV !== 'production',
 })));
+prefix(app, db);
 
 //
 // Register server-side rendering middleware

@@ -24,6 +24,14 @@
   display: flex;
 }
 
+.icon {
+  border: 32px;
+}
+
+.name {
+
+}
+
 .userAvatar {
   padding: 10px;
 }
@@ -37,6 +45,7 @@
 }
 
 .serverItem {
+  border: 3px solid #b5b2af;
   /* Safari 3-4, iOS 1-3.2, Android 1.6- */
   -webkit-border-radius: 12px;
 
@@ -45,7 +54,20 @@
 
   /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
   border-radius: 12px;
+
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  box-sizing: border-box;
+  background-color: rgb(219, 219, 219);
   padding-bottom: 6px;
+  margin: 10px;
+}
+
+.serverList {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }
 
 .serverTitle {

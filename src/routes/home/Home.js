@@ -11,7 +11,7 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Home.css';
 
-const title = 'React Starter Kit';
+const title = 'Home';
 
 function Home({ }, context) {
   context.setTitle(title);

@@ -9,15 +9,24 @@
 
 import React from 'react';
 import Server from './Server';
+import fetch from '../../core/fetch';
 
 export default {
 
   path: '/server/:id',
   auth: true,
 
-  async action({ user }, params) {
-    if (!user) throw new Error('User Object missing.');
-    return <Server user={user} server_id={params.id} />
+  async action({ user, req }, params) {
+    console.log("server index reached.");
+    const resp = await fetch(`api/v1/prefix/${user.id}`, {
+      method: 'get',
+      headers: {...req.headers},
+      credentials: 'include'
+    });
+    console.log(resp);
+    console.log(resp.body);
+    //if (!user) throw new Error('User Object missing.');
+    //return <Server user={user} server_id={params.id} />
   },
 
 };
