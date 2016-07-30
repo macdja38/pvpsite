@@ -64,10 +64,33 @@
   margin: 10px;
 }
 
+/*
 .serverList {
   padding: 0;
   margin: 0;
   list-style-type: none;
+}
+*/
+
+
+.serveritem {
+  border: 3px solid #b5b2af;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  width: 100%;
+  padding: 15px;
+  background-color: rgb(219, 219, 219);
+}
+
+.serverguildicon {
+  width: 128px;
+  float: left;
+}
+
+.serverlabel {
+  width: 100%;
+  float: right;
+  font-family: sans-serif;
 }
 
 .serverTitle {
