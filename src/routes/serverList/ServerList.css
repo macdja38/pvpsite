@@ -17,6 +17,8 @@
 .container {
   margin: 0 auto;
   padding: 0 0 40px;
+  overflow: auto;
+  height: auto;
   max-width: var(--max-content-width);
 }
 
@@ -43,16 +45,15 @@
 .server {
   padding: 0;
 }
-
+/*
 .serverItem {
   border: 3px solid #b5b2af;
-  /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+
   -webkit-border-radius: 12px;
 
-  /* Firefox 1-3.6 */
+
   -moz-border-radius: 12px;
 
-  /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
   border-radius: 12px;
 
   align-content: center;
@@ -62,7 +63,7 @@
   background-color: rgb(219, 219, 219);
   padding-bottom: 6px;
   margin: 10px;
-}
+} */
 
 /*
 .serverList {
@@ -73,25 +74,41 @@
 */
 
 
-.serveritem {
+.serverItem {
   border: 3px solid #b5b2af;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
-  width: 100%;
+  border-radius: 10px;
+  width: calc(50% - 30px - 6px - 15px);
+  float: left;
   padding: 15px;
+  height: 128px;
+  margin-bottom: 15px;
   background-color: rgb(219, 219, 219);
 }
+.serverItem:nth-child(2n+1) {
+  margin-left: 30px;
+}
 
-.serverguildicon {
+.serverGuildIcon {
   width: 128px;
   float: left;
 }
 
-.serverlabel {
-  width: 100%;
-  float: right;
-  font-family: sans-serif;
+.serverGuildIcon img {
+  border-radius: 64px;
 }
+
+.serverLabel {
+  width: calc(100% - 128px - 10px);
+  /* float: right; */
+  position: relative;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
+.serverLabel h3 { margin: 0; }
 
 .serverTitle {
   font-size: 1.125em;

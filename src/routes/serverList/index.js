@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import ServerList from './ServerList';
+import ServerList from './Serverlist.js';
 
 export default {
 

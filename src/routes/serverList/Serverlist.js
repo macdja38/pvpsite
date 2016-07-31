@@ -33,12 +33,12 @@ function ServerList({ user }, context) {
 
   const items = user.guilds.map(guild => {
     return (
-      <div className={s.serveritem}>
-        <div className={s.serverguildicon}>
+      <div className={s.serverItem}>
+        <div className={s.serverGuildIcon}>
           <img src={guild.icon == null ? `https://discordapp.com/api/guilds/97069403178278912/icons/8d7a71e1507514e9ab4345056c8b5cc3.jpg` : `https://discordapp.com/api/guilds/${guild.id}/icons/${guild.icon}.jpg`}/>
         </div>
-        <div className={s.serverlabel}>
-          <h3><a href={`/server/${guild.id}`}>{guild.name}</a></h3>
+        <div className={s.serverLabel}>
+          <h3>{guild.name}</h3>
         </div>
       </div>
     );
