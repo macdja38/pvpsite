@@ -18,11 +18,10 @@ export function ErrorPage({ error }, context) {
 
   if (error == null) {
     title = 'Error Not Found';
-    content = 'Sorry, the error you were trying to view does not exist, something is very wrong or nothing is wrong.'
+    content = 'Sorry, the error you were trying to view does not exist,' +
+      ' something is very wrong or nothing is wrong.';
     errorMessage = <pre> </pre>;
-  }
-
-  else if (error.status === 404) {
+  } else if (error.status === 404) {
     title = 'Page Not Found';
     content = 'Sorry, the page you were trying to view does not exist.';
   } else if (process.env.NODE_ENV !== 'production') {

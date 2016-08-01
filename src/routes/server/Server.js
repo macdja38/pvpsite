@@ -13,12 +13,9 @@ import s from './Server.css';
 
 const title = 'React Starter Kit';
 
-let iconURL = [`https://discordapp.com/api/guilds/`, `/icons/`, `8d7a71e1507514e9ab4345056c8b5cc3.jpg`];
-
-
-function Server({ user, server_id }, context) {
-  let avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
-  let guild = user.guilds.find(guild => server_id === guild.id);
+function Server({ user, serverId }, context) {
+  // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
+  const guild = user.guilds.find(guild => serverId === guild.id);
   context.setTitle(title);
   return (
     <div className={s.root}>
@@ -31,7 +28,7 @@ function Server({ user, server_id }, context) {
 
 Server.propTypes = {
   user: PropTypes.object,
-  server_id: PropTypes.string,
+  serverId: PropTypes.string,
 };
 
 Server.contextTypes = { setTitle: PropTypes.func.isRequired };

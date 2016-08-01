@@ -21,6 +21,7 @@ class App extends Component {
       insertCss: PropTypes.func,
       setTitle: PropTypes.func,
       setMeta: PropTypes.func,
+      user: PropTypes.object,
     }),
     children: PropTypes.element.isRequired,
     error: PropTypes.object,
@@ -54,7 +55,7 @@ class App extends Component {
   render() {
     return !this.props.error ? (
       <div>
-        <Header user={this.props.context.user}/>
+        <Header user={this.props.context.user} />
         {this.props.children}
         <Feedback />
         <Footer />

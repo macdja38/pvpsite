@@ -16,17 +16,17 @@ export default {
   path: '/error',
 
   action({ render, context, error }) {
-    if(error == null) {
+    if (error == null) {
       return render(
         <App context={context} error={error}>
-          <ErrorPage error={error}/>
+          <ErrorPage error={error} />
         </App>,
         500
       );
     }
     return render(
       <App context={context} error={error}>
-        <ErrorPage error={error}/>
+        <ErrorPage error={error} />
       </App>,
       error.status || 500
     );

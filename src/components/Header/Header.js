@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Header.css';
 import Link from '../Link';
@@ -33,7 +33,7 @@ function Header(user) {
 }
 
 Header.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
 };
 
 export default withStyles(s)(Header);

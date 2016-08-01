@@ -10,12 +10,11 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
-import session from 'express-session'
+import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-//import expressJwt from 'express-jwt';
+// import expressJwt from 'express-jwt';
 import expressGraphQL from 'express-graphql';
-import jwt from 'jsonwebtoken';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Html from './components/Html';
@@ -31,21 +30,17 @@ import schema from './data/schema';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth, database } from './config';
-import prefix from './api/v1/prefix'
+import prefix from './api/v1/prefix';
 import r from 'rethinkdb';
 
-var db = {r: r, conn: r.connect(database.reThinkDB)};
+const db = { r, conn: r.connect(database.reThinkDB) };
 
-var scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds'];
+const scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds'];
 
 const app = express();
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((obj, done) => done(null, obj));
 
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -71,34 +66,38 @@ passport.use(new DiscordStrategy(
     clientID: auth.discord.id,
     clientSecret: auth.discord.secret,
     callbackURL: '/login/discord/callback',
-    scope: scopes
+    scope: scopes,
   },
-  function(accessToken, refreshToken, profile, cb) {
-    process.nextTick(function() {
-      return cb(null, profile);
-    });
-  }
+  (accessToken, refreshToken, profile, cb) => process.nextTick(() => cb(null, profile))
 ));
+
+function checkAuth(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.redirect('/');
+  return true;
+}
 
 app.use(session({
   secret: 'keyboard cat-acomb',
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.get('/login/discord', passport.authenticate('discord', { scope: scopes }, function(req, res) {}));
+app.get('/login/discord', passport.authenticate('discord', { scope: scopes }, (req, res) => {
+}));
 app.get('/login/discord/callback',
-  passport.authenticate('discord', { failureRedirect: '/login' }), function(req, res) { res.redirect('/server') } // auth success
+  passport.authenticate('discord', { failureRedirect: '/login' }), (req, res) =>
+    res.redirect('/server') // auth success
 );
-app.get('/logout', function(req, res) {
+app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
-app.get('/info', checkAuth, function(req, res) {
-  //console.log(req.user)
+app.get('/info', checkAuth, (req, res) => {
+  // console.log(req.user)
   res.json(req.user);
-  //res.send("Welcome " + req.user.username);
+  // res.send("Welcome " + req.user.username);
 });
 
 //
@@ -115,14 +114,14 @@ prefix(app, db);
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
-app.get('*', async (req, res, next) => {
+app.get('*', async(req, res, next) => {
   try {
     let css = [];
     let statusCode = 200;
     const data = { title: '', description: '', style: '', script: assets.main.js, children: '' };
 
     await UniversalRouter.resolve(routes, {
-      req: req,
+      req,
       user: req.user,
       path: req.path,
       query: req.query,
@@ -168,7 +167,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
       description={err.message}
       style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
     >
-      {ReactDOM.renderToString(<ErrorPage error={err} />)}
+    {ReactDOM.renderToString(<ErrorPage error={err} />)}
     </Html>
   );
   res.status(statusCode);
@@ -185,8 +184,3 @@ models.sync().catch(err => console.error(err.stack)).then(() => {
   });
 });
 /* eslint-enable no-console */
-
-function checkAuth(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect('/');
-}

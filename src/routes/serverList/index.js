@@ -7,17 +7,21 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ServerList from './ServerList';
 
 export default {
+
+  propTypes: {
+    user: PropTypes.object,
+  },
 
   path: '/server',
   auth: true,
 
   async action({ user }) {
     if (!user) throw new Error('User Object missing.');
-    return <ServerList user={user} />
+    return <ServerList user={user} />;
   },
 
 };

@@ -17,16 +17,15 @@ export default {
   auth: true,
 
   async action({ user, req }, params) {
-    console.log("server index reached.");
     const resp = await fetch(`api/v1/prefix/${user.id}`, {
       method: 'get',
-      headers: {...req.headers},
-      credentials: 'include'
+      headers: { ...req.headers },
+      credentials: 'include',
     });
     console.log(resp);
     console.log(resp.body);
-    //if (!user) throw new Error('User Object missing.');
-    //return <Server user={user} server_id={params.id} />
+    // if (!user) throw new Error('User Object missing.');
+    // return <Server user={user} serverId={params.id} />
   },
 
 };
