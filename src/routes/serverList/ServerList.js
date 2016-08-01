@@ -39,13 +39,18 @@ function ServerList({ user }, context) {
     );
   });
 
+  var Grid = makeResponsive(SpringGrid, {
+    maxWidth: 1920,
+    minPadding: 10
+  });
+
   return (
     <div className={s.root}>
       <div className={s.container}>
         <h1 className={s.title}>{user.username}'s Servers</h1>
-        <SpringGrid
+        <Grid
+          className="grid"
           component="div"
-          columns={4}
           columnWidth={256}
           gutterWidth={5}
           gutterHeight={5}
@@ -53,7 +58,7 @@ function ServerList({ user }, context) {
           springConfig={{ stiffness: 170, damping: 26 }}
         >
           {items}
-        </SpringGrid>
+        </Grid>
       </div>
     </div>
   );
