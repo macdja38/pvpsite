@@ -31,9 +31,10 @@ import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth, database } from './config';
 import prefix from './api/v1/prefix';
+import user from './api/v1/user';
 import r from 'rethinkdb';
 
-const db = { r, conn: r.connect(database.reThinkDB) };
+const db = { r, connPromise: r.connect(database.reThinkDB) };
 
 const scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds'];
 
@@ -65,7 +66,7 @@ passport.use(new DiscordStrategy(
   {
     clientID: auth.discord.id,
     clientSecret: auth.discord.secret,
-    callbackURL: '/login/discord/callback',
+    callbackURL: 'http://betabot.pvpcraft.ca/login/discord/callback',
     scope: scopes,
   },
   (accessToken, refreshToken, profile, cb) => process.nextTick(() => cb(null, profile))
@@ -88,7 +89,7 @@ app.get('/login/discord', passport.authenticate('discord', { scope: scopes }, (r
 }));
 app.get('/login/discord/callback',
   passport.authenticate('discord', { failureRedirect: '/login' }), (req, res) =>
-    res.redirect('/server') // auth success
+    res.redirect(`/user/${req.user.id}/`) // auth success
 );
 app.get('/logout', (req, res) => {
   req.logout();
@@ -110,34 +111,32 @@ app.use('/graphql', expressGraphQL(req => ({
   pretty: process.env.NODE_ENV !== 'production',
 })));
 prefix(app, db);
+user(app, db);
 
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
-app.get('*', async(req, res, next) => {
+app.get('*', async (req, res, next) => {
   try {
-    let css = [];
+    let css = new Set();
     let statusCode = 200;
     const data = { title: '', description: '', style: '', script: assets.main.js, children: '' };
 
     await UniversalRouter.resolve(routes, {
-      req,
-      user: req.user,
       path: req.path,
       query: req.query,
       context: {
-        user: req.user,
         insertCss: (...styles) => {
-          styles.forEach(style => css.push(style._getCss())); // eslint-disable-line no-underscore-dangle, max-len
+          styles.forEach(style => css.add(style._getCss())); // eslint-disable-line no-underscore-dangle, max-len
         },
         setTitle: value => (data.title = value),
         setMeta: (key, value) => (data[key] = value),
       },
       render(component, status = 200) {
-        css = [];
+        css = new Set();
         statusCode = status;
         data.children = ReactDOM.renderToString(component);
-        data.style = css.join('');
+        data.style = [...css].join('');
         return true;
       },
     });

@@ -42,6 +42,6 @@ export function ErrorPage({ error }, context) {
 }
 
 ErrorPage.propTypes = { error: PropTypes.object.isRequired };
-ErrorPage.contextTypes = { setTitle: PropTypes.func.isRequired };
+ErrorPage.contextTypes = { setTitle: PropTypes.func };
 
 export default withStyles(s)(ErrorPage);

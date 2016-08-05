@@ -13,19 +13,22 @@ import fetch from '../../core/fetch';
 
 export default {
 
-  path: '/server/:id',
+  path: '/user/:userId/server/:serverId',
   auth: true,
 
   async action({ user, req }, params) {
-    const resp = await fetch(`api/v1/prefix/${user.id}`, {
+    console.log('Request');
+    console.log(req.headers);
+    const resp = await fetch(`/api/v1/prefix/${user.id}`, {
       method: 'get',
-      headers: { ...req.headers },
+      headers: req.headers,
       credentials: 'include',
     });
+    console.log('Request Concluded');
     console.log(resp);
-    console.log(resp.body);
-    // if (!user) throw new Error('User Object missing.');
-    // return <Server user={user} serverId={params.id} />
+    console.log(user);
+    if (!user) throw new Error('User Object missing.');
+    const { prefix } = await resp.json();
+    return <Server user={user} serverId={params.id} prefix={prefix} />;
   },
-
 };

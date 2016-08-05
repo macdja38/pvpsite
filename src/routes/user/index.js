@@ -8,25 +8,21 @@
  */
 
 import React from 'react';
-import ServerList from './ServerList';
+import User from './User';
 import fetch from '../../core/fetch';
 
 export default {
 
-  path: '/user/:userId/server/',
+  path: '/user/:userId/',
   auth: true,
 
-  async action(req, params) {
+  async action(context, params) {
     const resp = await fetch(`/api/v1/user/${params.userId}`, {
       method: 'get',
-      headers: req.headers,
       credentials: 'include',
     });
-    const user = await resp.json();
-    console.log('User');
-    console.log(user);
-    if (!user) throw new Error('User Object missing.');
-    return <ServerList user={user} />;
-  },
 
+    console.log('Request Concluded', 'Rendering User');
+    return <User />;
+  },
 };

@@ -13,8 +13,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
 import Link from '../Link';
 
-function Navigation({ className, user }) {
-  if (user.user == null) {
+function Navigation({ className }) {
+  /* if (user.user == null) {
     return (
       <div className={cx(s.root, className)} role="navigation">
         <Link className={s.link} to="/about">About</Link>
@@ -43,26 +43,21 @@ function Navigation({ className, user }) {
       </div>
     </div>
   );
-  /*
-   return (
-   <div className={cx(s.root, className)} role="navigation">
-   <Link className={s.link} to="/about">About</Link>
-   <Link className={s.link} to="/contact">Contact</Link>
-   <span className={s.spacer}> | </span>
-   {((user == null) ?
-   <Link className={cx(s.link, s.highlight)} to="/login">Log in</Link>
-   :
-   <img className={cx(s.link, s.highlight)} src={`https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`}>{user.username}</img> +
-   <Link className={cx(s.link, s.highlight)} to="/logout">Log out</Link>
-   )}
-   </div>
-   );
-   */
+  */
+
+
+  return (
+    <div className={cx(s.root, className)} role="navigation">
+      <Link className={s.link} to="/about">About</Link>
+      <Link className={s.link} to="/contact">Contact</Link>
+      <span className={s.spacer}> | </span>
+      <Link className={cx(s.link, s.highlight)} to="/login">Log in</Link>
+    </div>
+  );
 }
 
 Navigation.propTypes = {
   className: PropTypes.string,
-  user: PropTypes.object,
 };
 
 export default withStyles(s)(Navigation);
