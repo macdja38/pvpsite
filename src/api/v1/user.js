@@ -25,9 +25,15 @@ module.exports = function register(app, { r, connPromise }) {
    *    DELETE: deletes contact by id
    */
   app.get('/api/v1/user/:id', /* checkServerAuth,*/ (req, res) => {
-    console.log(app);
-    console.log('API ENDPOINT REQUEST');
-    res.json(req.user);
+    if (req.user) res.json(req.user);
+    else {
+      connPromise.then((conn) => r
+        .table('users').get(req.params.id).run(conn)
+        .then(user => {
+          res.json(user);
+        })
+      );
+    }
   });
 
   app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
