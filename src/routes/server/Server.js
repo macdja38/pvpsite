@@ -16,6 +16,10 @@ const title = 'React Starter Kit';
 
 function Server({ user, serverId, prefix }, context) {
   console.log(context);
+  console.log(user);
+  console.log(serverId);
+  console.log(prefix);
+  let setPrefix = prefix.join(',');
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
   console.log(guild);
@@ -24,7 +28,7 @@ function Server({ user, serverId, prefix }, context) {
     <div className={s.root}>
       <div className={s.container}>
         <h1 className={s.title}>{guild.name}'s Settings</h1>
-        Prefix: <input type="text" name="prefix" defaultValue={prefix} onChange={() => { /* fetch(`../api/v1/prefix/${guild.id}`);*/ console.log("Change"); }} />
+        Prefix: <input type="text" name="prefix" value={setPrefix} onChange={(thing) => { fetch(`/api/v1/prefix/${guild.id}`, { method: 'PUT' }); console.log(thing.target); console.log(setPrefix); }} />
         <p>Prefix: {prefix}</p>
       </div>
     </div>

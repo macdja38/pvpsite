@@ -16,19 +16,30 @@ export default {
   path: '/user/:userId/server/:serverId',
   auth: true,
 
-  async action({ user, req }, params) {
+  async action(context, params) {
     console.log('Request');
-    console.log(req.headers);
-    const resp = await fetch(`/api/v1/prefix/${user.id}`, {
+    console.log(context);
+
+    const prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, {
       method: 'get',
-      headers: req.headers,
       credentials: 'include',
     });
+
+    const userResp = await fetch(`/api/v1/user/${params.userId}`, {
+      method: 'get',
+      credentials: 'include',
+    });
+
+    const prefix = (await prefixResp.json()).prefix;
+    const user = await userResp.json();
+
     console.log('Request Concluded');
-    console.log(resp);
+    console.log(prefix);
     console.log(user);
+
+    if (!prefix) throw new Error('Prefix Object missing.');
     if (!user) throw new Error('User Object missing.');
-    const { prefix } = await resp.json();
-    return <Server user={user} serverId={params.id} prefix={prefix} />;
+
+    return <Server user={user} serverId={params.serverId} prefix={prefix} />;
   },
 };

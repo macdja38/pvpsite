@@ -16,13 +16,14 @@ export default {
   path: '/user/:userId/server/',
   auth: true,
 
-  async action(req, params) {
+  async action(context, params) {
+    console.log('Making request');
     const resp = await fetch(`/api/v1/user/${params.userId}`, {
       method: 'get',
-      headers: req.headers,
       credentials: 'include',
     });
-    const user = await resp.json();
+    console.log('Made request');
+    const user = await resp.json().catch((error) => { throw new Error(`User Object request failed. Error: ${error}`); });
     console.log('User');
     console.log(user);
     if (!user) throw new Error('User Object missing.');

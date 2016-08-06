@@ -89,7 +89,7 @@ app.get('/login/discord', passport.authenticate('discord', { scope: scopes }, (r
 }));
 app.get('/login/discord/callback',
   passport.authenticate('discord', { failureRedirect: '/login' }), (req, res) =>
-    res.redirect(`/user/${req.user.id}/`) // auth success
+    res.redirect(`/user/${req.user.id}/server/`) // auth success
 );
 app.get('/logout', (req, res) => {
   req.logout();

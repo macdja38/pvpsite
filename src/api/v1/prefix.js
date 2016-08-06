@@ -34,7 +34,7 @@ module.exports = function register(app, { r, connPromise }) {
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
-  app.get('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+  app.get('/api/v1/prefix/:id', /* checkServerAuth,*/ (req, res) => {
     console.log('Api request received.');
     connPromise.then((conn) => {
       const serverPrefix = r.table('servers').get(req.params.id).run(conn);

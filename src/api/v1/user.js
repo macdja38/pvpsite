@@ -24,7 +24,8 @@ module.exports = function register(app, { r, connPromise }) {
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
-  app.get('/api/v1/user/:id', checkServerAuth, (req, res) => {
+  app.get('/api/v1/user/:id', /* checkServerAuth,*/ (req, res) => {
+    console.log(app);
     console.log('API ENDPOINT REQUEST');
     res.json(req.user);
   });
