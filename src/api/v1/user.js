@@ -1,9 +1,6 @@
 /**
  * Created by macdja38 on 2016-08-05.
  */
-/**
- * Created by macdja38 on 2016-07-28.
- */
 
 /* function checkAuth(req, res, next) {
  if (req.isAuthenticated()) return next();

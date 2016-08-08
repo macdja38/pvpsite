@@ -4,6 +4,10 @@
   },
   "rules": {
     "no-unused-expressions": 0,
-    "padded-blocks": 0
+    "padded-blocks": 0,
+    "max-len": [
+      "error",
+      120
+    ]
   }
 }

@@ -46,7 +46,7 @@ const loginCallbackHandler = (objectMapper, type) =>
                 });
             })
         )
-        .catch(err => console.log('Error Getting User', err));
+        .catch(err => console.log('Error Getting User', err)); // eslint-disable-line no-console
     }
   };
 

@@ -142,6 +142,10 @@
       "jsx-quotes": [
         2,
         "prefer-double"
+      ],
+      "max-len": [
+        "error",
+        120
       ]
     }
   },

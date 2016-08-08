@@ -17,9 +17,6 @@ export default {
   auth: true,
 
   async action(context, params) {
-    console.log('Request');
-    console.log(context);
-
     const prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, {
       method: 'get',
       credentials: 'include',
@@ -32,10 +29,6 @@ export default {
 
     const prefix = (await prefixResp.json()).prefix;
     const user = await userResp.json();
-
-    console.log('Request Concluded');
-    console.log(prefix);
-    console.log(user);
 
     if (!prefix) throw new Error('Prefix Object missing.');
     if (!user) throw new Error('User Object missing.');

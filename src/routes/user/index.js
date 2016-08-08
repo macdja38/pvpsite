@@ -23,7 +23,6 @@ export default {
     });
 
     const user = await resp.json();
-    console.log('Request Concluded', 'Rendering User');
     return <User user={user} />;
   },
 };

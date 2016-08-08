@@ -35,14 +35,11 @@ module.exports = function register(app, { r, connPromise }) {
    *    DELETE: deletes contact by id
    */
   app.get('/api/v1/prefix/:id', /* checkServerAuth,*/ (req, res) => {
-    console.log('Api request received.');
     connPromise.then((conn) => {
       const serverPrefix = r.table('servers').get(req.params.id).run(conn);
       const defaultPrefix = r.table('servers').get('*').run(conn);
       Promise.all([serverPrefix, defaultPrefix])
         .then(([serverPrefixResult, defaultPrefixResult]) => {
-          console.log(serverPrefixResult);
-          console.log(defaultPrefixResult);
           if (serverPrefixResult && serverPrefixResult.hasOwnProperty('prefix')) {
             res.json(serverPrefixResult);
           } else {
@@ -54,6 +51,8 @@ module.exports = function register(app, { r, connPromise }) {
 
   app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
     connPromise.then((conn) => {
+      console.log(req); // eslint-disable-line no-console
+      console.log(req.json()); // eslint-disable-line no-console
       const prefix = { prefix: req.body.prefix, id: req.params.id };
       r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
         .then(() => {
