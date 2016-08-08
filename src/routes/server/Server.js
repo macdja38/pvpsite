@@ -28,6 +28,7 @@ function Server({ user, serverId, prefix }, context) {
       header: new Headers({
         'Content-Type': 'application/json',
       }),
+      credentials: 'include',
       body: JSON.stringify({ prefix: event.target.value }),
     });
   };
