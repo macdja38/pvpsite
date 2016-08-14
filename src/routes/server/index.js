@@ -17,15 +17,16 @@ export default {
   auth: true,
 
   async action(context, params) {
-    const prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, {
+    const options = {
       method: 'get',
       credentials: 'include',
-    });
+    };
+    if (context.headers) {
+      options.headers = context.headers;
+    }
+    const prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, options);
 
-    const userResp = await fetch(`/api/v1/user/${params.userId}`, {
-      method: 'get',
-      credentials: 'include',
-    });
+    const userResp = await fetch(`/api/v1/user/${params.userId}`, options);
 
     const prefix = (await prefixResp.json()).prefix;
     const user = await userResp.json();

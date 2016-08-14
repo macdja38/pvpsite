@@ -3,11 +3,11 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Jacob -- Developer -- @Macdja38
 
 # THANKS
 
-    <name>
+    ReactStarterKit framework.
 
 # TECHNOLOGY COLOPHON
 

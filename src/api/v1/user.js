@@ -9,8 +9,8 @@
  }*/
 
 function checkServerAuth(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect('/');
+  if (req.isAuthenticated() && req.params.id === req.user.id) return next();
+  res.sendStatus(403);
   return true;
 }
 
@@ -21,7 +21,8 @@ module.exports = function register(app, { r, connPromise }) {
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
-  app.get('/api/v1/user/:id', /* checkServerAuth,*/ (req, res) => {
+  app.get('/api/v1/user/:id', checkServerAuth, (req, res) => {
+    console.log(req.headers);
     if (req.user) res.json(req.user);
     else {
       connPromise.then((conn) => r
@@ -33,7 +34,7 @@ module.exports = function register(app, { r, connPromise }) {
     }
   });
 
-  app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+  app.put('/api/v1/user/:id', checkServerAuth, (req, res) => {
     connPromise.then((conn) => {
       const prefix = { prefix: req.body.prefix, id: req.params.id };
       r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
@@ -46,7 +47,7 @@ module.exports = function register(app, { r, connPromise }) {
     });
   });
 
-  app.delete('/api/v1/prefix/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
+  app.delete('/api/v1/user/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
     const prefix = { prefix: req.body.prefix, id: req.params.id };
     r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
       .then(() => {

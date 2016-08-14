@@ -31,12 +31,10 @@ function ServerList({ user }, context) {
     )
   );
 
-
   let Grid = makeResponsive(SpringGrid, {
     maxWidth: 1000,
     defaultColumns: 4,
   });
-
 
   return (
     <div className={s.root}>

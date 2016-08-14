@@ -104,6 +104,7 @@ app.get('*', async (req, res, next) => {
     const data = { title: '', description: '', style: '', script: assets.main.js, children: '' };
 
     await UniversalRouter.resolve(routes, {
+      headers: req.headers,
       path: req.path,
       query: req.query,
       context: {

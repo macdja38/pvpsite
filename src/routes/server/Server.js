@@ -10,24 +10,20 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Server.css';
-import fetch, { Request, Headers, Response } from '../../core/fetch';
+import fetch from '../../core/fetch';
 
 function Server({ user, serverId, prefix }, context) {
-  /* eslint-disable no-console */
-  console.log(Request.headers);
-  console.log(Response);
-  console.log(new Headers({ 'Content-Type': 'application/json' }));
-  console.log(context);
-  /* eslint-enable no-console */
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
   context.setTitle(guild.name);
   const handleState = (event) => {
     fetch(`/api/v1/prefix/${guild.id}`, {
       method: 'PUT',
-      header: new Headers({
+      headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-      }),
+      },
+      credentials: 'include',
       body: JSON.stringify({ prefix: event.target.value }),
     });
   };
@@ -38,7 +34,6 @@ function Server({ user, serverId, prefix }, context) {
         Prefix: <input
           type="text" name="prefix" defaultValue={prefix} onChange={handleState}
         />
-        <p>Prefix: {prefix}</p>
       </div>
     </div>
   );
