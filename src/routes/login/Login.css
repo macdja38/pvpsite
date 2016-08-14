@@ -94,13 +94,13 @@
 }
 
 .discord {
-  border-color: #7289DA;
-  background: #7289DA;
+  border-color: #7289da;
+  background: #7289da;
   composes: button;
 }
 
 .discord:hover {
-  background: #6279CA;
+  background: #6279ca;
 }
 
 .google {
