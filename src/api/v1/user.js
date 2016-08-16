@@ -14,15 +14,24 @@ function checkServerAuth(req, res, next) {
   return true;
 }
 
+function checkUser(req, res, next) {
+  if (req.isAuthenticated() && req.user.id) return next();
+  res.sendStatus(403);
+  return true;
+}
 
 module.exports = function register(app, { r, connPromise }) {
+  app.get('/api/v1/user/', checkUser, (req, res) => {
+    if (req.user) res.json(req.user);
+    else res.sendStatus(404);
+  });
+
   /*  "/api/v1/prefix/:id"
    *    GET: find contact by id
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
   app.get('/api/v1/user/:id', checkServerAuth, (req, res) => {
-    console.log(req.headers);
     if (req.user) res.json(req.user);
     else {
       connPromise.then((conn) => r

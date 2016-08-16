@@ -24,14 +24,29 @@ export default {
     if (context.headers) {
       options.headers = context.headers;
     }
-    const prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, options);
 
-    const userResp = await fetch(`/api/v1/user/${params.userId}`, options);
+    let prefixResp;
+    try {
+      prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, options);
+    } catch (error) {
+      console.error('prefix Resp caught', error);
+    }
 
-    const prefix = (await prefixResp.json()).prefix;
+    let userResp;
+    try {
+      userResp = await fetch(`/api/v1/user/${params.userId}`, options);
+    } catch (error) {
+      console.error('User Resp caught', error);
+    }
+
+    let prefix;
+    if (prefixResp.status === 200) {
+      prefix = (await prefixResp.json()).prefix;
+    }
     const user = await userResp.json();
 
-    if (!prefix) throw new Error('Prefix Object missing.');
+    console.log(prefix);
+    // if (!prefix) throw new Error('Prefix Object missing.');
     if (!user) throw new Error('User Object missing.');
 
     return <Server user={user} serverId={params.serverId} prefix={prefix} />;

@@ -16,6 +16,7 @@ import user from './user';
 import contact from './contact';
 import serverList from './serverList';
 import server from './server';
+import permissions from './permissions';
 import login from './login';
 import content from './content';
 import error from './error';
@@ -30,16 +31,17 @@ export default {
     user,
     server,
     serverList,
+    permissions,
     contact,
     content,
     error,
   ],
 
-  async action({ next, render, context }) {
+  async action({ next, render, context, user }) {
     const component = await next();
     if (component === undefined) return component;
     return render(
-      <App context={context} >{component}</App>
+      <App context={context} user={user} >{component}</App>
     );
   },
 

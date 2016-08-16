@@ -43,9 +43,9 @@ function ServerList({ user }, context) {
         <Grid
           className="grid"
           component="div"
-          columnWidth={256}
-          gutterWidth={1}
-          gutterHeight={1}
+          columnWidth={212}
+          gutterWidth={40}
+          gutterHeight={40}
           itemHeight={304}
           springConfig={{ stiffness: 170, damping: 26 }}
         >

@@ -14,11 +14,11 @@ import Link from '../Link';
 import Navigation from '../Navigation';
 import logoUrl from './logo-small.png';
 
-function Header() {
+function Header(user) {
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <Navigation className={s.nav} />
+        <Navigation className={s.nav} user={user} />
         <Link className={s.brand} to="/">
           <img src={logoUrl} width="128" height="128" alt="PvPCraft" />
           <span className={s.brandTxt}>PvPCraft</span>

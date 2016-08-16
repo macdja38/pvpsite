@@ -34,9 +34,10 @@
   margin: 3px;
 }
 
-/* .username {
-
-} */
+.username {
+  color: #b3d4fc;
+  text-decoration: none;
+}
 
 .highlight {
   margin-right: 8px;

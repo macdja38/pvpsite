@@ -22,6 +22,7 @@ import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, database } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
+import permissions from './api/v1/permissions';
 import r from 'rethinkdb';
 import authMiddleware from './core/auth';
 
@@ -93,6 +94,7 @@ app.use('/graphql', expressGraphQL(req => ({
 })));
 prefix(app, db);
 user(app, db);
+permissions(app, db);
 
 //
 // Register server-side rendering middleware
@@ -104,6 +106,7 @@ app.get('*', async (req, res, next) => {
     const data = { title: '', description: '', style: '', script: assets.main.js, children: '' };
 
     await UniversalRouter.resolve(routes, {
+      user: req.user,
       headers: req.headers,
       path: req.path,
       query: req.query,
