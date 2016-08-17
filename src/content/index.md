@@ -1,5 +1,5 @@
 ---
-title: React.js Starter Kit
+title: Index
 component: ContentPage
 ---
 ### Runtime Components

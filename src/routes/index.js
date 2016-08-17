@@ -12,7 +12,7 @@ import App from '../components/App';
 
 // Child routes
 import home from './home';
-import user from './user';
+import userPage from './user';
 import contact from './contact';
 import serverList from './serverList';
 import server from './server';
@@ -28,7 +28,7 @@ export default {
   children: [
     login,
     home,
-    user,
+    userPage,
     server,
     serverList,
     permissions,
