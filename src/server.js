@@ -72,9 +72,9 @@ app.get(
 );
 app.get('/login/discord', authMiddleware.authenticate('discord'));
 
-app.get('/logout', (req, res) => {
-  req.logout();
+app.get('/logout', checkAuth, (req, res) => {
   res.redirect('/');
+  req.logout();
 });
 
 app.get('/info', checkAuth, (req, res) => {
