@@ -17,7 +17,7 @@ function Permissions({ user, serverId, prefix }, context) {
   const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
   context.setTitle(guild.name);
   const prefixChange = (event) => {
-    fetch(`/api/v1/prefix/${guild.id}`, {
+    fetch(`/api/v1/permissions/${guild.id}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
