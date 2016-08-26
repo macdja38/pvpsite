@@ -17,7 +17,7 @@ If you are familiar with linux commands this chart should be enough. Just rememb
 
 | command  | description  | node  |
 |---|---|---|
-| perms set <allow\|deny\|remove> <node>\[ --channel <user>]\[--role <role>]\[--user <user>] | set\'s permission nodes | Discord Perm Administractor |
+| perms set <allow\|deny\|remove> <node>\[ --channel <channel>]\[--role <role>]\[--user <user>] | set\'s permission nodes | Discord Perm Administractor |
 | perms list  |  displays a link to the website with the current permissions setup | Discord Perm Administrator  |
 | perms hardreset  |  removes all user defined permissions  |  Server Owner  |
   
@@ -42,3 +42,20 @@ This example builds on top of the previous channel specific permission. If you w
 ```
 /perms set allow music.forceskip --channel #djs --group @Admin
 ```
+
+## Giveaways
+
+Giveaways allow you to host giveaways on your discord server. At the moment only one giveaway can be hosted on each discord.
+
+PvPCraft's giveaway module allows you to chose who can enter the giveaway, as well as assign groups/users of your chosing the ability
+to draw.
+
+| command  | description  | node  |
+|---|---|---|
+| giveaway <enable\|disable>\[ --channel <channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in. | admin.giveaway.setup |
+| clear | clears all entries | admin.giveaway.clear  |
+| count | counts all entries | admin.giveaway.count  |
+| draw [count] | clears all entries | admin.giveaway.draw  |
+| enter |  enters a giveaway  |  giveaway.enter  |
+
+Temporary note, the current permissions are `giveaway.admin` instead of `admin.giveaway` for the first 4 nodes. Those should be updated to the values in the table soon.
