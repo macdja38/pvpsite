@@ -29,6 +29,14 @@ export const auth = {
   discord: {
     id: process.env.DISCORD_CLIENT_ID || 'id',
     secret: process.env.DISCORD_CLIENT_SECRET || 'secret',
-  }
+  },
 
+};
+
+export const database = {
+  reThinkDB: {
+    host: '',
+    port: '',
+    db: '',
+  },
 };
