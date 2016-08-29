@@ -9,11 +9,12 @@
  }*/
 
 function checkServerAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    const id = req.params.id;
-    const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
-    if (guild && (guild.permissions & 8 === 0 || guild.owner)) return next();
-  }
+  const id = req.params.id;
+  const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
+  if (req.isAuthenticated()
+    && guild
+    && (guild.permissions & 8 === 0
+    || guild.owner)) return next();
   res.sendStatus(403);
   return true;
 }
@@ -25,25 +26,28 @@ module.exports = function register(app, { r, connPromise }) {
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
-  app.get('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+  app.get('/api/v1/permissions/:id', /* checkServerAuth,*/ (req, res) => {
     connPromise.then((conn) => {
-      const serverPrefix = r.table('servers').get(req.params.id).run(conn);
-      const defaultPrefix = r.table('servers').get('*').run(conn);
+      const serverPrefix = r.table('permissions').get(req.params.id).run(conn);
+      const defaultPrefix = r.table('permissions').get('*').run(conn);
       Promise.all([serverPrefix, defaultPrefix])
         .then(([serverPrefixResult, defaultPrefixResult]) => {
-          if (serverPrefixResult && serverPrefixResult.hasOwnProperty('prefix')) {
-            res.json(serverPrefixResult);
-          } else {
-            res.json(defaultPrefixResult);
+          const result = {};
+          if (serverPrefixResult) {
+            result.server = serverPrefixResult;
+          } else if (defaultPrefixResult) {
+            result.default = defaultPrefixResult;
           }
+          res.json(result);
         });
     });
   });
 
-  app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+  app.put('/api/v1/permissions/:id', checkServerAuth, (req, res) => {
     connPromise.then((conn) => {
+      console.log(req.body); // eslint-disable-line no-console
       const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
-      r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
+      r.table('permissions').insert(prefix, { conflict: 'update' }).run(conn)
         .then(() => {
           res.json({ success: true });
         })
@@ -53,9 +57,9 @@ module.exports = function register(app, { r, connPromise }) {
     });
   });
 
-  app.delete('/api/v1/prefix/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
+  app.delete('/api/v1/permissions/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
     const prefix = { prefix: req.body.prefix, id: req.params.id };
-    r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
+    r.table('permissions').insert(prefix, { conflict: 'update' }).run(conn)
       .then(() => {
         res.json({ success: true });
       })

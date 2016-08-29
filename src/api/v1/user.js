@@ -1,9 +1,6 @@
 /**
  * Created by macdja38 on 2016-08-05.
  */
-/**
- * Created by macdja38 on 2016-07-28.
- */
 
 /* function checkAuth(req, res, next) {
  if (req.isAuthenticated()) return next();
@@ -12,25 +9,41 @@
  }*/
 
 function checkServerAuth(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect('/');
+  if (req.isAuthenticated() && req.params.id === req.user.id) return next();
+  res.sendStatus(403);
   return true;
 }
 
+function checkUser(req, res, next) {
+  if (req.isAuthenticated() && req.user.id) return next();
+  res.sendStatus(403);
+  return true;
+}
 
 module.exports = function register(app, { r, connPromise }) {
+  app.get('/api/v1/user/', checkUser, (req, res) => {
+    if (req.user) res.json(req.user);
+    else res.sendStatus(404);
+  });
+
   /*  "/api/v1/prefix/:id"
    *    GET: find contact by id
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
-  app.get('/api/v1/user/:id', /* checkServerAuth,*/ (req, res) => {
-    console.log(app);
-    console.log('API ENDPOINT REQUEST');
-    res.json(req.user);
+  app.get('/api/v1/user/:id', checkServerAuth, (req, res) => {
+    if (req.user) res.json(req.user);
+    else {
+      connPromise.then((conn) => r
+        .table('users').get(req.params.id).run(conn)
+        .then(user => {
+          res.json(user);
+        })
+      );
+    }
   });
 
-  app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+  app.put('/api/v1/user/:id', checkServerAuth, (req, res) => {
     connPromise.then((conn) => {
       const prefix = { prefix: req.body.prefix, id: req.params.id };
       r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
@@ -43,7 +56,7 @@ module.exports = function register(app, { r, connPromise }) {
     });
   });
 
-  app.delete('/api/v1/prefix/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
+  app.delete('/api/v1/user/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
     const prefix = { prefix: req.body.prefix, id: req.params.id };
     r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
       .then(() => {

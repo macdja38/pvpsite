@@ -17,6 +17,7 @@ import Footer from '../Footer';
 class App extends Component {
 
   static propTypes = {
+    user: PropTypes.object,
     context: PropTypes.shape({
       insertCss: PropTypes.func,
       setTitle: PropTypes.func,
@@ -53,7 +54,7 @@ class App extends Component {
   render() {
     return !this.props.error ? (
       <div>
-        <Header />
+        <Header user={this.props.user} />
         {this.props.children}
         <Feedback />
         <Footer />

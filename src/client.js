@@ -13,6 +13,7 @@ import FastClick from 'fastclick';
 import UniversalRouter from 'universal-router';
 import routes from './routes';
 import history from './core/history';
+import fetch from './core/fetch';
 import { readState, saveState } from 'history/lib/DOMStateStorage';
 import {
   addEventListener,
@@ -106,13 +107,34 @@ function run() {
     }
     currentLocation = location;
 
-    UniversalRouter.resolve(routes, {
-      path: location.pathname,
-      query: location.query,
-      state: location.state,
-      context,
-      render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind, max-len
-    }).catch(err => console.error(err)); // eslint-disable-line no-console
+    const options = {
+      method: 'get',
+      credentials: 'include',
+    };
+    if (context.headers) {
+      options.headers = context.headers;
+    }
+
+    fetch('/api/v1/user/', options).then(resp => {
+      resp.json().then(user => {
+        UniversalRouter.resolve(routes, {
+          user,
+          path: location.pathname,
+          query: location.query,
+          state: location.state,
+          context,
+          render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind
+        }).catch(err => console.error(err)); // eslint-disable-line no-console
+      }).catch(() => {
+        UniversalRouter.resolve(routes, {
+          path: location.pathname,
+          query: location.query,
+          state: location.state,
+          context,
+          render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind
+        }).catch(err => console.error(err)); // eslint-disable-line no-console
+      });
+    });
   }
 
   // Add History API listener and trigger initial change

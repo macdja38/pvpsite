@@ -1,12 +1,3 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
@@ -23,25 +14,21 @@ import errorPageStyle from './routes/error/ErrorPage.css';
 import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
-import DiscordStrategy from 'passport-discord';
 import logger from 'morgan';
 import models from './data/models';
 import schema from './data/schema';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
-import { port, auth, database } from './config';
+import { port, database } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
+import permissions from './api/v1/permissions';
 import r from 'rethinkdb';
+import authMiddleware from './core/auth';
 
 const db = { r, connPromise: r.connect(database.reThinkDB) };
 
-const scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds'];
-
 const app = express();
-
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((obj, done) => done(null, obj));
 
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -62,15 +49,6 @@ app.use(bodyParser.json());
 //
 // Authentication
 // -----------------------------------------------------------------------------
-passport.use(new DiscordStrategy(
-  {
-    clientID: auth.discord.id,
-    clientSecret: auth.discord.secret,
-    callbackURL: 'http://betabot.pvpcraft.ca/login/discord/callback',
-    scope: scopes,
-  },
-  (accessToken, refreshToken, profile, cb) => process.nextTick(() => cb(null, profile))
-));
 
 function checkAuth(req, res, next) {
   if (req.isAuthenticated()) return next();
@@ -80,21 +58,25 @@ function checkAuth(req, res, next) {
 
 app.use(session({
   secret: 'keyboard cat-acomb',
-  resave: true,
-  saveUninitialized: false,
+  resave: false,
+  saveUninitialized: true,
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.get('/login/discord', passport.authenticate('discord', { scope: scopes }, (req, res) => {
-}));
-app.get('/login/discord/callback',
-  passport.authenticate('discord', { failureRedirect: '/login' }), (req, res) =>
-    res.redirect(`/user/${req.user.id}/server/`) // auth success
+
+app.get(
+  '/login/discord/callback',
+  authMiddleware.authenticate('discord', { failureRedirect: '/login' }),
+  (req, res) => res.redirect(`/user/${req.user.id}/server/`) // auth success
 );
-app.get('/logout', (req, res) => {
-  req.logout();
+app.get('/login/discord', authMiddleware.authenticate('discord'));
+
+app.get('/logout', checkAuth, (req, res) => {
   res.redirect('/');
+  req.logout();
 });
+
 app.get('/info', checkAuth, (req, res) => {
   // console.log(req.user)
   res.json(req.user);
@@ -112,6 +94,7 @@ app.use('/graphql', expressGraphQL(req => ({
 })));
 prefix(app, db);
 user(app, db);
+permissions(app, db);
 
 //
 // Register server-side rendering middleware
@@ -123,6 +106,8 @@ app.get('*', async (req, res, next) => {
     const data = { title: '', description: '', style: '', script: assets.main.js, children: '' };
 
     await UniversalRouter.resolve(routes, {
+      user: req.user,
+      headers: req.headers,
       path: req.path,
       query: req.query,
       context: {

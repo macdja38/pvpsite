@@ -17,27 +17,36 @@ export default {
   auth: true,
 
   async action(context, params) {
-    console.log('Request');
-    console.log(context);
-
-    const prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, {
+    const options = {
       method: 'get',
       credentials: 'include',
-    });
+    };
+    if (context.headers) {
+      options.headers = context.headers;
+    }
 
-    const userResp = await fetch(`/api/v1/user/${params.userId}`, {
-      method: 'get',
-      credentials: 'include',
-    });
+    let prefixResp;
+    try {
+      prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, options);
+    } catch (error) {
+      console.error('prefix Resp caught', error);
+    }
 
-    const prefix = (await prefixResp.json()).prefix;
+    let userResp;
+    try {
+      userResp = await fetch(`/api/v1/user/${params.userId}`, options);
+    } catch (error) {
+      console.error('User Resp caught', error);
+    }
+
+    let prefix;
+    if (prefixResp.status === 200) {
+      prefix = (await prefixResp.json()).prefix;
+    }
     const user = await userResp.json();
 
-    console.log('Request Concluded');
     console.log(prefix);
-    console.log(user);
-
-    if (!prefix) throw new Error('Prefix Object missing.');
+    // if (!prefix) throw new Error('Prefix Object missing.');
     if (!user) throw new Error('User Object missing.');
 
     return <Server user={user} serverId={params.serverId} prefix={prefix} />;

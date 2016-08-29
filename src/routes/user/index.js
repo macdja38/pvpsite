@@ -17,13 +17,16 @@ export default {
   auth: true,
 
   async action(context, params) {
-    const resp = await fetch(`/api/v1/user/${params.userId}`, {
+    const options = {
       method: 'get',
       credentials: 'include',
-    });
+    };
+    if (context.headers) {
+      options.headers = context.headers;
+    }
 
+    const resp = await fetch(`/api/v1/user/${params.userId}`, options);
     const user = await resp.json();
-    console.log('Request Concluded', 'Rendering User');
     return <User user={user} />;
   },
 };

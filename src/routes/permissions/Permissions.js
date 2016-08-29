@@ -9,15 +9,15 @@
 
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Server.css';
+import s from './Permissions.css';
 import fetch from '../../core/fetch';
 
-function Server({ user, serverId, prefix }, context) {
+function Permissions({ user, serverId, prefix }, context) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
   context.setTitle(guild.name);
   const prefixChange = (event) => {
-    fetch(`/api/v1/prefix/${guild.id}`, {
+    fetch(`/api/v1/permissions/${guild.id}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -38,12 +38,12 @@ function Server({ user, serverId, prefix }, context) {
   );
 }
 
-Server.propTypes = {
-  user: PropTypes.object.isRequired,
-  serverId: PropTypes.string.isRequired,
+Permissions.propTypes = {
+  user: PropTypes.object,
+  serverId: PropTypes.string,
   prefix: PropTypes.array,
 };
 
-Server.contextTypes = { setTitle: PropTypes.func.isRequired };
+Permissions.contextTypes = { setTitle: PropTypes.func.isRequired };
 
-export default withStyles(s)(Server);
+export default withStyles(s)(Permissions);
