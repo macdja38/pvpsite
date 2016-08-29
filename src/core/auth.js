@@ -2,7 +2,7 @@
  * Created by macdja38 on 2016-08-06.
  */
 
-import { auth } from '../config';
+import { host, auth } from '../config';
 import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
 import r from '../db/index.js';
@@ -55,7 +55,7 @@ passport.use(new DiscordStrategy(
     clientID: auth.discord.id,
     clientSecret: auth.discord.secret,
     scope: scopes,
-    callbackURL: 'http://betabot.pvpcraft.ca/login/discord/callback',
+    callbackURL: `${host}/login/discord/callback`,
   },
   loginCallbackHandler(profile => profile, 'discord')
 ));

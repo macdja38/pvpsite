@@ -4,7 +4,6 @@ import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-// import expressJwt from 'express-jwt';
 import expressGraphQL from 'express-graphql';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
