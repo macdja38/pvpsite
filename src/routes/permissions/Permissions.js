@@ -10,29 +10,19 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Permissions.css';
-import fetch from '../../core/fetch';
+import ServerMenu from '../../components/ServerMenu';
 
 function Permissions({ user, serverId, prefix }, context) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
   context.setTitle(guild.name);
-  const prefixChange = (event) => {
-    fetch(`/api/v1/permissions/${guild.id}`, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ prefix: event.target.value }),
-    });
-  };
   return (
-    <div className={s.root}>
-      <div className={s.container}>
-        <h1 className={s.title}>{guild.name}'s Settings</h1>
-        {(prefix ? <div>Prefix: <input type="text" name="prefix" defaultValue={prefix} onChange={prefixChange} /></div>
-          : '')}
+    <div>
+      <ServerMenu className={s.nav} user={user} serverId={serverId} />
+      <div className={s.root}>
+        <div className={s.container}>
+          <h1 className={s.title}>{guild.name}'s Permissions</h1>
+        </div>
       </div>
     </div>
   );

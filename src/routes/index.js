@@ -18,6 +18,7 @@ import serverList from './serverList';
 import server from './server';
 import permissions from './permissions';
 import login from './login';
+import music from './music';
 import content from './content';
 import error from './error';
 
@@ -32,6 +33,7 @@ export default {
     server,
     serverList,
     permissions,
+    music,
     contact,
     content,
     error,

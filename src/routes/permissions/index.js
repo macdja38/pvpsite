@@ -30,7 +30,7 @@ export default {
 
     let permissions;
     if (permissionsResp.status === 200) {
-      permissions = (await permissionsResp.json()).permissions;
+      permissions = (await permissionsResp.json());
     }
     const user = await userResp.json();
 

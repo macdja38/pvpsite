@@ -39,7 +39,7 @@ module.exports = function register(app, { r, connPromise }) {
             result.default = defaultPrefixResult;
           }
           res.json(result);
-        });
+        }).catch(error => console.error(error));
     });
   });
 

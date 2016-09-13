@@ -25,18 +25,15 @@ module.exports = function register(app, { r, connPromise }) {
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
-  app.get('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+  app.get('/api/v1/music/:id', checkServerAuth, (req, res) => {
     connPromise.then((conn) => {
-      const serverPrefix = r.table('servers').get(req.params.id).run(conn);
-      const defaultPrefix = r.table('servers').get('*').run(conn);
-      Promise.all([serverPrefix, defaultPrefix])
-        .then(([serverPrefixResult, defaultPrefixResult]) => {
-          if (serverPrefixResult && serverPrefixResult.hasOwnProperty('prefix')) {
-            res.json(serverPrefixResult);
-          } else if (defaultPrefixResult && defaultPrefixResult.hasOwnProperty('prefix')) {
-            res.json(defaultPrefixResult);
+      const queue = r.table('queue').get(req.params.id).run(conn);
+      Promise.all([queue])
+        .then(([queueResult]) => {
+          if (queueResult && queueResult.hasOwnProperty('queue')) {
+            res.json(queueResult);
           } else {
-            res.json({ prefix: [] });
+            res.json({ queue: [] });
           }
         }).catch((error) => console.error(error));
     });

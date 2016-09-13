@@ -22,6 +22,7 @@ import { port, database } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
 import permissions from './api/v1/permissions';
+import music from './api/v1/music';
 import r from 'rethinkdb';
 import authMiddleware from './core/auth';
 
@@ -94,6 +95,7 @@ app.use('/graphql', expressGraphQL(req => ({
 prefix(app, db);
 user(app, db);
 permissions(app, db);
+music(app, db);
 
 //
 // Register server-side rendering middleware

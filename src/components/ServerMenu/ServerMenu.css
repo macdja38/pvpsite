@@ -1,0 +1,56 @@
+@import '../../components/variables.css';
+
+.root {
+  margin: 0 auto;
+  padding: 5px 20px;
+  background: #f5f5f5;
+}
+
+.menu {
+  margin: 0 auto;
+  max-width: var(--max-content-width);
+}
+
+.link {
+  display: inline-block;
+  padding: 3px 8px;
+  vertical-align: middle;
+  text-decoration: none;
+  font-size: 1.125em; /* ~18px */
+}
+
+.link,
+.link:active,
+.link:visited {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.link:hover {
+  color: rgb(29, 29, 29);
+}
+
+.avatar {
+  border-radius: 3px;
+  margin: 3px;
+}
+
+.username {
+  color: #000;
+  text-decoration: none;
+}
+
+.highlight {
+  margin-right: 8px;
+  margin-left: 8px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.15);
+  color: #fff;
+}
+
+.highlight:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.spacer {
+  color: rgba(255, 255, 255, 0.3);
+}
