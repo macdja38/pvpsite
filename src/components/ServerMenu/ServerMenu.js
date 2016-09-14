@@ -18,9 +18,10 @@ function ServerMenu({ className, user, serverId }) {
     return (
       <div className={cx(s.root, className)} role="navigation">
         <div className={s.menu}>
-          <Link className={s.link} to={`/server/${serverId}/music`}>Music</Link>
-          <Link className={s.link} to={`/server/${serverId}/permissions`}>Permissions</Link>
-          <Link className={s.link} to="/docs">Docs</Link>
+          <Link className={s.link} to={`/server/${serverId}/`}>Server</Link>
+          <Link className={s.link} to={`/server/${serverId}/music/`}>Music</Link>
+          <Link className={s.link} to={`/server/${serverId}/permissions/`}>Permissions</Link>
+          <Link className={s.link} to="/docs/">Docs</Link>
         </div>
       </div>
     );
