@@ -52,10 +52,11 @@
 }
 
 .permissionItem {
-  margin: 5px 0;
-  padding: 2px 5px;
+  margin: 12px 0;
+  padding: 0 5px;
   list-style-type: none;
-  border: solid #dfdfe2;
+  border: none #dfdfe2;
+  border-left-style: solid;
 }
 
 .permission {
