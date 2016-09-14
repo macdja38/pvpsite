@@ -14,11 +14,12 @@
   padding-right: 20px;
 }
 
-.denied:before {
-  content:"\2613\0020";
+.denied::before {
+  content: '\2613\0020';
   margin-right: 3px;
   color: #7f0000;
 }
+
 .denied {
   color: #7f0000;
   margin: 0 -20px;
@@ -26,11 +27,12 @@
   list-style-type: none;
 }
 
-.allowed:before {
-  content:"\2713\0020";
+.allowed::before {
+  content: '\2713\0020';
   margin-right: 3px;
   color: #007f00;
 }
+
 .allowed {
   color: #007f00;
   margin: 0 -20px;
