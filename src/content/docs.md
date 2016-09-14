@@ -17,7 +17,7 @@ If you are familiar with linux commands this chart should be enough. Just rememb
 
 | command  | description  | node  |
 |---|---|---|
-| perms set <allow\|deny\|remove> <node>\[ --channel <channel>]\[--role <role>]\[--user <user>] | set\'s permission nodes | Discord Perm Administractor |
+| perms set <allow\|deny\|remove> <node>\[ --channel <channel>]\[--role <role>]\[--user <user>] | set\'s permission nodes | Discord Perm Administrator |
 | perms list  |  displays a link to the website with the current permissions setup | Discord Perm Administrator  |
 | perms hardreset  |  removes all user defined permissions  |  Server Owner  |
   
