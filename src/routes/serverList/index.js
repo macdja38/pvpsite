@@ -13,7 +13,7 @@ import fetch from '../../core/fetch';
 
 export default {
 
-  path: '/user/:userId/server/',
+  path: '/server/',
   auth: true,
 
   async action(context, params) {
@@ -27,7 +27,7 @@ export default {
     if (context.headers) {
       options.headers = context.headers;
     }
-    const resp = await fetch(`/api/v1/user/${params.userId}`, options);
+    const resp = await fetch('/api/v1/user/', options);
     // console.log('Made request'); // eslint-disable-line no-console
     let user;
     try {

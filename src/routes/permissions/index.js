@@ -13,10 +13,11 @@ import fetch from '../../core/fetch';
 
 export default {
 
-  path: '/user/:userId/server/:serverId/permissions',
+  path: '/server/:serverId/permissions',
   auth: true,
 
   async action(context, params) {
+    console.log(1);
     const options = {
       method: 'get',
       credentials: 'include',
@@ -26,7 +27,7 @@ export default {
     }
     const permissionsResp = await fetch(`/api/v1/permissions/${params.serverId}`, options);
 
-    const userResp = await fetch(`/api/v1/user/${params.userId}`, options);
+    const userResp = await fetch('/api/v1/user/', options);
 
     let permissions;
     if (permissionsResp.status === 200) {
@@ -35,7 +36,7 @@ export default {
     const user = await userResp.json();
 
     console.log(permissions);
-    if (!permissions) throw new Error('Prefix Object missing.');
+    if (!permissions) throw new Error('Permissions Object missing.');
     if (!user) throw new Error('User Object missing.');
 
     return <Permissions user={user} serverId={params.serverId} permissions={permissions} />;

@@ -14,10 +14,50 @@
   padding-right: 20px;
 }
 
+.denied:before {
+  content:"\2613\0020";
+  margin-right: 3px;
+  color: #7f0000;
+}
+.denied {
+  color: #7f0000;
+  margin: 0 -20px;
+  border: none;
+  list-style-type: none;
+}
+
+.allowed:before {
+  content:"\2713\0020";
+  margin-right: 3px;
+  color: #007f00;
+}
+.allowed {
+  color: #007f00;
+  margin: 0 -20px;
+  border: none;
+  list-style-type: none;
+}
+
 .container {
   margin: 0 auto;
   padding: 0 0 40px;
   max-width: var(--max-content-width);
+}
+
+.channels {
+  margin: 0 0 0 -40px;
+  color: blue;
+}
+
+.permissionItem {
+  margin: 5px 0;
+  padding: 2px 5px;
+  list-style-type: none;
+  border: solid #dfdfe2;
+}
+
+.permission {
+  border: none;
 }
 
 .userContainer {

@@ -68,7 +68,7 @@ app.use(passport.session());
 app.get(
   '/login/discord/callback',
   authMiddleware.authenticate('discord', { failureRedirect: '/login' }),
-  (req, res) => res.redirect(`/user/${req.user.id}/server/`) // auth success
+  (req, res) => res.redirect('/server/') // auth success
 );
 app.get('/login/discord', authMiddleware.authenticate('discord'));
 

@@ -13,7 +13,7 @@ import fetch from '../../core/fetch';
 
 export default {
 
-  path: '/user/:userId/server/:serverId',
+  path: '/server/:serverId/',
   auth: true,
 
   async action(context, params) {
@@ -34,7 +34,7 @@ export default {
 
     let userResp;
     try {
-      userResp = await fetch(`/api/v1/user/${params.userId}`, options);
+      userResp = await fetch('/api/v1/user/', options);
     } catch (error) {
       console.error('User Resp caught', error);
     }

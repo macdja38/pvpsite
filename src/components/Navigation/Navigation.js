@@ -30,7 +30,7 @@ function Navigation({ className, user }) {
       <Link className={s.link} to="/about">About</Link>
       <Link className={s.link} to="/contact">Contact</Link>
       <Link className={s.link} to="/docs">Docs</Link>
-      <Link className={s.link} to={`/user/${user.user.id}/server`}>Servers</Link>
+      <Link className={s.link} to="/server">Servers</Link>
       <span className={s.spacer}> | </span>
       <div className={cx(s.link, s.highlight)} >
         <a href={`/user/${user.user.id}`}>

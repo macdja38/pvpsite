@@ -25,7 +25,7 @@ function ServerList({ user }, context) {
         />
       </div>
       <div className={s.serverLabel}>
-        <h3><a href={`/user/${user.id}/server/${guild.id}`}>{guild.name}</a></h3>
+        <h3><a href={`/server/${guild.id}`}>{guild.name}</a></h3>
       </div>
     </div>
     )
