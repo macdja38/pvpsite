@@ -43,7 +43,7 @@ function Navigation({ className, user }) {
             src={`https://discordapp.com/api/users/${user.user.id}/avatars/${user.user.avatar}.jpg`}
           />
         </a>
-        <Link className={cx(s.link, s.highlight)} to="/logout">Log out</Link>
+        <a className={cx(s.link, s.highlight)} href="/logout">Log out</a>
       </div>
     </div>
   );
