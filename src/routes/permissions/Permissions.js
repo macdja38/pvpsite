@@ -18,11 +18,29 @@ function toDivs(permissions, layer = 0) {
   if (typeof(permissions) !== 'object') {
     return permissions;
   }
-  return (<ul>{
+  return (<div>{
     Object.keys(permissions).map((key, i) => {
       let spanClassName;
       let liClassName;
       const subNode = toDivs(permissions[key], layer + 1);
+      let levelNode;
+      switch (layer) {
+        case 0:
+          levelNode = s.channel;
+          break;
+        case 1:
+          if (key[0] === 'u') {
+            levelNode = s.user;
+          } else {
+            levelNode = s.group;
+          }
+          break;
+        case 2:
+          levelNode = cx(s.nodeStart, s.node);
+          break;
+        default:
+          levelNode = s.node;
+      }
       if (typeof(subNode) === 'boolean') {
         spanClassName = (subNode === true) ? s.allowed : s.denied;
         liClassName = s.permissions;
@@ -30,11 +48,11 @@ function toDivs(permissions, layer = 0) {
         spanClassName = s.entry;
         liClassName = s.permissionItem;
       }
-      return (<li className={cx(spanClassName, (layer === 0) ? cx(s.channels, liClassName) : liClassName)} key={i}>
+      return (<div className={cx(spanClassName, levelNode)} key={i}>
         <span >{key}{subNode}</span>
-      </li>);
+      </div>);
     })
-  }</ul>);
+  }</div>);
 }
 
 function Permissions({ user, serverId, permissions }, context) {

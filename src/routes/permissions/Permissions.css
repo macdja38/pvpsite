@@ -14,6 +14,51 @@
   padding-right: 20px;
 }
 
+.container {
+  margin: 0 auto;
+  padding: 0 0 40px;
+  max-width: var(--max-content-width);
+}
+
+.entry {
+
+}
+
+.permissionItem {
+
+}
+
+.channel {
+  border: solid #99AAB5;
+  margin: 5px 0;
+  padding: 10px 5px;
+}
+
+.user {
+  border: none;
+  border-left: solid #7289DA;
+  margin: 0 5px;
+  padding: 5px 5px;
+}
+
+.group {
+  border: none;
+  border-left: solid #7289DA;
+  margin: 0 5px;
+  padding: 5px 5px;
+}
+
+.nodeStart {
+  border: none;
+  margin: 0 5px;
+  border-left: solid #2C2F33;
+}
+
+.node {
+  margin: 0 5px;
+  padding: 0 15px;
+}
+
 .denied::before {
   content: '\2613\0020';
   margin-right: 3px;
@@ -22,9 +67,6 @@
 
 .denied {
   color: #7f0000;
-  margin: 0 -20px;
-  border: none;
-  list-style-type: none;
 }
 
 .allowed::before {
@@ -35,67 +77,4 @@
 
 .allowed {
   color: #007f00;
-  margin: 0 -20px;
-  border: none;
-  list-style-type: none;
-}
-
-.container {
-  margin: 0 auto;
-  padding: 0 0 40px;
-  max-width: var(--max-content-width);
-}
-
-.channels {
-  margin: 0 0 0 -40px;
-  color: blue;
-}
-
-.permissionItem {
-  margin: 12px 0;
-  padding: 0 5px;
-  list-style-type: none;
-  border: none #dfdfe2;
-  border-left-style: solid;
-}
-
-.permission {
-  border: none;
-}
-
-.userContainer {
-  display: flex;
-}
-
-.userAvatar {
-  padding: 10px;
-}
-
-.userInfo {
-  padding: 10px;
-}
-
-.server {
-  padding: 0;
-}
-
-.serverItem {
-  /* Safari 3-4, iOS 1-3.2, Android 1.6- */
-  -webkit-border-radius: 12px;
-
-  /* Firefox 1-3.6 */
-  -moz-border-radius: 12px;
-
-  /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
-  border-radius: 12px;
-  padding-bottom: 6px;
-}
-
-.serverTitle {
-  font-size: 1.125em;
-}
-
-.serverTitle,
-.serverDesc {
-  display: block;
 }
