@@ -34,14 +34,16 @@ function Music({ user, serverId, music }, context) {
           <div className={s.container}>
             <h1 className={s.title}>{guild.name}'s Music</h1>
             <table>
-              <tr>
-                <th>#</th>
-                <th>Song</th>
-                <th>Uploader</th>
-                <th>Duration</th>
-                <th>Added by</th>
-              </tr>
-              {items}
+              <tbody>
+                <tr>
+                  <th>#</th>
+                  <th>Song</th>
+                  <th>Uploader</th>
+                  <th>Duration</th>
+                  <th>Added by</th>
+                </tr>
+                {items}
+              </tbody>
             </table>
           </div>
         </div>

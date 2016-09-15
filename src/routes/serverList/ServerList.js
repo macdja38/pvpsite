@@ -6,6 +6,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import s from './ServerList.css';
 
+import Link from '../../components/Link'
+
 const title = 'Server List';
 
 function ServerList({ user }, context) {
@@ -25,7 +27,7 @@ function ServerList({ user }, context) {
         />
       </div>
       <div className={s.serverLabel}>
-        <h3><a href={`/server/${guild.id}`}>{guild.name}</a></h3>
+        <h3><Link to={`/server/${guild.id}`}>{guild.name}</Link></h3>
       </div>
     </div>
     )

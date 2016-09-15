@@ -15,10 +15,9 @@ import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
 import logger from 'morgan';
-import models from './data/models';
 import schema from './data/schema';
 import routes from './routes';
-import { port, database } from './config';
+import { port, database, sentry } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
 import permissions from './api/v1/permissions';
@@ -27,21 +26,23 @@ import R from 'rethinkdbdash';
 import authMiddleware from './core/auth';
 import RDBStore from 'session-rethinkdb';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
+import raven from 'raven';
 
 const r = R({servers: [
   database.reThinkDB
 ]});
 
-console.log(r);
-
 const db = { r, connPromise: r.connect(database.reThinkDB) };
 
 const app = express();
 
+app.use(raven.middleware.express.requestHandler(sentry.serverDSN));
+app.use(raven.middleware.express.errorHandler(sentry.serverDSN));
+
 const RDBStoreSession = RDBStore(session);
 
 const store = new RDBStoreSession(r,  {
-  browserSessionsMaxAge: 500000, // optional, default is 60000 (60 seconds). Time between clearing expired sessions.
+  browserSessionsMaxAge: 5000, // optional, default is 60000 (60 seconds). Time between clearing expired sessions.
   table: 'session' // optional, default is 'session'. Table to store sessions in.
 });
 
@@ -78,7 +79,7 @@ app.use(session({
   sameSite: true,
   store: store,
   saveUninitialized: true,
-  cookie: {secure: 'auto', maxAge: 86400},
+  cookie: {secure: 'auto', maxAge: 86400000},
 }));
 
 app.use(passport.initialize());
@@ -92,8 +93,8 @@ app.get(
 app.get('/login/discord', authMiddleware.authenticate('discord'));
 
 app.get('/logout', checkAuth, (req, res) => {
-  res.redirect('/');
   req.logout();
+  res.redirect('/');
 });
 
 app.get('/info', checkAuth, (req, res) => {
@@ -182,9 +183,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 // Launch the server
 // -----------------------------------------------------------------------------
 /* eslint-disable no-console */
-models.sync().catch(err => console.error(err.stack)).then(() => {
-  app.listen(port, () => {
-    console.log(`The server is running at http://localhost:${port}/`);
-  });
+app.listen(port, () => {
+  console.log(`The server is running at http://localhost:${port}/`);
 });
 /* eslint-enable no-console */

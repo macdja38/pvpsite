@@ -16,14 +16,15 @@ function checkServerAuth(req, res, next) {
 
 function checkUser(req, res, next) {
   if (req.isAuthenticated() && req.user.id) return next();
-  res.sendStatus(403);
+  res.status(403).send("User not Authenticated");
   return true;
 }
 
 module.exports = function register(app, { r, connPromise }) {
   app.get('/api/v1/user/', checkUser, (req, res) => {
-    if (req.user) res.json(req.user);
-    else res.sendStatus(404);
+    console.log("Got user request");
+    if (req.user) { res.json(req.user); console.log(req.user.username); }
+    else res.status(404).send('User not Cached');
   });
 
   /*  "/api/v1/prefix/:id"
@@ -35,7 +36,7 @@ module.exports = function register(app, { r, connPromise }) {
     if (req.user) res.json(req.user);
     else {
       connPromise.then((conn) => r
-        .table('users').get(req.params.id).run(conn)
+        .table('users').get(req.params.id)
         .then(user => {
           res.json(user);
         })
