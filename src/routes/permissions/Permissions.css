@@ -21,37 +21,37 @@
 }
 
 .entry {
-
+  /* */
 }
 
 .permissionItem {
-
+  /* */
 }
 
 .channel {
-  border: solid #99AAB5;
+  border: solid #99aab5;
   margin: 5px 0;
   padding: 10px 5px;
 }
 
 .user {
   border: none;
-  border-left: solid #7289DA;
+  border-left: solid #7289da;
   margin: 0 5px;
-  padding: 5px 5px;
+  padding: 5px;
 }
 
 .group {
   border: none;
-  border-left: solid #7289DA;
+  border-left: solid #7289da;
   margin: 0 5px;
-  padding: 5px 5px;
+  padding: 5px;
 }
 
 .nodeStart {
   border: none;
   margin: 0 5px;
-  border-left: solid #2C2F33;
+  border-left: solid #2c2f33;
 }
 
 .node {

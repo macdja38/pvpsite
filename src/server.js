@@ -28,9 +28,9 @@ import RDBStore from 'session-rethinkdb';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import raven from 'raven';
 
-const r = R({servers: [
-  database.reThinkDB
-]});
+const r = new R({ servers: [
+  database.reThinkDB,
+] });
 
 const db = { r, connPromise: r.connect(database.reThinkDB) };
 
@@ -39,11 +39,11 @@ const app = express();
 app.use(raven.middleware.express.requestHandler(sentry.serverDSN));
 app.use(raven.middleware.express.errorHandler(sentry.serverDSN));
 
-const RDBStoreSession = RDBStore(session);
+const RDBStoreSession = new RDBStore(session);
 
-const store = new RDBStoreSession(r,  {
+const store = new RDBStoreSession(r, {
   browserSessionsMaxAge: 5000, // optional, default is 60000 (60 seconds). Time between clearing expired sessions.
-  table: 'session' // optional, default is 'session'. Table to store sessions in.
+  table: 'session', // optional, default is 'session'. Table to store sessions in.
 });
 
 //
@@ -77,9 +77,9 @@ app.use(session({
   resave: false,
   httpOnly: true,
   sameSite: true,
-  store: store,
+  store,
   saveUninitialized: true,
-  cookie: {secure: 'auto', maxAge: 86400000},
+  cookie: { secure: 'auto', maxAge: 86400000 },
 }));
 
 app.use(passport.initialize());

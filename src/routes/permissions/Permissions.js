@@ -11,7 +11,7 @@ function toDivs(permissions, layer = 0) {
   return (<div>{
     Object.keys(permissions).map((key, i) => {
       let spanClassName;
-      let liClassName;
+      // let liClassName;
       const subNode = toDivs(permissions[key], layer + 1);
       let levelNode;
       switch (layer) {
@@ -33,10 +33,10 @@ function toDivs(permissions, layer = 0) {
       }
       if (typeof(subNode) === 'boolean') {
         spanClassName = (subNode === true) ? s.allowed : s.denied;
-        liClassName = s.permissions;
+        // liClassName = s.permissions;
       } else {
         spanClassName = s.entry;
-        liClassName = s.permissionItem;
+        // liClassName = s.permissionItem;
       }
       return (<div className={cx(spanClassName, levelNode)} key={i}>
         <span >{key}{subNode}</span>
