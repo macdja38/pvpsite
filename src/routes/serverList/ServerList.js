@@ -6,7 +6,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import s from './ServerList.css';
 
-import Link from '../../components/Link'
+import Link from '../../components/Link';
 
 const title = 'Server List';
 

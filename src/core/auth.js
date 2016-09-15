@@ -2,7 +2,7 @@
  * Created by macdja38 on 2016-08-06.
  */
 
-import { host, auth } from '../config';
+import { auth } from '../config';
 import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
 import r from '../db/index.js';
@@ -22,9 +22,13 @@ passport.deserializeUser((id, done) => r
 const loginCallbackHandler = (objectMapper, type) =>
   (accessToken, refreshToken, profile, done) => {
     if (accessToken !== null) {
+      const userProfile = profile;
+      userProfile.accessToken = accessToken;
+      userProfile.refreshToken = refreshToken;
+      userProfile.fetched = new Date();
       r
         .table('users')
-        .getAll(profile.id, { index: 'id' })
+        .getAll(userProfile.id, { index: 'id' })
         .filter({ type })
         .run(r.conn)
         .then((cursor) =>
@@ -34,11 +38,11 @@ const loginCallbackHandler = (objectMapper, type) =>
                 return done(null, users[0]);
               }
               return r.table('users')
-                .insert(objectMapper(profile))
+                .insert(objectMapper(userProfile), { conflict: 'update' })
                 .run(r.conn)
                 .then(() => r
                   .table('users')
-                  .get(profile.id)
+                  .get(userProfile.id)
                   .run(r.conn)
                 )
                 .then((newUser) => {
@@ -55,7 +59,7 @@ passport.use(new DiscordStrategy(
     clientID: auth.discord.id,
     clientSecret: auth.discord.secret,
     scope: scopes,
-    callbackURL: `${host}/login/discord/callback`,
+    callbackURL: 'http://localhost:3001/login/discord/callback',
   },
   loginCallbackHandler(profile => profile, 'discord')
 ));
