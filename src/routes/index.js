@@ -13,7 +13,6 @@ import App from '../components/App';
 // Child routes
 import home from './home';
 import userPage from './user';
-import contact from './contact';
 import serverList from './serverList';
 import server from './server';
 import permissions from './permissions';
@@ -34,7 +33,6 @@ export default {
     serverList,
     permissions,
     music,
-    contact,
     content,
     error,
   ],

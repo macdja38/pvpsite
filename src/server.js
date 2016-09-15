@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import 'source-map-support/register';
 import path from 'path';
 import express from 'express';
 import session from 'express-session';
@@ -17,18 +18,32 @@ import logger from 'morgan';
 import models from './data/models';
 import schema from './data/schema';
 import routes from './routes';
-import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, database } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
 import permissions from './api/v1/permissions';
 import music from './api/v1/music';
-import r from 'rethinkdb';
+import R from 'rethinkdbdash';
 import authMiddleware from './core/auth';
+import RDBStore from 'session-rethinkdb';
+import assets from './assets'; // eslint-disable-line import/no-unresolved
+
+const r = R({servers: [
+  database.reThinkDB
+]});
+
+console.log(r);
 
 const db = { r, connPromise: r.connect(database.reThinkDB) };
 
 const app = express();
+
+const RDBStoreSession = RDBStore(session);
+
+const store = new RDBStoreSession(r,  {
+  browserSessionsMaxAge: 500000, // optional, default is 60000 (60 seconds). Time between clearing expired sessions.
+  table: 'session' // optional, default is 'session'. Table to store sessions in.
+});
 
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -59,7 +74,11 @@ function checkAuth(req, res, next) {
 app.use(session({
   secret: 'keyboard cat-acomb',
   resave: false,
+  httpOnly: true,
+  sameSite: true,
+  store: store,
   saveUninitialized: true,
+  cookie: {secure: 'auto', maxAge: 86400},
 }));
 
 app.use(passport.initialize());

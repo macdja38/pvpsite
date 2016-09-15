@@ -16,4 +16,4 @@ component: ContentPage
 
 ### Fork me on GitHub
 
-[github.com/kriasoft/react-starter-kit](https://github.com/kriasoft/react-starter-kit)
+[github.com/macdja38/pvpsite](https://github.com/macdja38/pvpsite)
