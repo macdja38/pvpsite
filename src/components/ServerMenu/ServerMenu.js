@@ -13,14 +13,21 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './ServerMenu.css';
 import Link from '../Link';
 
-function ServerMenu({ className, user, serverId }) {
+function ServerMenu({ className, user, serverId, page }) {
   if (user == null || user.user == null) {
     return (
       <div className={cx(s.root, className)} role="navigation">
         <div className={s.menu}>
-          <Link className={s.link} to={`/server/${serverId}`}>Server</Link>
-          <Link className={s.link} to={`/server/${serverId}/music`}>Music</Link>
-          <Link className={s.link} to={`/server/${serverId}/permissions`}>Permissions</Link>
+          <Link className={page === 'server' ? cx(s.link, s.active) : s.link} to={`/server/${serverId}`}>Server</Link>
+          <Link className={page === 'music' ? cx(s.link, s.active) : s.link} to={`/server/${serverId}/music`}>
+            Music
+          </Link>
+          <Link
+            className={page === 'permissions' ? cx(s.link, s.active) : s.link}
+            to={`/server/${serverId}/permissions`}
+          >
+            Permissions
+          </Link>
           <Link className={s.link} to="/docs">Docs</Link>
         </div>
       </div>
@@ -32,6 +39,7 @@ ServerMenu.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object,
   serverId: PropTypes.string,
+  page: PropTypes.string,
 };
 
 export default withStyles(s)(ServerMenu);
