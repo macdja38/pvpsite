@@ -24,7 +24,15 @@ module.exports = function register(app, { r }) {
   app.get('/api/v1/user/', checkUser, (req, res) => {
     console.log('Got user request');
     if (req.user) {
-      res.json(req.user);
+      const responseUser = {};
+      responseUser.avatar = req.user.avatar;
+      responseUser.discriminator = req.user.discriminator;
+      responseUser.guilds = req.user.guilds;
+      responseUser.id = req.user.id;
+      responseUser.mfa_enabled = req.user.mfa_enabled;
+      responseUser.provider = req.user.provider;
+      responseUser.username = req.user.username;
+      res.json(responseUser);
       console.log(req.user.username);
     } else {
       res.status(404).send('User not Cached');
