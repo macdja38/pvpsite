@@ -25,8 +25,20 @@ export default {
       options.headers = context.headers;
     }
 
-    const resp = await fetch(`/api/v1/user/${params.userId}`, options);
-    const user = await resp.json();
+    let user;
+    if (context.user) {
+      console.log("Got cached User");
+      user = context.user;
+    } else {
+      try {
+        const resp = await fetch('/api/v1/user/', options);
+        console.log("Fetching user");
+        user = await resp.json();
+      } catch (error) {
+        throw new Error(`User Object request failed. Error: ${error}`);
+      }
+    }
+
     return <User user={user} />;
   },
 };

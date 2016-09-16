@@ -22,6 +22,8 @@ import {
   windowScrollY,
 } from './core/DOMUtils';
 
+let user = null;
+
 const context = {
   insertCss: (...styles) => {
     const removeCss = styles.map(style => style._insertCss()); // eslint-disable-line no-underscore-dangle, max-len
@@ -115,26 +117,49 @@ function run() {
       options.headers = context.headers;
     }
 
-    fetch('/api/v1/user/', options).then(resp => {
-      resp.json().then(user => {
-        UniversalRouter.resolve(routes, {
-          user,
-          path: location.pathname,
-          query: location.query,
-          state: location.state,
-          context,
-          render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind
-        }).catch(err => console.error(err)); // eslint-disable-line no-console
-      }).catch(() => {
-        UniversalRouter.resolve(routes, {
-          path: location.pathname,
-          query: location.query,
-          state: location.state,
-          context,
-          render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind
-        }).catch(err => console.error(err)); // eslint-disable-line no-console
+    if (user === null) {
+      fetch('/api/v1/user/', options).then(resp => {
+        resp.json().then(respUser => {
+          user = respUser;
+          UniversalRouter.resolve(routes, {
+            user: respUser,
+            path: location.pathname,
+            query: location.query,
+            state: location.state,
+            context,
+            render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind
+          }).catch(err => console.error(err)); // eslint-disable-line no-console
+        }).catch(() => {
+          user = false;
+          UniversalRouter.resolve(routes, {
+            path: location.pathname,
+            query: location.query,
+            state: location.state,
+            context,
+            render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind
+          }).catch(err => console.error(err)); // eslint-disable-line no-console
+        });
       });
-    });
+    }
+
+    else if (user) {
+      UniversalRouter.resolve(routes, {
+        user,
+        path: location.pathname,
+        query: location.query,
+        state: location.state,
+        context,
+        render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind
+      }).catch(err => console.error(err)); // eslint-disable-line no-console
+    } else {
+      UniversalRouter.resolve(routes, {
+        path: location.pathname,
+        query: location.query,
+        state: location.state,
+        context,
+        render: render.bind(undefined, container, location.state), // eslint-disable-line react/jsx-no-bind
+      }).catch(err => console.error(err)); // eslint-disable-line no-console
+    }
   }
 
   // Add History API listener and trigger initial change

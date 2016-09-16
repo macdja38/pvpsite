@@ -27,13 +27,24 @@ export default {
     }
     const permissionsResp = await fetch(`/api/v1/permissions/${params.serverId}`, options);
 
-    const userResp = await fetch('/api/v1/user/', options);
+    let user;
+    if (context.user) {
+      console.log("Got cached User");
+      user = context.user;
+    } else {
+      try {
+        const resp = await fetch('/api/v1/user/', options);
+        console.log("Fetching user");
+        user = await resp.json();
+      } catch (error) {
+        throw new Error(`User Object request failed. Error: ${error}`);
+      }
+    }
 
     let permissions;
     if (permissionsResp.status === 200) {
       permissions = (await permissionsResp.json());
     }
-    const user = await userResp.json();
 
     console.log(permissions);
     if (!permissions) throw new Error('Permissions Object missing.');

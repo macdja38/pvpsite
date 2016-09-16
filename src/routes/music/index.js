@@ -32,18 +32,24 @@ export default {
       console.error('prefix Resp caught', error);
     }
 
-    let userResp;
-    try {
-      userResp = await fetch('/api/v1/user/', options);
-    } catch (error) {
-      console.error('User Resp caught', error);
+    let user;
+    if (context.user) {
+      console.log("Got cached User");
+      user = context.user;
+    } else {
+      try {
+        const resp = await fetch('/api/v1/user/', options);
+        console.log("Fetching user");
+        user = await resp.json();
+      } catch (error) {
+        throw new Error(`User Object request failed. Error: ${error}`);
+      }
     }
 
     let music;
     if (musicResp.status === 200) {
       music = (await musicResp.json());
     }
-    const user = await userResp.json();
 
     console.log(music);
     // if (!prefix) throw new Error('Prefix Object missing.');
