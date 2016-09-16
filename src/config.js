@@ -14,6 +14,12 @@ export const host = process.env.WEBSITE_HOSTNAME || `localhost:${port}`;
 
 export const databaseUrl = process.env.DATABASE_URL || 'sqlite:database.sqlite';
 
+export const oauth = {
+  discord: {
+    url: process.env.OAUTH_DISCORD_URL || 'http://localhost:3001'
+  }
+};
+
 export const analytics = {
 
   // https://analytics.google.com/
