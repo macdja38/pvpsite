@@ -2,7 +2,7 @@
  * Created by macdja38 on 2016-08-06.
  */
 
-import { auth } from '../config';
+import { auth, oauth } from '../config';
 import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
 import r from '../db/index.js';
@@ -59,7 +59,7 @@ passport.use(new DiscordStrategy(
     clientID: auth.discord.id,
     clientSecret: auth.discord.secret,
     scope: scopes,
-    callbackURL: 'http://localhost:3001/login/discord/callback',
+    callbackURL: `${oauth.discord.url}/login/discord/callback`,
   },
   loginCallbackHandler(profile => profile, 'discord')
 ));
