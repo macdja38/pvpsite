@@ -30,7 +30,7 @@ function Server({ user, serverId, prefix }, context) {
   };
   return (
     <div>
-      <ServerMenu className={s.nav} user={user} serverId={serverId} />
+      <ServerMenu className={s.nav} user={user} serverId={serverId} page="server" />
       <div className={s.root}>
         <div className={s.container}>
           <h1 className={s.title}>{guild.name}'s Settings</h1>

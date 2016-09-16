@@ -29,7 +29,7 @@ function Music({ user, serverId, music }, context) {
     );
     return (
       <div>
-        <ServerMenu className={s.nav} user={user} serverId={serverId} />
+        <ServerMenu className={s.nav} user={user} serverId={serverId} page="music" />
         <div className={s.root}>
           <div className={s.container}>
             <h1 className={s.title}>{guild.name}'s Music</h1>

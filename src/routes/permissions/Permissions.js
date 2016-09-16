@@ -53,10 +53,9 @@ function Permissions({ user, serverId, permissions }, context) {
 
     const items = toDivs(permissions.server);
 
-    console.log(permissions);
     return (
       <div>
-        <ServerMenu className={s.nav} user={user} serverId={serverId} />
+        <ServerMenu className={s.nav} user={user} serverId={serverId} page="permissions" />
         <div className={s.root}>
           <div className={s.container}>
             <h1 className={s.title}>{guild.name}'s Permissions</h1>
