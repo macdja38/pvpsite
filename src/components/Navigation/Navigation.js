@@ -33,8 +33,8 @@ function Navigation({ className, user }) {
       <Link className={s.link} to="/server">Servers</Link>
       <span className={s.spacer}> | </span>
       <div className={cx(s.link, s.highlight)} >
-        <a href={`/user/${user.user.id}`}>
-          <span className={s.username}> {user.user.username}</span>
+        <Link className={s.username} to={`/user/${user.user.id}`}>
+          <span> {user.user.username}</span>
           <img
             role="presentation"
             className={s.avatar}
@@ -42,7 +42,7 @@ function Navigation({ className, user }) {
             width="32px"
             src={`https://discordapp.com/api/users/${user.user.id}/avatars/${user.user.avatar}.jpg`}
           />
-        </a>
+        </Link>
         <a className={cx(s.link, s.highlight)} href="/logout">Log out</a>
       </div>
     </div>

@@ -12,7 +12,7 @@ function checkServerAuth(req, res, next) {
   if (req.isAuthenticated()) {
     const id = req.params.id;
     const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
-    if (guild && (guild.permissions & 8 === 0 || guild.owner)) return next();
+    if (guild && ((guild.permissions & 8) === 8 || guild.owner)) return next();
   }
   res.sendStatus(403);
   return true;

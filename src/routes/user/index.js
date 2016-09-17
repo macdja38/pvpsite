@@ -27,16 +27,20 @@ export default {
 
     let user;
     if (context.user) {
-      console.log("Got cached User");
+      console.log('Got cached User');
       user = context.user;
     } else {
       try {
         const resp = await fetch('/api/v1/user/', options);
-        console.log("Fetching user");
+        console.log('Fetching user');
         user = await resp.json();
       } catch (error) {
         throw new Error(`User Object request failed. Error: ${error}`);
       }
+    }
+
+    if (params.userId !== user.id) {
+      console.log('User trying to fetch user page that\'s not their own.');
     }
 
     return <User user={user} />;

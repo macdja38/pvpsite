@@ -1,0 +1,27 @@
+@import '../../components/variables.css';
+
+.untouched,
+.changed,
+.saved {
+  box-shadow: 1px 1px 4px #ebebeb;
+  -moz-box-shadow: 1px 1px 4px #ebebeb;
+  -webkit-box-shadow: 1px 1px 4px #ebebeb;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+}
+
+.untouched {
+  border: 1px solid #2c2f33;
+  background-color: rgba(223, 223, 226, 0.81);
+}
+
+.changed {
+  border: 1px solid #c00;
+}
+
+.saved {
+  border: 1px solid #0c0;
+}

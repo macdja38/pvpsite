@@ -14,7 +14,7 @@ passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser((id, done) => r
   .table('users')
   .get(id)
-  .run(r.conn)
+  .run()
   .then((user) => {
     done(null, user);
   }));
@@ -30,26 +30,23 @@ const loginCallbackHandler = (objectMapper, type) =>
         .table('users')
         .getAll(userProfile.id, { index: 'id' })
         .filter({ type })
-        .run(r.conn)
-        .then((cursor) =>
-          cursor.toArray()
-            .then((users) => {
-              if (users.length > 0) {
-                return done(null, users[0]);
-              }
-              return r.table('users')
-                .insert(objectMapper(userProfile), { conflict: 'update' })
-                .run(r.conn)
-                .then(() => r
-                  .table('users')
-                  .get(userProfile.id)
-                  .run(r.conn)
-                )
-                .then((newUser) => {
-                  done(null, newUser);
-                });
-            })
-        )
+        .run()
+        .then((users) => {
+          if (users.length > 0) {
+            return done(null, users[0]);
+          }
+          return r.table('users')
+            .insert(objectMapper(userProfile), { conflict: 'update' })
+            .run()
+            .then(() => r
+              .table('users')
+              .get(userProfile.id)
+              .run()
+            )
+            .then((newUser) => {
+              done(null, newUser);
+            });
+        })
         .catch(err => console.log('Error Getting User', err)); // eslint-disable-line no-console
     }
   };

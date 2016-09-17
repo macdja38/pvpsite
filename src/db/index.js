@@ -3,26 +3,14 @@
  */
 import { database } from '../config.js';
 
-const r = require('rethinkdb');
+const r = require('rethinkdbdash')(database.reThinkDB);
 require('rethinkdb-init')(r);
-
-r.connections = [];
-r.getNewConnection = () => r.connect(database.reThinkDB)
-  .then(conn => {
-    conn.use(database.reThinkDB.db);
-    r.connections.push(conn);
-    return conn;
-  });
 
 r.init(database.reThinkDB, [
   {
     name: 'users',
     indexes: ['login'],
   },
-]).then(conn => {
-  r.conn = conn;
-  r.connections.push(conn);
-  r.conn.use(database.reThinkDB.db);
-});
+]);
 
 module.exports = r;
