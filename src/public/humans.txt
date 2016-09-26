@@ -8,6 +8,7 @@
 # THANKS
 
     ReactStarterKit framework.
+    Eris discord bot api.
 
 # TECHNOLOGY COLOPHON
 

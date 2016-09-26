@@ -17,7 +17,7 @@ import passport from 'passport';
 import logger from 'morgan';
 import schema from './data/schema';
 import routes from './routes';
-import { port, database, sentry } from './config';
+import { auth, port, database, sentry } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
 import permissions from './api/v1/permissions';
@@ -27,6 +27,9 @@ import authMiddleware from './core/auth';
 import RDBStore from 'session-rethinkdb';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import raven from 'raven';
+
+import Eris from 'eris';
+const eris = new Eris(auth.token, { autoreconnect: true, cleanContent: false, messageLimit: null, });
 
 const r = new R({ servers: [
   database.reThinkDB,
@@ -112,10 +115,10 @@ app.use('/graphql', expressGraphQL(req => ({
   rootValue: { request: req },
   pretty: process.env.NODE_ENV !== 'production',
 })));
-prefix(app, db);
-user(app, db);
-permissions(app, db);
-music(app, db);
+prefix(app, db, eris);
+user(app, db, eris);
+permissions(app, db, eris);
+music(app, db, eris);
 
 //
 // Register server-side rendering middleware
@@ -187,3 +190,5 @@ app.listen(port, () => {
   console.log(`The server is running at http://localhost:${port}/`);
 });
 /* eslint-enable no-console */
+
+eris.connect();
