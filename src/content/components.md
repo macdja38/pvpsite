@@ -1,5 +1,6 @@
 ---
 title: Index
+description: The ingredients to the PvPCraft discord bot.
 component: ContentPage
 ---
 ### Runtime Components

@@ -47,3 +47,15 @@
 .serverDesc {
   display: block;
 }
+
+.untouched {
+  border: solid black;
+}
+
+.updating {
+  border: solid red;
+}
+
+.updated {
+  border: solid green;
+}

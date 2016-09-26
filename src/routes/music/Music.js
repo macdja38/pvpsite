@@ -17,7 +17,7 @@ function Music({ user, serverId, music }, context) {
   try {
     const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
     context.setTitle(guild.name);
-    console.log(music);
+    context.setDescription(`Queued music for ${guild.name}`);
     const items = music.queue.map((song, position) =>
       <tr key={position}>
         <td>{position}</td>
@@ -58,6 +58,6 @@ Music.propTypes = {
   music: PropTypes.object,
 };
 
-Music.contextTypes = { setTitle: PropTypes.func.isRequired };
+Music.contextTypes = { setTitle: PropTypes.func.isRequired, setDescription: PropTypes.func.isRequired };
 
 export default withStyles(s)(Music);

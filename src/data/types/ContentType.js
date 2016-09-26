@@ -18,6 +18,7 @@ const ContentType = new ObjectType({
   fields: {
     path: { type: new NonNull(StringType) },
     title: { type: new NonNull(StringType) },
+    description: { type: new NonNull(StringType) },
     content: { type: new NonNull(StringType) },
     component: { type: new NonNull(StringType) },
   },

@@ -1,5 +1,6 @@
 ---
 title: Privacy Policy
+description: Privacy Policy for the PvPCraft discord bot.
 component: ContentPage
 ---
 PvPCraft will do our best to protect your data though data may be used by 3rd party sources to provide resources that

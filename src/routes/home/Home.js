@@ -12,9 +12,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Home.css';
 
 const title = 'Home';
+const description = 'Home Page';
 
 function Home(params, context) {
   context.setTitle(title);
+  console.log(context);
+  context.setDescription(description);
   return (
     <div className={s.root}>
       <div className={s.container}>
@@ -33,6 +36,6 @@ function Home(params, context) {
   );
 }
 
-Home.contextTypes = { setTitle: PropTypes.func.isRequired };
+Home.contextTypes = { setTitle: PropTypes.func.isRequired, setDescription: PropTypes.func.isRequired };
 
 export default withStyles(s)(Home);

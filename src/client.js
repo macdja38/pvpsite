@@ -31,6 +31,22 @@ const context = {
       removeCss.forEach(f => f());
     };
   },
+  setDescription: value => {
+    // Remove and create a new <meta /> tag in order to make it work
+    // with bookmarks in Safari
+    const elements = document.getElementsByTagName('meta');
+    Array.from(elements).forEach((element) => {
+      if (element.getAttribute('name') === 'description') {
+        element.parentNode.removeChild(element);
+      }
+    });
+    const meta = document.createElement('meta');
+    meta.setAttribute('name', 'description');
+    meta.setAttribute('content', value);
+    document
+      .getElementsByTagName('head')[0]
+      .appendChild(meta);
+  },
   setTitle: value => (document.title = value),
   setMeta: (name, content) => {
     // Remove and create a new <meta /> tag in order to make it work

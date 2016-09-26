@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { analytics } from '../config';
+import { analytics, oauth } from '../config';
 
 function Html({ title, description, style, script, children }) {
   return (
@@ -8,10 +8,13 @@ function Html({ title, description, style, script, children }) {
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <title>{title}</title>
-        <meta name="description" content={description} />
+        <link
+          rel="alternate"
+          type="application/json+oembed"
+          href={`${oauth.discord.url}/api/v1/oembed?type=photo&url=f&title=${title}&description=${description}`}
+          title={title}
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
@@ -43,7 +46,7 @@ function Html({ title, description, style, script, children }) {
 
 Html.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   style: PropTypes.string.isRequired,
   script: PropTypes.string,
   children: PropTypes.string,

@@ -1,5 +1,6 @@
 ---
 title: Contact
+description: Contact PvPCraft
 component: ContentPage
 ---
 ### Contact 

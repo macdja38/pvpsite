@@ -21,6 +21,7 @@ class App extends Component {
     context: PropTypes.shape({
       insertCss: PropTypes.func,
       setTitle: PropTypes.func,
+      setDescription: PropTypes.func,
       setMeta: PropTypes.func,
     }),
     children: PropTypes.element.isRequired,
@@ -30,6 +31,7 @@ class App extends Component {
   static childContextTypes = {
     insertCss: PropTypes.func.isRequired,
     setTitle: PropTypes.func.isRequired,
+    setDescription: PropTypes.func.isRequired,
     setMeta: PropTypes.func.isRequired,
   };
 
@@ -38,6 +40,7 @@ class App extends Component {
     return {
       insertCss: context.insertCss || emptyFunction,
       setTitle: context.setTitle || emptyFunction,
+      setDescription: context.setDescription || emptyFunction,
       setMeta: context.setMeta || emptyFunction,
     };
   }

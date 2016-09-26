@@ -1,5 +1,6 @@
 ---
 title: Documentation
+description: Instructions for usage of PvPCraft Discord bot.
 component: ContentPage
 ---
 Hello and Welcome to PvPCraft's documentation. Some features that are still being tested may not be documented.

@@ -23,7 +23,7 @@ export default {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        query: `{content(path:"${path}"){path,title,content,component}}`,
+        query: `{content(path:"${path}"){path,title,description,content,component}}`,
       }),
       credentials: 'include',
     });

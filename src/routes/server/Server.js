@@ -17,6 +17,7 @@ function Server({ user, serverId, prefix }, context) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
   context.setTitle(guild.name);
+  context.setDescription(`Admin panel of ${guild.name}`);
   return (
     <div>
       <ServerMenu className={s.nav} user={user} serverId={serverId} page="server" />
@@ -41,6 +42,6 @@ Server.propTypes = {
   prefix: PropTypes.array,
 };
 
-Server.contextTypes = { setTitle: PropTypes.func.isRequired };
+Server.contextTypes = { setTitle: PropTypes.func.isRequired, setDescription: PropTypes.func.isRequired };
 
 export default withStyles(s)(Server);

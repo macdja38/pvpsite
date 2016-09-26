@@ -12,9 +12,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Login.css';
 
 const title = 'Log In';
+const description = 'Login to the PvPCraft webadmin panel.';
 
 function Login(props, context) {
   context.setTitle(title);
+  context.setDescription(description);
   return (
     <div className={s.root}>
       <div className={s.container}>
@@ -51,6 +53,6 @@ function Login(props, context) {
   );
 }
 
-Login.contextTypes = { setTitle: PropTypes.func.isRequired };
+Login.contextTypes = { setTitle: PropTypes.func.isRequired, setDescription: PropTypes.func.isRequired };
 
 export default withStyles(s)(Login);

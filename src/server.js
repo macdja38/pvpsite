@@ -22,6 +22,7 @@ import prefix from './api/v1/prefix';
 import user from './api/v1/user';
 import permissions from './api/v1/permissions';
 import music from './api/v1/music';
+import oembed from './api/v1/oembed';
 import R from 'rethinkdbdash';
 import authMiddleware from './core/auth';
 import RDBStore from 'session-rethinkdb';
@@ -29,7 +30,7 @@ import assets from './assets'; // eslint-disable-line import/no-unresolved
 import raven from 'raven';
 
 import Eris from 'eris';
-const eris = new Eris(auth.token, { autoreconnect: true, cleanContent: false, messageLimit: null, });
+const eris = new Eris(auth.discord.token, { autoreconnect: true, cleanContent: false, messageLimit: null, });
 
 const r = new R({ servers: [
   database.reThinkDB,
@@ -38,9 +39,6 @@ const r = new R({ servers: [
 const db = { r, connPromise: r.connect(database.reThinkDB) };
 
 const app = express();
-
-app.use(raven.middleware.express.requestHandler(sentry.serverDSN));
-app.use(raven.middleware.express.errorHandler(sentry.serverDSN));
 
 const RDBStoreSession = new RDBStore(session);
 
@@ -59,11 +57,13 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
-app.use(logger('dev'));
+app.use(logger('combined'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(raven.middleware.express.requestHandler(sentry.serverDSN));
+app.use(raven.middleware.express.errorHandler(sentry.serverDSN));
 
 //
 // Authentication
@@ -119,6 +119,7 @@ prefix(app, db, eris);
 user(app, db, eris);
 permissions(app, db, eris);
 music(app, db, eris);
+oembed(app, db, eris);
 
 //
 // Register server-side rendering middleware
@@ -127,7 +128,7 @@ app.get('*', async (req, res, next) => {
   try {
     let css = new Set();
     let statusCode = 200;
-    const data = { title: '', description: '', style: '', script: assets.main.js, children: '' };
+    const data = { title: 'PvPCraft', description: 'PvPCraft discord bot', style: '', script: assets.main.js, children: '' };
 
     await UniversalRouter.resolve(routes, {
       user: req.user,
@@ -138,6 +139,7 @@ app.get('*', async (req, res, next) => {
         insertCss: (...styles) => {
           styles.forEach(style => css.add(style._getCss())); // eslint-disable-line no-underscore-dangle, max-len
         },
+        setDescription: value => (data.description = value),
         setTitle: value => (data.title = value),
         setMeta: (key, value) => (data[key] = value),
       },

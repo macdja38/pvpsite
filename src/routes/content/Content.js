@@ -15,20 +15,24 @@ class Content extends Component {
 
   static contextTypes = {
     setTitle: PropTypes.func.isRequired,
+    setDescription: PropTypes.func.isRequired,
   };
 
   static propTypes = {
     path: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     title: PropTypes.string,
+    description: PropTypes.string,
   };
 
   componentWillMount() {
     this.context.setTitle(this.props.title);
+    this.context.setDescription(this.props.description || 'PvPCraft Discord bot');
   }
 
   componentWillReceiveProps(nextProps) {
     this.context.setTitle(nextProps.title);
+    this.context.setDescription(nextProps.description || 'PvPcraft Discord bot');
   }
 
   render() {
