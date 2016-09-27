@@ -20,47 +20,20 @@ function checkServerAuth(req, res, next) {
 }
 
 
-module.exports = function register(app, { r, connPromise }, eris) {
+module.exports = function register(app, {}, eris) {
   /*  "/api/v1/prefix/:id"
-   *    GET: find contact by id
-   *    PUT: update contact by id
-   *    DELETE: deletes contact by id
+   *    GET: find server by id
    */
   app.get('/api/v1/server/:id', /* checkServerAuth,*/ (req, res) => {
     console.log(req.params.id);
-    console.log(eris);
-    console.log(eris.guilds);
     const server = eris.guilds.get(req.params.id);
     console.log(server);
     const serverObject = {
-      roles: roles.map(r => ({id: r.id, })),
+      roles: server.roles.map(role => ({ id: role.id, name: role.name })),
+      members: server.members.map(member => ({ id: member.id, name: member.user.username })),
+      channels: server.channels.map(channel => ({ id: channel.id, name: channel.name })),
     };
-    console.log(JSON.stringify(server));
-    res.json(JSON.stringify(server));
+    console.log(serverObject);
+    res.json(serverObject);
   });
-
-  app.put('/api/v1/server/:id', checkServerAuth, (req, res) => {
-    connPromise.then((conn) => {
-      console.log(req.body); // eslint-disable-line no-console
-      const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
-      r.table('server').insert(prefix, { conflict: 'update' }).run(conn)
-      .then(() => {
-        res.json({ success: true });
-      })
-      .catch(() => {
-        res.json({ success: false });
-      });
-    });
-  });
-
-  app.delete('/api/v1/server/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
-    const prefix = { prefix: req.body.prefix, id: req.params.id };
-    r.table('server').insert(prefix, { conflict: 'update' }).run(conn)
-    .then(() => {
-      res.json({ success: true });
-    })
-    .catch(() => {
-      res.json({ success: false });
-    });
-  }));
 };

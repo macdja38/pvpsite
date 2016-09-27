@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Permissions.css';
 import ServerMenu from '../../components/ServerMenu';
 
-function toDivs(permissions, layer = 0) {
+function toDivs(permissions, serverData, layer = 0) {
   if (typeof(permissions) !== 'object') {
     return permissions;
   }
@@ -12,7 +12,7 @@ function toDivs(permissions, layer = 0) {
     Object.keys(permissions).map((key, i) => {
       let spanClassName;
       // let liClassName;
-      const subNode = toDivs(permissions[key], layer + 1);
+      const subNode = toDivs(permissions[key], serverData, layer + 1);
       let levelNode;
       switch (layer) {
         case 0:
@@ -39,19 +39,20 @@ function toDivs(permissions, layer = 0) {
         // liClassName = s.permissionItem;
       }
       return (<div className={cx(spanClassName, levelNode)} key={i}>
-        <span >{key}{subNode}</span>
+        <span onClick={console.log} name={i} >{key}{subNode}</span>
       </div>);
     })
   }</div>);
 }
 
-function Permissions({ user, serverId, permissions }, context) {
+function Permissions({ user, serverId, permissions, serverData }, context) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
+  console.log(serverData);
   try {
     const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
     context.setTitle(guild.name);
 
-    const items = toDivs(permissions.server);
+    const items = toDivs(permissions.server, serverData);
 
     return (
       <div>

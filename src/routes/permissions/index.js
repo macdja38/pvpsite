@@ -26,6 +26,7 @@ export default {
       options.headers = context.headers;
     }
     const permissionsResp = await fetch(`/api/v1/permissions/${params.serverId}`, options);
+    const serverDataResp = await fetch('/api/v1/user/', options);
 
     let user;
     if (context.user) {
@@ -41,6 +42,11 @@ export default {
       }
     }
 
+    let serverData;
+    if (serverDataResp.status === 200) {
+      serverData = await serverDataResp.json();
+    }
+
     let permissions;
     if (permissionsResp.status === 200) {
       permissions = (await permissionsResp.json());
@@ -49,7 +55,8 @@ export default {
     console.log(permissions);
     if (!permissions) throw new Error('Permissions Object missing.');
     if (!user) throw new Error('User Object missing.');
+    if (!serverData) throw new Error('Server Data Object missing.');
 
-    return <Permissions user={user} serverId={params.serverId} permissions={permissions} />;
+    return <Permissions user={user} serverId={params.serverId} serverData={serverData} permissions={permissions} />;
   },
 };
