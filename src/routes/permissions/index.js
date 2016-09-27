@@ -26,7 +26,7 @@ export default {
       options.headers = context.headers;
     }
     const permissionsResp = await fetch(`/api/v1/permissions/${params.serverId}`, options);
-    const serverDataResp = await fetch('/api/v1/user/', options);
+    const serverDataResp = await fetch(`/api/v1/server/${params.serverId}`, options);
 
     let user;
     if (context.user) {

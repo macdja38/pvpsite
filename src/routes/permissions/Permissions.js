@@ -10,6 +10,7 @@ function toDivs(permissions, serverData, layer = 0) {
   }
   return (<div>{
     Object.keys(permissions).map((key, i) => {
+      let label = key;
       let spanClassName;
       // let liClassName;
       const subNode = toDivs(permissions[key], serverData, layer + 1);
@@ -17,12 +18,32 @@ function toDivs(permissions, serverData, layer = 0) {
       switch (layer) {
         case 0:
           levelNode = s.channel;
+          if (serverData && serverData.hasOwnProperty('channels') && key !== '*') {
+            const channel = serverData.channels.find(c => c.id === key);
+            if (channel && channel.hasOwnProperty('name')) {
+              label = `#${channel.name}`;
+            }
+          }
           break;
         case 1:
           if (key[0] === 'u') {
             levelNode = s.user;
+            if (serverData && serverData.hasOwnProperty('members') && key !== '*') {
+              const userId = key.slice(1);
+              const user = serverData.members.find(m => m.id === userId);
+              if (user && user.hasOwnProperty('name')) {
+                label = `User: ${user.name}`;
+              }
+            }
           } else {
             levelNode = s.group;
+            if (serverData && serverData.hasOwnProperty('roles') && key !== '*') {
+              const groupId = key.slice(1);
+              const group = serverData.roles.find(g => g.id === groupId);
+              if (group && group.hasOwnProperty('name')) {
+                label = `Role: ${group.name}`;
+              }
+            }
           }
           break;
         case 2:
@@ -38,9 +59,7 @@ function toDivs(permissions, serverData, layer = 0) {
         spanClassName = s.entry;
         // liClassName = s.permissionItem;
       }
-      return (<div className={cx(spanClassName, levelNode)} key={i}>
-        <span onClick={console.log} name={i} >{key}{subNode}</span>
-      </div>);
+      return (<div className={cx(spanClassName, levelNode)} key={i}>{label}{subNode}</div>);
     })
   }</div>);
 }
@@ -54,13 +73,17 @@ function Permissions({ user, serverId, permissions, serverData }, context) {
 
     const items = toDivs(permissions.server, serverData);
 
+    const clickHandler = function (...args) {
+      console.log(args);
+    };
+
     return (
       <div>
         <ServerMenu className={s.nav} user={user} serverId={serverId} page="permissions" />
         <div className={s.root}>
           <div className={s.container}>
             <h1 className={s.title}>{guild.name}'s Permissions</h1>
-            <div>
+            <div onClick={clickHandler}>
               {items}
             </div>
           </div>
@@ -73,6 +96,7 @@ function Permissions({ user, serverId, permissions, serverData }, context) {
 Permissions.propTypes = {
   user: PropTypes.object,
   serverId: PropTypes.string,
+  serverData: PropTypes.object,
   permissions: PropTypes.object,
 };
 

@@ -31,7 +31,21 @@ import assets from './assets'; // eslint-disable-line import/no-unresolved
 import raven from 'raven';
 
 import Eris from 'eris';
-const eris = new Eris(auth.discord.token, { autoreconnect: true, cleanContent: false, messageLimit: null });
+const eris = new Eris(auth.discord.token, {
+  autoreconnect: true,
+  cleanContent: false,
+  messageLimit: 0,
+  maxShards: 4,
+  disableEvents: {
+    VOICE_STATE_UPDATE: true,
+    TYPING_START: true,
+    MESSAGE_CREATE: true,
+    MESSAGE_DELETE: true,
+    MESSAGE_BULK_DELETE: true,
+    MESSAGE_UPDATE: true,
+    PRESENCE_UPDATE: true,
+  },
+});
 
 const r = new R({ servers: [
   database.reThinkDB,
@@ -135,7 +149,7 @@ app.get('*', async (req, res, next) => {
       description: 'PvPCraft discord bot',
       style: '',
       script: assets.main.js,
-      children: ''
+      children: '',
     };
 
     await UniversalRouter.resolve(routes, {
@@ -201,6 +215,6 @@ app.listen(port, () => {
 });
 /* eslint-enable no-console */
 
-eris.connect().then(()=>{
-  console.log("Connected");
+eris.connect().then(() => {
+  console.log('Connected To Discord');
 });
