@@ -23,6 +23,7 @@ import user from './api/v1/user';
 import permissions from './api/v1/permissions';
 import music from './api/v1/music';
 import oembed from './api/v1/oembed';
+import server from './api/v1/server';
 import R from 'rethinkdbdash';
 import authMiddleware from './core/auth';
 import RDBStore from 'session-rethinkdb';
@@ -120,6 +121,7 @@ user(app, db, eris);
 permissions(app, db, eris);
 music(app, db, eris);
 oembed(app, db, eris);
+server(app, db, eris);
 
 //
 // Register server-side rendering middleware
