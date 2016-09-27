@@ -1,6 +1,8 @@
 /**
  * Created by macdja38 on 2016-09-22.
  */
+
+import { oauth } from '../../config';
 import logoUrl from '../../components/Header/logo-small.png';
 
 module.exports = function register(app) {
@@ -19,7 +21,7 @@ module.exports = function register(app) {
         author_name: 'macdja38',
         author_url: 'https://youtube.com/macdja38',
         provider_name: 'PvPCraft',
-        provider_url: 'https://betabot.pvpcraft.ca',
+        provider_url: oauth.discord.url,
         thumbnail_url: logoUrl,
         thumbnail_width: 128,
         thumbnail_height: 128,
@@ -37,7 +39,7 @@ module.exports = function register(app) {
         author_name: 'macdja38',
         author_url: 'https://youtube.com/macdja38',
         provider_name: 'PvPCraft',
-        provider_url: 'https://betabot.pvpcraft.ca',
+        provider_url: oauth.discord.url,
         thumbnail_url: 'https://discordapp.com/api/users/85257659694993408/' +
         'avatars/7bf8199536c3eba2b29c86027274ab67.jpg',
         thumbnail_width: 128,
@@ -59,12 +61,12 @@ module.exports = function register(app) {
         author_name: 'macdja38',
         author_url: 'https://youtube.com/macdja38',
         provider_name: 'PvPCraft',
-        provider_url: 'https://betabot.pvpcraft.ca',
+        provider_url: oauth.discord.url,
         cach_age: 1,
-        thumbnail_url: `https://betabot.pvpcraft.ca${logoUrl}`,
+        thumbnail_url: `${oauth.discord.url}${logoUrl}`,
         thumbnail_width: 128,
         thumbnail_height: 128,
-        url: `https://betabot.pvpcraft.ca${logoUrl}`,
+        url: `${oauth.discord.url}${logoUrl}`,
         width: 128,
         height: 128,
       });
