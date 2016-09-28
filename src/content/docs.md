@@ -44,6 +44,23 @@ This example builds on top of the previous channel specific permission. If you w
 /perms set allow music.forceskip --channel #djs --group @Admin
 ```
 
+## Music
+
+Music module allows you to setup the bot to play a queue of songs in a voice channel.
+
+| command  | description  | node  |
+|---|---|---|
+| init | temporarily binds the bot to the users voice channel, and the text channel the command was used in | music.init |
+| destroy | unbinds the bot from it's current voice and text channel and clears the queue. | music.destroy  |
+| play <search term \| video link \| playlist > | plays the song or playlist in the bound channel | music.play  |
+| skip [target] | skips the current song or if target is provided skips the song with that index in the list command | music.list  |
+| pause | pauses the current song | music.pause |
+| resume | resumes the current song | music.resume |
+| list | lists the contents of the queue | music.list |
+| time | displays the current time into the song | music.time |
+| volume [volume] | if volume is provided it sets the volume, if not it displays the volume | music.volume.set or/and music.volume.list
+| shuffle | shuffles the current queue | music.shuffle |
+
 ## Giveaways
 
 Giveaways allow you to host giveaways on your discord server. At the moment only one giveaway can be hosted on each discord.
@@ -59,7 +76,13 @@ to draw.
 | draw [count] | clears all entries | admin.giveaway.draw  |
 | enter |  enters a giveaway  |  giveaway.enter  |
 
-Temporary note, the current permissions are `giveaway.admin` instead of `admin.giveaway` for the first 4 nodes. Those should be updated to the values in the table soon.
+## Moderation
+
+Moderation module, mod log was moved into feeds, this is now just purge.
+| command  | description  | node  |
+|---|---|---|
+| purge \[count]\[ --user <user>]\[ --before <message id>]\[ --after <message id>] | purges the text channel of messages | moderation.toools.purge |
+
 
 ## Feeds Manager
 
@@ -90,3 +113,100 @@ This is similar to the permissions system but for events like warframe alerts an
 | moderation.voice.join | Logs voice joins | |
 | moderation.voice.leaves | Logs voice leaves | |
 | moderation.user | Logs user changes | |
+
+## Ranks
+
+#### Requirements
+The **PvPCraft** bot must have a role that is higher than the rank you want it to add to users and it must have the 
+discord permission **Manage Roles**.
+
+#### Notes:
+
+If a rank is added with the **visible name** of joinrole it will not be visible on the `/rank list` output and it will
+be added to users as they join the discord.
+
+The **visible name** of a rank is the label for the rank that is visible to the users running /list or /rank join.
+
+| command | description  | node  |
+|---|---|---|
+| rank add <visible name> --role <mention or exact name of an existing role> | adds the role from --role to the list of joinable ranks under the name of <**visible name**> | admin.rank.add |
+| rank remove <visible name> | removes a rank from the list of join-able ranks |	admin.rank.remove |
+| rank join <visible name> | adds the user of the command to the rank they request |	rank.join.use && rank.join.<visible name> |
+| rank leave <visible name> |	removes the user of the command from the rank they request | rank.leave.user && rank.leave.<visible name> |
+| rank list |	Lists all of the ranks | rank.list |
+
+#### Examples
+
+If you want to simply allow all users to join all the ranks you've added to the rank list you can run
+
+```
+/perms set allow rank.*
+```
+
+If you want to add a rank to the list make sure you have admin.rank.add then run
+
+```
+/rank add member --role @member
+```
+where the first member is the label for the rank you want users to see, and the @member is a mention for or the exact 
+name of the role you want added to the user when they run `/rank join member`
+
+
+## Pokemon
+
+| command | description  | node  |
+|---|---|---|
+| pokemon <pokemon> |	searches for a pokemon |	pokemon.pokemon |
+| shiny <pokemon> | searches for a shiny |	pokemon.shiny |
+| pokestat <pokemon> |	get’s a pokemon’s stats |	pokemon.pokestat |
+| hiddenability <pokemon> |	fetches a pokemon’s hidden ability |	pokemon.hiddenability |
+
+## Minecraft
+
+| command | description  | node  |
+|---|---|---|
+| mcping <server address> | Pings a Minecraft server and displays some info about it. | minecraft.mcping |
+| mcavatar <minecraft username> | Displays a users Minecraft avatar | minecraft.avatar  |
+| mcskin | Displays a user's minecraft skin | minecraft.mcskin | 
+
+## Utilities
+
+Displays some misc info about servers and users and stuff.
+
+| command | description  | node  |
+|---|---|---|
+| server | Displays some info about the server | utils.serverinfo |
+| user <user mention> | Displays some info about the user | utils.userinfo  |
+| ping | Displays the bot's ping. | utils.ping |
+| lmgtfy <thing to google for them> | returns a let me google that for you link. | utils.lmgtfy |
+| status | displays the bot's current status | utils.status |
+| getshardedinfo | displays the global information about the bot's connections | utils.getshardedinfo |
+
+## Cleverbot
+
+If the user has the permission node `cleverbot.misc` respond to any messages in which they mention the bot with a 
+message from cleverbot.
+
+## Welcome
+
+Welcomes users to the server
+
+| command | description  | node  |
+|---|---|---|
+| setwelcome <welcome message | false>\[ -p]\[ --channel <channel>] | Sets the welcome message | admin.welcome.set |
+flag -p means the bot will private message the sure.
+
+Variables
+| variable | result |
+| --- | --- |
+| $mention | is replaced by a mention for the user eg @macdja38 |
+| $server | replaced by the servers name |
+| $user | replaced by the username of the user |
+
+## Help
+
+Help module... displays a link to this website
+
+| node | description |
+| --- | --- |
+| help | display link to help website |
