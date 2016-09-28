@@ -114,6 +114,33 @@ This is similar to the permissions system but for events like warframe alerts an
 | moderation.voice.leaves | Logs voice leaves | |
 | moderation.user | Logs user changes | |
 
+## Warframe
+
+| command  | description  | node  |
+|---|---|---|
+| deal | get’s darvo’s daily deals | warframe.deal |
+| trader | get’s the current voidtrader info | warframe.trader |
+| trial | get’s link’s to the current trial statistics | warframe.trial |
+| wiki <item name> | searches the wiki for an item | warframe.wiki |
+| sortie | get’s the current sortie | warframe.sortie |
+| farm | get’s a random farming guide | warframe.farm |
+| damage | get’s Telkhines damage table | warframe.damage |
+| primeaccess | get’s the prime access info | warframe.access |
+| update | get’s the current update and/or hotfix | warframe.update |
+| armor | does some armor calculations | warframe.armor |
+| alert[s] | get’s the current alerts | warframe.alert |
+| alert[s] enable --channel <channel> | Enable alert tracking | admin.warframe.alerts |
+| alert[s] add <item> | Adds an item to the items that are being tracked | admin.warframe.alerts |
+| alert[s] remove <item> | Removes an item from the items that are being tracked | admin.warframe.alerts |
+| alert[s] join <item> | Allows a user to get notifications when an item comes up | warframe.alerts.join |
+| alert[s] leave <item> | Stops notifying a user about when an item comes up | warframe.alerts.leave |
+| alert[s] list | Lists all the items users join or/and leave | warframe.alerts.list |
+| alert[s] enable --channel <channel> | Enable alert tracking | warframe.alert |
+
+#### Misc
+
+If a user has the permission node warframe.misc.soon the user will reply to `soon` with `soon:tm:`
+
 ## Ranks
 
 #### Requirements
