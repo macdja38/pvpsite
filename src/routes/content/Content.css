@@ -11,10 +11,16 @@
   max-width: var(--max-content-width);
 }
 
+code {
+  white-space: normal;
+}
+
 table {
   color: #333; /* Lighten up font color */
   font-family: Helvetica, Arial, sans-serif; /* Nicer font */
   border-collapse: collapse;
+  table-layout: auto;
+  width: 100%;
   border-spacing: 0;
 }
 
