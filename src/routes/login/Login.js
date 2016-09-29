@@ -21,7 +21,7 @@ function Login(props, context) {
     <div className={s.root}>
       <div className={s.container}>
         <h1>{title}</h1>
-        <a className={s.discord} href="/login/discord">
+        <a className={s.discord} href="/login/discord" target="_top">
           <svg
             className={s.icon}
             xmlns="http://www.w3.org/2000/svg"
