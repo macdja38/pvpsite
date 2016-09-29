@@ -18,7 +18,7 @@ If you are familiar with linux commands this chart should be enough. Just rememb
 
 | command  | description  | node  |
 |---|---|---|
-| perms set <allow\|deny\|remove> <node>\[ --channel <channel>]\[--role <role>]\[--user <user>] | set\'s permission nodes | Discord Perm Administrator |
+| perms set <allow\|deny\|remove> <node>\[ --channel <channel>]\[ --role <role>]\[ --user <user>] | set\'s permission nodes | Discord Perm Administrator |
 | perms list  |  displays a link to the website with the current permissions setup | Discord Perm Administrator  |
 | perms hardreset  |  removes all user defined permissions  |  Server Owner  |
   
@@ -50,16 +50,16 @@ Music module allows you to setup the bot to play a queue of songs in a voice cha
 
 | command  | description  | node  |
 |---|---|---|
-| init | temporarily binds the bot to the users voice channel, and the text channel the command was used in | music.init |
-| destroy | unbinds the bot from it's current voice and text channel and clears the queue. | music.destroy  |
-| play <search term \| video link \| playlist > | plays the song or playlist in the bound channel | music.play  |
-| skip [target] | skips the current song or if target is provided skips the song with that index in the list command | music.list  |
-| pause | pauses the current song | music.pause |
-| resume | resumes the current song | music.resume |
-| list | lists the contents of the queue | music.list |
-| time | displays the current time into the song | music.time |
-| volume [volume] | if volume is provided it sets the volume, if not it displays the volume | music.volume.set or/and music.volume.list
-| shuffle | shuffles the current queue | music.shuffle |
+| init | temporarily binds the bot to the users voice channel, and the text channel the command was used in | music​.init |
+| destroy | unbinds the bot from it's current voice and text channel and clears the queue​. | music​.destroy  |
+| play <search term \| video link \| playlist > | plays the song or playlist in the bound channel | music​.play  |
+| skip [target] | skips the current song or if target is provided skips the song with that index in the list command | music​.list  |
+| pause | pauses the current song | music​.pause |
+| resume | resumes the current song | music​.resume |
+| list | lists the contents of the queue | music​.list |
+| time | displays the current time into the song | music​.time |
+| volume [volume] | if volume is provided it sets the volume, if not it displays the volume | music​.volume​.set or/and music​.volume​.list
+| shuffle | shuffles the current queue | music​.shuffle |
 
 ## Giveaways
 
@@ -70,11 +70,11 @@ to draw.
 
 | command  | description  | node  |
 |---|---|---|
-| giveaway <enable\|disable>\[ --channel <channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in. | admin.giveaway.setup |
-| clear | clears all entries | admin.giveaway.clear  |
-| count | counts all entries | admin.giveaway.count  |
-| draw [count] | clears all entries | admin.giveaway.draw  |
-| enter |  enters a giveaway  |  giveaway.enter  |
+| giveaway <enable\|disable>\[ --channel <channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
+| clear | clears all entries | admin​.giveaway​.clear  |
+| count | counts all entries | admin​.giveaway​.count  |
+| draw [count] | clears all entries | admin​.giveaway​.draw  |
+| enter |  enters a giveaway  |  giveaway​.enter  |
 
 ## Moderation
 
@@ -96,46 +96,46 @@ This is similar to the permissions system but for events like warframe alerts an
 ### Available feeds
 | feed node | description | permission node |
 | --- | --- | --- |
-| moderation.message.deleted | Logs message deletes | msglog.whitelist.messagedeleted | 
-| moderation.message.updated | Logs message edits | msglog.whitelist.messageupdate |
-| moderation.channel.created | Logs channel creation | |
-| moderation.channel.deleted | Logs channel deletion | |
-| moderation.channel.updated | Logs channel edits | |
-| moderation.server.updated | Logs server updates | |
-| moderation.role.created | Logs role creation | |
-| moderation.role.updated | Logs edits to roles | |
-| moderation.role.deleted | Logs role deletion | | 
-| moderation.member.added | Logs joins | |
-| moderation.member.removed | Logs leaves/kicks | |
-| moderation.member.banned | Logs user bans | | 
-| moderation.member.unbanned | Logs use unbans | |
-| moderation.member.updated | Logs server specific user changes | |
-| moderation.voice.join | Logs voice joins | |
-| moderation.voice.leaves | Logs voice leaves | |
-| moderation.user | Logs user changes | |
+| moderation​.message​.deleted | Logs message deletes | msglog​.whitelist​.messagedeleted | 
+| moderation​.message​.updated | Logs message edits | msglog​.whitelist​.messageupdate |
+| moderation​.channel​.created | Logs channel creation | |
+| moderation​.channel​.deleted | Logs channel deletion | |
+| moderation​.channel​.updated | Logs channel edits | |
+| moderation​.server​.updated | Logs server updates | |
+| moderation​.role​.created | Logs role creation | |
+| moderation​.role​.updated | Logs edits to roles | |
+| moderation​.role​.deleted | Logs role deletion | | 
+| moderation​.member​.added | Logs joins | |
+| moderation​.member​.removed | Logs leaves/kicks | |
+| moderation​.member​.banned | Logs user bans | | 
+| moderation​.member​.unbanned | Logs use unbans | |
+| moderation​.member​.updated | Logs server specific user changes | |
+| moderation​.voice​.join | Logs voice joins | |
+| moderation​.voice​.leaves | Logs voice leaves | |
+| moderation​.user | Logs user changes | |
 
 ## Warframe
 
 | command  | description  | node  |
 |---|---|---|
-| deal | get’s darvo’s daily deals | warframe.deal |
-| trader | get’s the current voidtrader info | warframe.trader |
-| trial | get’s link’s to the current trial statistics | warframe.trial |
-| wiki <item name> | searches the wiki for an item | warframe.wiki |
-| sortie | get’s the current sortie | warframe.sortie |
-| farm | get’s a random farming guide | warframe.farm |
-| damage | get’s Telkhines damage table | warframe.damage |
-| primeaccess | get’s the prime access info | warframe.access |
-| update | get’s the current update and/or hotfix | warframe.update |
-| armor | does some armor calculations | warframe.armor |
-| alert[s] | get’s the current alerts | warframe.alert |
-| alert[s] enable --channel <channel> | Enable alert tracking | admin.warframe.alerts |
-| alert[s] add <item> | Adds an item to the items that are being tracked | admin.warframe.alerts |
-| alert[s] remove <item> | Removes an item from the items that are being tracked | admin.warframe.alerts |
-| alert[s] join <item> | Allows a user to get notifications when an item comes up | warframe.alerts.join |
-| alert[s] leave <item> | Stops notifying a user about when an item comes up | warframe.alerts.leave |
-| alert[s] list | Lists all the items users join or/and leave | warframe.alerts.list |
-| alert[s] enable --channel <channel> | Enable alert tracking | warframe.alert |
+| deal | get’s darvo’s daily deals | warframe​.deal |
+| trader | get’s the current voidtrader info | warframe​.trader |
+| trial | get’s link’s to the current trial statistics | warframe​.trial |
+| wiki <item name> | searches the wiki for an item | warframe​.wiki |
+| sortie | get’s the current sortie | warframe​.sortie |
+| farm | get’s a random farming guide | warframe​.farm |
+| damage | get’s Telkhines damage table | warframe​.damage |
+| primeaccess | get’s the prime access info | warframe​.access |
+| update | get’s the current update and/or hotfix | warframe​.update |
+| armor | does some armor calculations | warframe​.armor |
+| alert[s] | get’s the current alerts | warframe​.alert |
+| alert[s] enable --channel <channel> | Enable alert tracking | admin​.warframe​.alerts |
+| alert[s] add <item> | Adds an item to the items that are being tracked | admin​.warframe​.alerts |
+| alert[s] remove <item> | Removes an item from the items that are being tracked | admin​.warframe​.alerts |
+| alert[s] join <item> | Allows a user to get notifications when an item comes up | warframe​.alerts​.join |
+| alert[s] leave <item> | Stops notifying a user about when an item comes up | warframe​.alerts​.leave |
+| alert[s] list | Lists all the items users join or/and leave | warframe​.alerts​.list |
+| alert[s] enable --channel <channel> | Enable alert tracking | warframe​.alert |
 
 #### Misc
 
@@ -156,11 +156,11 @@ The **visible name** of a rank is the label for the rank that is visible to the 
 
 | command | description  | node  |
 |---|---|---|
-| rank add <visible name> --role <mention or exact name of an existing role> | adds the role from --role to the list of joinable ranks under the name of <**visible name**> | admin.rank.add |
-| rank remove <visible name> | removes a rank from the list of join-able ranks |	admin.rank.remove |
-| rank join <visible name> | adds the user of the command to the rank they request |	rank.join.use && rank.join.<visible name> |
-| rank leave <visible name> |	removes the user of the command from the rank they request | rank.leave.user && rank.leave.<visible name> |
-| rank list |	Lists all of the ranks | rank.list |
+| rank add <visible name> --role <mention or exact name of an existing role> | adds the role from --role to the list of joinable ranks under the name of <**visible name**> | admin​.rank​.add |
+| rank remove <visible name> | removes a rank from the list of join-able ranks |	admin​.rank​.remove |
+| rank join <visible name> | adds the user of the command to the rank they request |	rank​.join​.use && rank​.join​.<visible name> |
+| rank leave <visible name> |	removes the user of the command from the rank they request | rank​.leave​.user && rank​.leave​.<visible name> |
+| rank list |	Lists all of the ranks | rank​.list |
 
 #### Examples
 
@@ -202,12 +202,12 @@ Displays some misc info about servers and users and stuff.
 
 | command | description  | node  |
 |---|---|---|
-| server | Displays some info about the server | utils.serverinfo |
-| user <user mention> | Displays some info about the user | utils.userinfo  |
-| ping | Displays the bot's ping. | utils.ping |
-| lmgtfy <thing to google for them> | returns a let me google that for you link. | utils.lmgtfy |
-| status | displays the bot's current status | utils.status |
-| getshardedinfo | displays the global information about the bot's connections | utils.getshardedinfo |
+| server | Displays some info about the server | utils​.serverinfo |
+| user <user mention> | Displays some info about the user | utils​.userinfo  |
+| ping | Displays the bot's ping | utils​.ping |
+| lmgtfy <thing to google for them> | returns a let me google that for you link​. | utils​.lmgtfy |
+| status | displays the bot's current status | utils​.status |
+| getshardedinfo | displays the global information about the bot's connections | utils​.getshardedinfo |
 
 ## Cleverbot
 
@@ -220,7 +220,7 @@ Welcomes users to the server
 
 | command | description  | node  |
 |---|---|---|
-| setwelcome <welcome message | false>\[ -p]\[ --channel <channel>] | Sets the welcome message | admin.welcome.set |
+| setwelcome <welcome message \| false>\[ -p]\[ --channel <channel>] | Sets the welcome message | admin.welcome.set |
 flag -p means the bot will private message the sure.
 
 Variables
