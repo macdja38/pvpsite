@@ -23,7 +23,6 @@
 }
 
 .link,
-.link:active,
 .link:hover,
 .link:visited {
   color: #333;
@@ -31,7 +30,12 @@
 }
 
 .link:hover {
-  text-decoration: underline;
+  border-bottom: solid black 1px;
+  border-top: transparent;
+}
+
+.link:active {
+  color: #000;
 }
 
 .spacer {
