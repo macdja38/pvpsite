@@ -4,6 +4,7 @@
     "node": ">=5.0 <7",
     "npm": ">=3.3 <4"
   },
+  "version": "1.0.0",
   "dependencies": {
     "babel-polyfill": "6.9.1",
     "babel-runtime": "6.9.2",
