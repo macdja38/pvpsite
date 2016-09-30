@@ -21,7 +21,7 @@ function isModifiedEvent(event) {
 class Link extends Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
-    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.url]).isRequired,
     onClick: PropTypes.func,
   };
 
@@ -40,16 +40,18 @@ class Link extends Component { // eslint-disable-line react/prefer-stateless-fun
       allowTransition = false;
     }
 
-    event.preventDefault();
+    if (!this.props.to.includes('https://discordapp.com')) {
+      event.preventDefault();
 
-    if (allowTransition) {
-      if (this.props.to) {
-        history.push(this.props.to);
-      } else {
-        history.push({
-          pathname: event.currentTarget.pathname,
-          search: event.currentTarget.search,
-        });
+      if (allowTransition) {
+        if (this.props.to) {
+          history.push(this.props.to);
+        } else {
+          history.push({
+            pathname: event.currentTarget.pathname,
+            search: event.currentTarget.search,
+          });
+        }
       }
     }
   };

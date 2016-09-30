@@ -17,8 +17,6 @@ export default {
   auth: true,
 
   async action(context, params) {
-    console.log(context);
-    console.log(params);
     // console.log('Making request'); // eslint-disable-line no-console
     const options = {
       method: 'get',
@@ -28,24 +26,31 @@ export default {
       options.headers = context.headers;
     }
 
+    let commonServersResp;
+    try {
+      commonServersResp = await fetch('/api/v1/servers/', options);
+    } catch (error) {
+      console.error('commonServers Resp caught', error);
+    }
+
     let user;
     if (context.user) {
-      console.log('Got cached User');
       user = context.user;
     } else {
       try {
         const resp = await fetch('/api/v1/user/', options);
-        console.log('Fetching user');
         user = await resp.json();
       } catch (error) {
         throw new Error(`User Object request failed. Error: ${error}`);
       }
     }
 
+    let commonServers = await commonServersResp.json();
+
     // console.log('User'); // eslint-disable-line no-console
     // console.log(user); // eslint-disable-line no-console
     if (!user) throw new Error('User Object missing.');
-    return <ServerList user={user} />;
+    return <ServerList user={user} commonServers={commonServers} />;
   },
 
 };

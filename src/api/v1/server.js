@@ -22,6 +22,14 @@ function checkServerAuth(req, res, next) {
 */
 
 module.exports = function register(app, db, eris) {
+  app.get('/api/v1/servers/', /* checkServerAuth,*/ (req, res) => {
+    if (!req.isAuthenticated()) {
+      res.sendStatus(403);
+      return;
+    }
+    res.json(req.user.guilds.filter(g => eris.guilds.has(g.id)));
+  });
+
   /*  "/api/v1/prefix/:id"
    *    GET: find server by id
    */
@@ -33,7 +41,6 @@ module.exports = function register(app, db, eris) {
       members: server.members.map(member => ({ id: member.id, name: member.user.username })),
       channels: server.channels.map(channel => ({ id: channel.id, name: channel.name })),
     };
-    console.log(serverObject);
     res.json(serverObject);
   });
 };

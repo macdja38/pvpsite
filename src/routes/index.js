@@ -38,7 +38,6 @@ export default {
   ],
 
   async action({ next, render, context, user }) {
-    console.log(context);
     const component = await next();
     if (component === undefined) return component;
     const userContext = context;

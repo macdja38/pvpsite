@@ -48,6 +48,28 @@
   background-color: rgb(219, 219, 219);
 }
 
+.botOnServer {
+
+}
+
+.botNotOnServer {
+  border-color: #8c8c8c;
+  filter: grayscale(0.25);
+  background-color: rgb(160, 160, 160);
+}
+
+.botNotOnServer:hover {
+  border-color: #8c8c8c;
+  filter: none;
+  background-color: rgb(219, 219, 219);
+}
+
+.noAddPerms {
+  border-color: #464646;
+  filter: grayscale(1);
+  background-color: rgb(100, 100, 100);
+}
+
 .serverGuildIconBox {
   width: 128px;
   height: 128px;

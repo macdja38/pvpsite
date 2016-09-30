@@ -51,7 +51,6 @@ export default {
       prefix = (await prefixResp.json()).prefix;
     }
 
-    console.log(prefix);
     // if (!prefix) throw new Error('Prefix Object missing.');
     if (!user) throw new Error('User Object missing.');
 

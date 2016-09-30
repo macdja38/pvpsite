@@ -106,7 +106,13 @@ app.use(passport.session());
 app.get(
   '/login/discord/callback',
   authMiddleware.authenticate('discord', { failureRedirect: '/login' }),
-  (req, res) => res.redirect('/server/') // auth success
+  (req, res) => {
+    if (req.query.hasOwnProperty('guild_id')) {
+      res.redirect(`/server/${req.query.guild_id}`);
+    } else {
+      res.redirect('/server/');
+    }
+  } // auth success
 );
 app.get('/login/discord', authMiddleware.authenticate('discord'));
 
