@@ -67,7 +67,7 @@ Music module allows you to setup the bot to play a queue of songs in a voice cha
 
 Giveaways allow you to host giveaways on your Discord server. At the moment, only one giveaway can be hosted on each Discord server.
 
-PvPCraft's giveaway module allows you to choose who can enter the giveaway, as well as assign roless/users of your choosing the ability
+PvPCraft's giveaway module allows you to choose who can enter the giveaway, as well as assign roles/users of your choosing the ability
 to draw.
 
 | command  | description  | node  |
@@ -223,7 +223,7 @@ Welcomes users to the server
 | command | description  | node  |
 |---|---|---|
 | setwelcome <welcome message \| false>\[ -p]\[ --channel <channel>] | Sets the welcome message | admin.welcome.set |
-flag -p means the bot will private message the USER.
+flag -p means the bot will private message the user.
 
 Variables
 | variable | result |
