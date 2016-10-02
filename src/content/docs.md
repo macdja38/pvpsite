@@ -53,8 +53,8 @@ Music module allows you to setup the bot to play a queue of songs in a voice cha
 | init | temporarily binds the bot to the voice channel the user is in, and the text channel the command was used in | music​.init |
 | destroy | un-binds the bot from it's current voice and text channel and clears the queue​. | music​.destroy  |
 | play <search term \| video link \| playlist > | plays the song or playlist in the bound channel | music​.play  |
-| skip [target] | votes to skips the song at index in queue or the currently playing song | music​.list  |
-| skip -f [target] | force skips the song at index in queue or the currently playing song
+| skip [target] | votes to skips the song at index in queue or the currently playing song | music.voteskip  |
+| skip -f [target] | force skips the song at index in queue or the currently playing song | music.forceskip |
 | pause | pauses the current song | music​.pause |
 | resume | resumes the current song | music​.resume |
 | list | lists the contents of the queue | music​.list |
