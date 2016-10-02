@@ -20,7 +20,7 @@ import {
 
 import ContentType from '../types/ContentType';
 
-const md = new MarkdownIt();
+const md = new MarkdownIt({html: true});
 
 // A folder with Markdown/HTML content pages
 const CONTENT_DIR = join(__dirname, './content');
