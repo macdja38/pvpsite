@@ -23,13 +23,10 @@ function Home(params, context) {
       <div className={s.container}>
         <h1 className={s.title}>PvPCraft Discord bot.</h1>
         <p>
-          Welcome to the discord bot you've always known you've wanted but could never find. Once this website is
-          finished.
-          You will find the most advanced permissions system, highly configurable prompts, intelligently designed rate
-          limits and
-          everything else you could ever want from a Discord bot. With dozens of modules available and more available on
-          request
-          the pvpcraft Discord bot is the bot that is right for you!
+          Welcome to the discord bot you've always known you've wanted but could never find.
+          Inside you will find the most advanced permissions system, highly configurable prompts, intelligently designed
+          rate limits and everything else you could ever want from a Discord bot. With dozens of modules available and
+          more available on request the pvpcraft Discord bot is the bot that is right for you!
         </p>
       </div>
     </div>
