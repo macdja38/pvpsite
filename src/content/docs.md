@@ -83,7 +83,7 @@ to draw.
 Moderation module, mod log was moved into feeds, this is now just purge.
 | command  | description  | node  |
 |---|---|---|
-| purge \[count]\[ --user <user>]\[ --before <message id>]\[ --after <message id>] | purges the text channel of messages | moderation.toools.purge |
+| purge \[count]\[ --user <user>]\[ --before <message id>]\[ --after <message id>] | purges the text channel of messages | moderation.tools.purge |
 
 
 ## Feeds Manager
