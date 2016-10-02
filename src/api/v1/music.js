@@ -12,7 +12,9 @@ function checkServerAuth(req, res, next) {
   if (req.isAuthenticated()) {
     const id = req.params.id;
     const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
-    if (guild && ((guild.permissions & 8) === 8 || (guild.permissions & 1024) === 1024 || guild.owner)) return next();
+    if (guild) {
+      return next();
+    }
   }
   res.sendStatus(403);
   return true;
@@ -39,7 +41,7 @@ module.exports = function register(app, { r, connPromise }) {
     });
   });
 
-  app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+  /*app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
     connPromise.then((conn) => {
       const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
       r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
@@ -62,5 +64,6 @@ module.exports = function register(app, { r, connPromise }) {
         res.json({ success: false });
       });
   }));
+  */
 };
 
