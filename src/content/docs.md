@@ -93,7 +93,7 @@ This is similar to the permissions system but for events like Warframe alerts an
 | command  | description  | node  |
 |---|---|---|
 | feeds <start\|stop> <feed node>\[ --channel <channel>] | enables or disables a specific feed within a channel. | feed.manage |
-| feeds check <node> | checks where a certain node goes | feed.check  |
+| find <node> | checks where a certain node goes | feed.find  |
 
 ### Available feeds
 | feed node | description | permission node |
