@@ -16,7 +16,7 @@ export default {
   path: '/server/',
   auth: true,
 
-  async action(context, params) {
+  async action(context) {
     // console.log('Making request'); // eslint-disable-line no-console
     const options = {
       method: 'get',

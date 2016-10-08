@@ -41,7 +41,7 @@ module.exports = function register(app, { r, connPromise }) {
     });
   });
 
-  /*app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+  /* app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
     connPromise.then((conn) => {
       const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
       r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)

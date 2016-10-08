@@ -34,13 +34,15 @@ function ServerList({ user, commonServers }, context) {
     return a.id - b.id;
   });
   const items = sortedGuilds.map((guild, b) => {
-      console.log(b, guild.name, guild.permissions);
+    console.log(b, guild.name, guild.permissions);
     const botIsOnServer = botOnServer(guild, commonServers);
     const userHasManageServer = userManageServer(guild, user);
     return (<div
       className={cx(
         s.serverItem,
-        (botIsOnServer ? s.botOnServer : (userHasManageServer ? s.botNotOnServer : s.noAddPerms))
+        (botIsOnServer // eslint-disable-line no-nested-ternary
+          ? s.botOnServer :
+          (userHasManageServer ? s.botNotOnServer : s.noAddPerms))
       )}
       key={b}
     >
@@ -63,15 +65,15 @@ function ServerList({ user, commonServers }, context) {
             }
           />
         </div>
-      <div className={s.serverLabel}>
-        <h3>{guild.name}</h3>
-      </div>
-    </Link>
+        <div className={s.serverLabel}>
+          <h3>{guild.name}</h3>
+        </div>
+      </Link>
     </div>);
   });
 
   let Grid = makeResponsive(SpringGrid, {
-    maxWidth: 1000,
+    maxWidth: 1300,
     defaultColumns: 4,
   });
 

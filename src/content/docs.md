@@ -96,6 +96,7 @@ This is similar to the permissions system but for events like Warframe alerts an
 | find <node> | checks where a certain node goes | feed.find  |
 
 ### Available feeds
+<!--
 | feed node | description | permission node |
 | --- | --- | --- |
 | moderation​.message​.deleted | Logs message deletes | msglog​.whitelist​.messagedeleted | 
@@ -115,6 +116,104 @@ This is similar to the permissions system but for events like Warframe alerts an
 | moderation​.voice​.join | Logs voice joins | |
 | moderation​.voice​.leaves | Logs voice leaves | |
 | moderation​.user | Logs user changes | |
+-->
+
+<table>
+<thead>
+<tr>
+<th>feed node</th>
+<th>description</th>
+<th>permission node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="background-color: #FFB600;">moderation​.message​.deleted</td>
+<td>Logs message deletes</td>
+<td>msglog​.whitelist​.messagedeleted</td>
+</tr>
+<tr>
+<td style="background-color: #FFFF00;">moderation​.message​.updated</td>
+<td>Logs message edits</td>
+<td>msglog​.whitelist​.messageupdate</td>
+</tr>
+<tr>
+<td style="background-color: #CC0000;">moderation​.channel​.created</td>
+<td>Logs channel creation</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #CC0000;">moderation​.channel​.deleted</td>
+<td>Logs channel deletion</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #CC0000;">moderation​.channel​.updated</td>
+<td>Logs channel edits</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #FF0000;">moderation​.server​.updated</td>
+<td>Logs server updates</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #FF0000;">moderation​.role​.created</td>
+<td>Logs role creation</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #FF0000;">moderation​.role​.updated</td>
+<td>Logs edits to roles</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #FF0000;">moderation​.role​.deleted</td>
+<td>Logs role deletion</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #A400A4;">moderation​.member​.added</td>
+<td>Logs joins</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #A400A4;">moderation​.member​.removed</td>
+<td>Logs leaves/kicks</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #A400A4;">moderation​.member​.banned</td>
+<td>Logs user bans</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #A400A4;">moderation​.member​.unbanned</td>
+<td>Logs use unbans</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #111180;">moderation​.member​.updated</td>
+<td>Logs server specific user changes</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #14D5E2;">moderation​.voice​.join</td>
+<td>Logs voice joins</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #14D5E2;">moderation​.voice​.leaves</td>
+<td>Logs voice leaves</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #111180;">moderation​.user</td>
+<td>Logs user changes</td>
+<td></td> 
+</tr>
+</tbody>
+</table>
 
 ## Warframe
 
