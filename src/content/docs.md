@@ -114,7 +114,7 @@ This is similar to the permissions system but for events like Warframe alerts an
 | moderation​.member​.unbanned | Logs use unbans | |
 | moderation​.member​.updated | Logs server specific user changes | |
 | moderation​.voice​.join | Logs voice joins | |
-| moderation​.voice​.leaves | Logs voice leaves | |
+| moderation​.voice​.leave | Logs voice leaves | |
 | moderation​.user | Logs user changes | |
 -->
 
@@ -203,7 +203,7 @@ This is similar to the permissions system but for events like Warframe alerts an
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #14D5E2;">moderation​.voice​.leaves</td>
+<td style="background-color: #14D5E2;">moderation​.voice​.leave</td>
 <td>Logs voice leaves</td>
 <td></td>
 </tr>
