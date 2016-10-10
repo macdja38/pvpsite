@@ -18,7 +18,7 @@ If you are familiar with linux commands this chart should be enough. Just rememb
 
 | command  | description  | node  |
 |---|---|---|
-| perms set <allow\|deny\|remove> <node>\[ --channel <channel>]\[ --role <role>]\[ --user <user>] | sets permission nodes | Discord Perm Administrator |
+| perms set \<allow\|deny\|remove> <node>\[ --channel \<channel>]\[ --role \<role>]\[ --user \<user>] | sets permission nodes | Discord Perm Administrator |
 | perms list  |  displays a link to the website with the current permissions setup | Discord Perm Administrator  |
 | perms hardreset  |  removes all user defined permissions  |  Server Owner  |
   
@@ -52,7 +52,7 @@ Music module allows you to setup the bot to play a queue of songs in a voice cha
 |---|---|---|
 | init | temporarily binds the bot to the voice channel the user is in, and the text channel the command was used in | music​.init |
 | destroy | un-binds the bot from it's current voice and text channel and clears the queue​. | music​.destroy  |
-| play <search term \| video link \| playlist > | plays the song or playlist in the bound channel | music​.play  |
+| play \<search term \| video link \| playlist > | plays the song or playlist in the bound channel | music​.play  |
 | skip [target] | votes to skips the song at index in queue or the currently playing song | music.voteskip  |
 | skip -f [target] | force skips the song at index in queue or the currently playing song | music.forceskip |
 | pause | pauses the current song | music​.pause |
@@ -72,7 +72,7 @@ to draw.
 
 | command  | description  | node  |
 |---|---|---|
-| giveaway <enable\|disable>\[ --channel <channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
+| giveaway \<enable\|disable>\[ --channel \<channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
 | clear | clears all entries | admin​.giveaway​.clear  |
 | count | counts all entries | admin​.giveaway​.count  |
 | draw [count] | clears all entries | admin​.giveaway​.draw  |
@@ -83,7 +83,7 @@ to draw.
 Moderation module, mod log was moved into feeds, this is now just purge.
 | command  | description  | node  |
 |---|---|---|
-| purge \[count]\[ --user <user>]\[ --before <message id>]\[ --after <message id>] | purges the text channel of messages | moderation.tools.purge |
+| purge \[count]\[ --user \<user>]\[ --before \<message id>]\[ --after \<message id>] | purges the text channel of messages | moderation.tools.purge |
 
 
 ## Feeds Manager
@@ -92,8 +92,8 @@ This is similar to the permissions system but for events like Warframe alerts an
 
 | command  | description  | node  |
 |---|---|---|
-| feeds <start\|stop> <feed node>\[ --channel <channel>] | enables or disables a specific feed within a channel. | feed.manage |
-| find <node> | checks where a certain node goes | feed.find  |
+| feeds \<start\|stop> \<feed node>\[ --channel <channel>] | enables or disables a specific feed within a channel. | feed.manage |
+| find \<node> | checks where a certain node goes | feed.find  |
 
 ### Available feeds
 <!--
@@ -222,7 +222,7 @@ This is similar to the permissions system but for events like Warframe alerts an
 | deal | gets Darvo’s daily deals | warframe​.deal |
 | trader | gets the current voidtrader info | warframe​.trader |
 | trial | gets links to the current trial statistics | warframe​.trial |
-| wiki <item name> | searches the wiki for an item | warframe​.wiki |
+| wiki \<item name> | searches the wiki for an item | warframe​.wiki |
 | sortie | gets the current sortie | warframe​.sortie |
 | farm | gets a random farming guide | warframe​.farm |
 | damage | gets Telkhines damage table | warframe​.damage |
@@ -230,13 +230,13 @@ This is similar to the permissions system but for events like Warframe alerts an
 | update | gets the current update and/or hotfix | warframe​.update |
 | armor | does some armor calculations | warframe​.armor |
 | alert[s] | gets the current alerts | warframe​.alert |
-| alert[s] enable --channel <channel> | Enable alert tracking | admin​.warframe​.alerts |
-| alert[s] add <item> | Adds an item to the items that are being tracked | admin​.warframe​.alerts |
-| alert[s] remove <item> | Removes an item from the items that are being tracked | admin​.warframe​.alerts |
-| alert[s] join <item> | Allows a user to get notifications when an item comes up | warframe​.alerts​.join |
-| alert[s] leave <item> | Stops notifying a user about when an item comes up | warframe​.alerts​.leave |
+| alert[s] enable --channel \<channel> | Enable alert tracking | admin​.warframe​.alerts |
+| alert[s] add \<item> | Adds an item to the items that are being tracked | admin​.warframe​.alerts |
+| alert[s] remove \<item> | Removes an item from the items that are being tracked | admin​.warframe​.alerts |
+| alert[s] join \<item> | Allows a user to get notifications when an item comes up | warframe​.alerts​.join |
+| alert[s] leave \<item> | Stops notifying a user about when an item comes up | warframe​.alerts​.leave |
 | alert[s] list | Lists all the items users join or/and leave | warframe​.alerts​.list |
-| alert[s] enable --channel <channel> | Enable alert tracking | warframe​.alert |
+| alert[s] enable --channel \<channel> | Enable alert tracking | warframe​.alert |
 
 #### Misc
 
@@ -257,10 +257,10 @@ The **visible name** of a rank is the label for the rank that is visible to the 
 
 | command | description  | node  |
 |---|---|---|
-| rank add <visible name> --role <mention or exact name of an existing role> | adds the role from --role to the list of joinable ranks under the name of <**visible name**> | admin​.rank​.add |
-| rank remove <visible name> | removes a rank from the list of join-able ranks |	admin​.rank​.remove |
-| rank join <visible name> | adds the user of the command to the rank they request |	rank​.join​.use && rank​.join​.<visible name> |
-| rank leave <visible name> |	removes the user of the command from the rank they request | rank​.leave​.user && rank​.leave​.<visible name> |
+| rank add \<visible name> --role \<mention or exact name of an existing role> | adds the role from --role to the list of joinable ranks under the name of \<**visible name**> | admin​.rank​.add |
+| rank remove \<visible name> | removes a rank from the list of join-able ranks |	admin​.rank​.remove |
+| rank join \<visible name> | adds the user of the command to the rank they request |	rank​.join​.use && rank​.join​.\<visible name> |
+| rank leave \<visible name> |	removes the user of the command from the rank they request | rank​.leave​.user && rank​.leave​.\<visible name> |
 | rank list |	Lists all of the ranks | rank​.list |
 
 #### Examples
@@ -284,17 +284,17 @@ name of the role you want added to the user when they run `/rank join member`
 
 | command | description  | node  |
 |---|---|---|
-| pokemon <pokemon> |	searches for a Pokemon |	pokemon.pokemon |
-| shiny <pokemon> | searches for a shiny |	pokemon.shiny |
-| pokestat <pokemon> |	gets a Pokemon’s stats |	pokemon.pokestat |
-| hiddenability <pokemon> |	fetches a Pokemon’s hidden ability |	pokemon.hiddenability |
+| pokemon \<pokemon> |	searches for a Pokemon |	pokemon.pokemon |
+| shiny \<pokemon> | searches for a shiny |	pokemon.shiny |
+| pokestat \<pokemon> |	gets a Pokemon’s stats |	pokemon.pokestat |
+| hiddenability \<pokemon> |	fetches a Pokemon’s hidden ability |	pokemon.hiddenability |
 
 ## Minecraft
 
 | command | description  | node  |
 |---|---|---|
-| mcping <server address> | Pings a Minecraft server and displays some info about it. | minecraft.mcping |
-| mcavatar <minecraft username> | Displays a user's Minecraft avatar | minecraft.avatar  |
+| mcping \<server address> | Pings a Minecraft server and displays some info about it. | minecraft.mcping |
+| mcavatar \<minecraft username> | Displays a user's Minecraft avatar | minecraft.avatar  |
 | mcskin | Displays a user's Minecraft skin | minecraft.mcskin | 
 
 ## Utilities
@@ -304,9 +304,9 @@ Displays some misc info about servers and users and stuff.
 | command | description  | node  |
 |---|---|---|
 | server | Displays some info about the server | utils​.serverinfo |
-| user <user mention> | Displays some info about the user | utils​.userinfo  |
+| user \<user mention> | Displays some info about the user | utils​.userinfo  |
 | ping | Displays the bot's ping | utils​.ping |
-| lmgtfy <thing to google for them> | returns a let me google that for you link​. | utils​.lmgtfy |
+| lmgtfy \<thing to google for them> | returns a let me google that for you link​. | utils​.lmgtfy |
 | status | displays the bot's current status | utils​.status |
 | getshardedinfo | displays the global information about the bot's connections | utils​.getshardedinfo |
 
@@ -321,7 +321,7 @@ Welcomes users to the server
 
 | command | description  | node  |
 |---|---|---|
-| setwelcome <welcome message \| false>\[ -p]\[ --channel <channel>] | Sets the welcome message | admin.welcome.set |
+| setwelcome \<welcome message \| false>\[ -p]\[ --channel \<channel>] | Sets the welcome message | admin.welcome.set |
 flag -p means the bot will private message the user.
 
 Variables
