@@ -138,62 +138,62 @@ This is similar to the permissions system but for events like Warframe alerts an
 <td>msglog​.whitelist​.messageupdate</td>
 </tr>
 <tr>
-<td style="background-color: #CC0000;">moderation​.channel​.created</td>
+<td style="background-color: #CC0000; color: white;">moderation​.channel​.created</td>
 <td>Logs channel creation</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #CC0000;">moderation​.channel​.deleted</td>
+<td style="background-color: #CC0000; color: white;">moderation​.channel​.deleted</td>
 <td>Logs channel deletion</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #CC0000;">moderation​.channel​.updated</td>
+<td style="background-color: #CC0000; color: white;">moderation​.channel​.updated</td>
 <td>Logs channel edits</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #FF0000;">moderation​.server​.updated</td>
+<td style="background-color: #FF0000; color: white;">moderation​.server​.updated</td>
 <td>Logs server updates</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #FF0000;">moderation​.role​.created</td>
+<td style="background-color: #FF0000; color: white;">moderation​.role​.created</td>
 <td>Logs role creation</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #FF0000;">moderation​.role​.updated</td>
+<td style="background-color: #FF0000; color: white;">moderation​.role​.updated</td>
 <td>Logs edits to roles</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #FF0000;">moderation​.role​.deleted</td>
+<td style="background-color: #FF0000; color: white;">moderation​.role​.deleted</td>
 <td>Logs role deletion</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #A400A4;">moderation​.member​.added</td>
+<td style="background-color: #A400A4; color: white;">moderation​.member​.added</td>
 <td>Logs joins</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #A400A4;">moderation​.member​.removed</td>
+<td style="background-color: #A400A4; color: white;">moderation​.member​.removed</td>
 <td>Logs leaves/kicks</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #A400A4;">moderation​.member​.banned</td>
+<td style="background-color: #A400A4; color: white;">moderation​.member​.banned</td>
 <td>Logs user bans</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #A400A4;">moderation​.member​.unbanned</td>
+<td style="background-color: #A400A4; color: white;">moderation​.member​.unbanned</td>
 <td>Logs use unbans</td>
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #111180;">moderation​.member​.updated</td>
+<td style="background-color: #111180; color: white;">moderation​.member​.updated</td>
 <td>Logs server specific user changes</td>
 <td></td>
 </tr>
@@ -208,7 +208,7 @@ This is similar to the permissions system but for events like Warframe alerts an
 <td></td>
 </tr>
 <tr>
-<td style="background-color: #111180;">moderation​.user</td>
+<td style="background-color: #111180; color: white;">moderation​.user</td>
 <td>Logs user changes</td>
 <td></td> 
 </tr>
