@@ -9,6 +9,13 @@ Prefixes default to /, // and !! but can be changed in your servers settings pag
 
 This documentation is primarily about text commands.
 
+## General notes
+
+By default most permissions are unset and default to false make sure to read the permissions section to learn how to activate commands and choose who can use them.
+
+When running commands for the bot make sure not to include **\<\>** or **[]**, they are only there to tell you what you need to edit.
+Things in **\<\>** are required for the command to run while things in **[]** are optional. 
+
 ## Permissions
 
 Permissions are the cornerstone of every system of **PvPCraft** they allow you to limit commands to a specific channel,
@@ -48,13 +55,19 @@ This example builds on top of the previous channel specific permission. If you w
 
 Music module allows you to setup the bot to play a queue of songs in a voice channel.
 
+If the music lags I apologise in advance... Their is not much that can be done about that at the moment really it 
+boils down to more server space, and server space costs money. If you want to help the bot has a [Patreon](https://www.patreon.com/macdja38)
+and a [Paypal](https://www.paypal.me/pvpcraftbot).
+
+**Soundcloud might work now, to try it just feed the bot a soundcloud link in the /play command**
+
 | command  | description  | node  |
 |---|---|---|
 | init | temporarily binds the bot to the voice channel the user is in, and the text channel the command was used in | music​.init |
 | destroy | un-binds the bot from it's current voice and text channel and clears the queue​. | music​.destroy  |
-| play \<search term \| video link \| playlist > | plays the song or playlist in the bound channel | music​.play  |
+| play \<search term \| video link \| playlist \> | plays the song or playlist in the bound channel | music​.play  |
 | skip [target] | votes to skips the song at index in queue or the currently playing song | music.voteskip  |
-| skip -f [target] | force skips the song at index in queue or the currently playing song | music.forceskip |
+| skip [target] -f | force skips the song at index in queue or the currently playing song | music.forceskip |
 | pause | pauses the current song | music​.pause |
 | resume | resumes the current song | music​.resume |
 | list | lists the contents of the queue | music​.list |
@@ -72,7 +85,7 @@ to draw.
 
 | command  | description  | node  |
 |---|---|---|
-| giveaway \<enable\|disable>\[ --channel \<channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
+| giveaway \<enable\|disable>\>[ --channel \<channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
 | clear | clears all entries | admin​.giveaway​.clear  |
 | count | counts all entries | admin​.giveaway​.count  |
 | draw [count] | clears all entries | admin​.giveaway​.draw  |
@@ -81,6 +94,7 @@ to draw.
 ## Moderation
 
 Moderation module, mod log was moved into feeds, this is now just purge.
+
 | command  | description  | node  |
 |---|---|---|
 | purge \[count]\[ --user \<user>]\[ --before \<message id>]\[ --after \<message id>] | purges the text channel of messages | moderation.tools.purge |
@@ -214,6 +228,21 @@ This is similar to the permissions system but for events like Warframe alerts an
 </tr>
 </tbody>
 </table>
+
+So for example once you have allowed yourself the permissions node required (`feed.manage`, see the permissions section at the top) you can run the following command to log just users joining voice.
+
+```
+/feeds start moderation.voice.join
+```
+
+Which will then be logged into the text channel the command was run in. If you want to log multiple similar events a * can be used to reduce the commands required. For example to log all message events you can use.
+
+```
+/feeds start moderation.message.*
+```
+
+Be warned that unlike permissions you can't start moderation.* then stop moderation.voice in order to get everything but voice, with feeds everything but voice must be started.
+Also if you have given yourself * you will have to deny yourself the white-list nodes for message deletes and edits if you want your own messages to be logged when they are deleted.
 
 ## Warframe
 
