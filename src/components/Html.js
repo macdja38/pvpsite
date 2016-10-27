@@ -32,8 +32,9 @@ function Html({ title, description, style, script, children }) {
         {analytics.google.trackingId &&
           <script
             dangerouslySetInnerHTML={{ __html:
+            'if (typeof(window) !== "undefined" && window.self === window.top) {' +
             'window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;' +
-            `ga('create','${analytics.google.trackingId}','auto');ga('send','pageview')` }}
+            `ga('create','${analytics.google.trackingId}','auto');ga('send','pageview')}` }}
           />
         }
         {analytics.google.trackingId &&
@@ -43,6 +44,29 @@ function Html({ title, description, style, script, children }) {
     </html>
   );
 }
+
+/*
+function inFrame() {
+  console.log("Checked This");
+  if (typeof(window) === 'undefined') {
+    console.log("Cant Find Window");
+    return false;
+  }
+  if (window.hasOwnProperty("frameElement")) {
+    try {
+      return !!window.frameElement
+    } catch(e) {
+      console.error("inFrame() Error", e);
+    }
+  }
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    console.error("inFrame() Error 2", e);
+    return true;
+  }
+}
+*/
 
 Html.propTypes = {
   title: PropTypes.string.isRequired,
