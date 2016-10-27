@@ -71,7 +71,7 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 //
 // Apply settings
-app.set("trust proxy", true);
+app.set('trust proxy', true);
 
 //
 // Register Node.js middleware
