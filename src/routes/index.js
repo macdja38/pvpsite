@@ -40,6 +40,7 @@ export default {
   async action({ next, render, context, user }) {
     const component = await next();
     if (component === undefined) return component;
+    if (component instanceof Error) return component;
     const userContext = context;
     userContext.user = user;
     return render(
