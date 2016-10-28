@@ -32,9 +32,10 @@ function Html({ title, description, style, script, children }) {
         {analytics.google.trackingId &&
           <script
             dangerouslySetInnerHTML={{ __html:
-            'if (typeof(window) !== "undefined" && window.self === window.top) {' +
             'window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;' +
-            `ga('create','${analytics.google.trackingId}','auto');ga('send','pageview')}` }}
+            'ga("create","(typeof(window)!=="undefined"&&window.self===window.top&&' +
+            `${analytics.google.embedTrackingId})?${analytics.google.trackingId}:${analytics.google.embedTrackingId}` +
+            ',"auto");ga("send","pageview")' }}
           />
         }
         {analytics.google.trackingId &&
