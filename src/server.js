@@ -174,6 +174,13 @@ app.get('*', async (req, res, next) => {
         setDescription: value => (data.description = value),
         setTitle: value => (data.title = value),
         setMeta: (key, value) => (data[key] = value),
+        redirect(to) {
+          res.redirect(to);
+          /* const error = new Error(`Redirecting to "${to}"...`);
+          error.status = 301;
+          error.path = to;
+          throw error;*/
+        },
       },
       render(component, status = 200) {
         css = new Set();
@@ -184,11 +191,16 @@ app.get('*', async (req, res, next) => {
       },
     });
 
+    if (res.headersSent) {
+      return;
+    }
+
     const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
 
     res.status(statusCode);
     res.send(`<!doctype html>${html}`);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });

@@ -11,10 +11,10 @@ import 'babel-polyfill';
 import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
 import UniversalRouter from 'universal-router';
+import { readState, saveState } from 'history/lib/DOMStateStorage';
 import routes from './routes';
 import history from './core/history';
 import fetch from './core/fetch';
-import { readState, saveState } from 'history/lib/DOMStateStorage';
 import {
   addEventListener,
   removeEventListener,
@@ -31,7 +31,7 @@ const context = {
       removeCss.forEach(f => f());
     };
   },
-  setDescription: value => {
+  setDescription: (value) => {
     // Remove and create a new <meta /> tag in order to make it work
     // with bookmarks in Safari
     const elements = document.getElementsByTagName('meta');
@@ -63,6 +63,12 @@ const context = {
     document
       .getElementsByTagName('head')[0]
       .appendChild(meta);
+  },
+  redirect(to) {
+    const error = new Error(`Redirecting to "${to}"...`);
+    error.status = 301;
+    error.path = to;
+    throw error;
   },
 };
 
@@ -134,8 +140,8 @@ function run() {
     }
 
     if (user === null) {
-      fetch('/api/v1/user/', options).then(resp => {
-        resp.json().then(respUser => {
+      fetch('/api/v1/user/', options).then((resp) => {
+        resp.json().then((respUser) => {
           user = respUser;
           UniversalRouter.resolve(routes, {
             user: respUser,
