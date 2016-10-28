@@ -34,13 +34,13 @@ module.exports = function register(app, db, eris) {
    *    GET: find server by id
    */
   app.get('/api/v1/server/:id', /* checkServerAuth,*/ (req, res) => {
-    console.log(req.params.id);
     const server = eris.guilds.get(req.params.id);
+    if (!server) return res.sendStatus(404);
     const serverObject = {
       roles: server.roles.map(role => ({ id: role.id, name: role.name })),
       members: server.members.map(member => ({ id: member.id, name: member.user.username })),
       channels: server.channels.map(channel => ({ id: channel.id, name: channel.name })),
     };
-    res.json(serverObject);
+    return res.json(serverObject);
   });
 };
