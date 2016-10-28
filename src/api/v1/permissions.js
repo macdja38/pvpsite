@@ -13,7 +13,7 @@ function checkServerAuth(req, res, next) {
   const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
   if (req.isAuthenticated()
     && guild
-    && ((guild.permissions & 8) === 8
+    && ((guild.permissions & 8) === 8 // eslint-disable-line no-bitwise
     || guild.owner)) return next();
   res.sendStatus(403);
   return true;

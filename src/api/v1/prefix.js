@@ -12,7 +12,7 @@ function checkServerAuth(req, res, next) {
   if (req.isAuthenticated()) {
     const id = req.params.id;
     const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
-    if (guild && ((guild.permissions & 8) === 8 || guild.owner)) return next();
+    if (guild && ((guild.permissions & 8) === 8 || guild.owner)) return next(); // eslint-disable-line no-bitwise
   }
   res.sendStatus(403);
   return true;
@@ -31,14 +31,14 @@ module.exports = function register(app, { r, connPromise }) {
       const defaultPrefix = r.table('servers').get('*').run(conn);
       Promise.all([serverPrefix, defaultPrefix])
         .then(([serverPrefixResult, defaultPrefixResult]) => {
-          if (serverPrefixResult && serverPrefixResult.hasOwnProperty('prefix')) {
+          if (serverPrefixResult && serverPrefixResult.hasOwnProperty('prefix')) { // eslint-disable-line
             res.json(serverPrefixResult);
-          } else if (defaultPrefixResult && defaultPrefixResult.hasOwnProperty('prefix')) {
+          } else if (defaultPrefixResult && defaultPrefixResult.hasOwnProperty('prefix')) { // eslint-disable-line
             res.json(defaultPrefixResult);
           } else {
             res.json({ prefix: [] });
           }
-        }).catch((error) => console.error(error));
+        }).catch(error => console.error(error));
     });
   });
 

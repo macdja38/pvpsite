@@ -51,9 +51,7 @@ module.exports = function register(app, { r }) {
       .table('users')
       .get(req.params.id)
       .run()
-      .then(user => {
-        res.json(user);
-      });
+      .then(user => res.json(user));
     }
   });
 

@@ -32,12 +32,12 @@ module.exports = function register(app, { r, connPromise }) {
       const queue = r.table('queue').get(req.params.id).run(conn);
       Promise.all([queue])
         .then(([queueResult]) => {
-          if (queueResult && queueResult.hasOwnProperty('queue')) {
+          if (queueResult && queueResult.hasOwnProperty('queue')) { // eslint-disable-line no-prototype-builtins
             res.json(queueResult);
           } else {
             res.json({ queue: [] });
           }
-        }).catch((error) => console.error(error));
+        }).catch(error => console.error(error));
     });
   });
 
