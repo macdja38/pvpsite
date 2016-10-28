@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "name": "base64",
+  "main": "./base64.server.js",
+  "browser": "./base64.client.js"
+}

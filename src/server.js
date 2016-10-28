@@ -15,6 +15,7 @@ import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
 import logger from 'morgan';
+import base64 from './core/base64';
 import schema from './data/schema';
 import routes from './routes';
 import { auth, port, database, sentry } from './config';
@@ -113,12 +114,19 @@ app.get(
   (req, res) => {
     if (req.query.hasOwnProperty('guild_id')) {
       res.redirect(`/server/${req.query.guild_id}`);
+    } else if (req.query.hasOwnProperty('state')) {
+      res.redirect(`/server/${base64.toText(req.query.state)}`);
     } else {
       res.redirect('/server/');
     }
   } // auth success
 );
-app.get('/login/discord', authMiddleware.authenticate('discord'));
+app.get('/login/discord/:id?/:page?', (...args) => {
+  console.log(args);
+  return authMiddleware.authenticate('discord', {
+    state: base64.toBase64(`${args[0].params.id}/${args[0].params.page}`),
+  })(...args);
+});
 
 app.get('/logout', checkAuth, (req, res) => {
   req.logout();

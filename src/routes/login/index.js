@@ -12,10 +12,11 @@ import Login from './Login';
 
 export default {
 
-  path: '/login',
+  path: '/login/:id?/:page?',
 
-  action() {
-    return <Login />;
+  action(context, params) {
+    console.log(params);
+    return <Login context={context} page={params.page} id={params.id} />;
   },
 
 };
