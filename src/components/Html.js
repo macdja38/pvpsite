@@ -33,8 +33,9 @@ function Html({ title, description, style, script, children }) {
           <script
             dangerouslySetInnerHTML={{ __html:
             'window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;' +
-            'ga("create","(typeof(window)!=="undefined"&&window.self===window.top&&' +
-            `${analytics.google.embedTrackingId})?${analytics.google.trackingId}:${analytics.google.embedTrackingId}` +
+            'ga("create",(typeof(window)!=="undefined"&&window.self===window.top&&' +
+            `"${analytics.google.embedTrackingId}")?"${analytics.google.trackingId}":` +
+            `"${analytics.google.embedTrackingId}"` +
             ',"auto");ga("send","pageview")' }}
           />
         }
