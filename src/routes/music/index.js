@@ -29,7 +29,7 @@ export default {
     try {
       musicResp = await fetch(`/api/v1/music/${params.serverId}`, options);
     } catch (error) {
-      console.error('prefix Resp caught', error);
+      context.context.redirect('/login');
     }
 
     let user;
@@ -42,7 +42,7 @@ export default {
         console.log('Fetching user');
         user = await resp.json();
       } catch (error) {
-        throw new Error(`User Object request failed. Error: ${error}`);
+        context.context.redirect('/login');
       }
     }
 
