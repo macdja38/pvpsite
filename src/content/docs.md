@@ -169,8 +169,8 @@ This is similar to the permissions system but for events like Warframe alerts an
 <!--
 | feed node | description | permission node |
 | --- | --- | --- |
-| moderation​.message​.deleted | Logs message deletes | msglog​.whitelist​.messagedeleted | 
-| moderation​.message​.updated | Logs message edits | msglog​.whitelist​.messageupdate |
+| moderation​.message​.deleted | Logs message deletes | msglog​.whitelist​.message​.deleted | 
+| moderation​.message​.updated | Logs message edits | msglog​.whitelist​.message​.updated |
 | moderation​.channel​.created | Logs channel creation | |
 | moderation​.channel​.deleted | Logs channel deletion | |
 | moderation​.channel​.updated | Logs channel edits | |
