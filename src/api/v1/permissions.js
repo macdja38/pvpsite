@@ -46,12 +46,14 @@ module.exports = function register(app, { r, connPromise }) {
   app.put('/api/v1/permissions/:id', checkServerAuth, (req, res) => {
     connPromise.then((conn) => {
       console.log(req.body); // eslint-disable-line no-console
-      const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
-      r.table('permissions').insert(prefix, { conflict: 'update' }).run(conn)
+      const data = req.body;
+      data.id = req.params.id;
+      r.table('permissions').insert(data, { conflict: 'replace' }).run(conn)
         .then(() => {
           res.json({ success: true });
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error(error);
           res.json({ success: false });
         });
     });
