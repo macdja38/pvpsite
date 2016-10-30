@@ -1,41 +1,40 @@
-import React, {PropTypes, Component} from 'react';
+import React, { PropTypes, Component } from 'react';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Permissions.css';
 import ServerMenu from '../../components/ServerMenu';
 import fetch from '../../core/fetch';
 
-function recursiveAdd(data, node, value) {
+function buildNode(nodes, value) {
+  if (nodes.length === 0) return value;
+  const key = nodes.splice(0, 1)[0];
+  return { [key]: buildNode(nodes, value) };
+}
+
+function recursiveAdd(dataInput, node, value) {
+  const data = dataInput;
+  let key;
   if (node.length > 0) {
-    var key = node.shift();
-  }
-  else {
+    key = node.shift();
+  } else {
     return value;
   }
   if (data && data.hasOwnProperty(key)) {
-    let mergedNodes = recursiveAdd(data[key], node, value);
-    if(mergedNodes === null || (typeof(mergedNodes) === "object" && Object.keys(mergedNodes).length === 0)) {
+    const mergedNodes = recursiveAdd(data[key], node, value);
+    if (mergedNodes === null || (typeof mergedNodes === 'object' && Object.keys(mergedNodes).length === 0)) {
       delete data[key];
     } else {
       data[key] = mergedNodes;
     }
     return data;
   }
-  else {
-    if(value !== null && data !== null) {
-      if (data === true || data === false || typeof(data) === "string") {
-        return {[key]: buildNode(node, value)};
-      }
-      data[key] = buildNode(node, value);
+  if (value !== null && data !== null) {
+    if (data === true || data === false || typeof data === 'string' || typeof data === 'number') {
+      return { [key]: buildNode(node, value) };
     }
-    return data;
+    data[key] = buildNode(node, value);
   }
-}
-
-function buildNode(nodes, value) {
-  if (nodes.length == 0) return value;
-  var key = nodes.splice(0, 1)[0];
-  return { [key]: buildNode(nodes, value) };
+  return data;
 }
 
 function generateNode(element, permsArray = []) {
@@ -165,7 +164,7 @@ class Permissions extends Component {
               <h1 className={s.title}>{guild.name}&#39;s Permissions</h1>
               <p>Click a Node to delete it (feature still in beta, refresh page before use).</p>{
               // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-              }<div onClick={(...args) => this.clickHandler('cat', ...args)} className="topLevelPermissionsId" id="topLevelPermissionsId">
+              }<div onClick={(...args) => this.clickHandler('cat', ...args)} id="topLevelPermissionsId">
                 {items}
               </div>
             </div>
