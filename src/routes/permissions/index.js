@@ -45,6 +45,8 @@ export default {
     let serverData;
     if (serverDataResp.status === 200) {
       serverData = await serverDataResp.json();
+    } else {
+      serverData = { id: params.serverId };
     }
 
     let permissions;
@@ -54,7 +56,7 @@ export default {
 
     console.log(permissions);
     if (!permissions) return context.context.redirect(`/login/server/${params.serverId}/permissions`);
-    if (!user) return new Error('User Object missing.');
+    if (!user) return context.context.redirect(`/login/server/${params.serverId}/permissions`);
     if (!serverData) return context.context.redirect(`/login/server/${params.serverId}/permissions`);
 
     return <Permissions user={user} serverId={params.serverId} serverData={serverData} permissions={permissions} />;
