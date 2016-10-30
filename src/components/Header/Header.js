@@ -12,20 +12,24 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Header.css';
 import Link from '../Link';
 import Navigation from '../Navigation';
+import PurpleBar from '../PurpleBar';
 import logoUrl from './logo-small.png';
 
 function Header(user) {
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <Navigation className={s.nav} user={user} />
-        <Link className={s.brand} to="/">
-          <img src={logoUrl} width="128" height="128" alt="PvPCraft" />
-          <span className={s.brandTxt}>PvPCraft</span>
-        </Link>
+        <PurpleBar />
         <div className={s.banner}>
           <h1 className={s.bannerTitle}>PvPCraft</h1>
           <p className={s.bannerDesc}>Just the best Discord bot</p>
+        </div>
+        <div className={s.navBar}>
+          <Navigation className={s.nav} user={user} />
+          <Link className={s.brand} to="/">
+            <img src={logoUrl} width="44" height="44" alt="PvPCraft" />
+            <span className={s.brandTxt}>PvPCraft</span>
+          </Link>
         </div>
       </div>
     </div>

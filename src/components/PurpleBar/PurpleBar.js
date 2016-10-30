@@ -8,14 +8,11 @@
  */
 
 import React from 'react';
-import Login from './Login';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import s from './PurpleBar.css';
 
-export default {
+function PurpleBar() {
+  return (<div className={s.root} />);
+}
 
-  path: '/login/:nextPage*', // /:id?/:page?
-
-  action(context, params) {
-    return <Login context={context} nextPage={params.nextPage} />;
-  },
-
-};
+export default withStyles(s)(PurpleBar);

@@ -42,7 +42,7 @@ export default {
         console.log('Fetching user');
         user = await resp.json();
       } catch (error) {
-        throw new Error(`User Object request failed. Error: ${error}`);
+        return context.context.redirect(`/login/server/${params.serverId}/`);
       }
     }
 

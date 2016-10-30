@@ -10,11 +10,14 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Footer.css';
+import Feedback from '../FeedBack';
 import Link from '../Link';
 
 function Footer() {
   return (
     <div className={s.root}>
+      <hr className={s.bar} />
+      <Feedback />
       <div className={s.container}>
         <span className={s.text}>© PvPCraft</span>
         <span className={s.spacer}>·</span>

@@ -7,15 +7,25 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React from 'react';
-import Login from './Login';
+.root {
+  margin: 0;
+  height: 65px;
+  background-color: #7289da;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+}
 
-export default {
+@media (max-width: 543px) {
+  .root {
+    height: 103px;
+  }
+}
 
-  path: '/login/:nextPage*', // /:id?/:page?
-
-  action(context, params) {
-    return <Login context={context} nextPage={params.nextPage} />;
-  },
-
-};
+@media (max-width: 389px) {
+  .root {
+    height: 125px;
+  }
+}

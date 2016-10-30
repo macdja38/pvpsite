@@ -14,16 +14,19 @@ import s from './Login.css';
 const title = 'Log In';
 const description = 'Login to the PvPCraft webadmin panel.';
 
-function Login({ id, page }, context) {
-  console.log(id);
-  console.log(page);
+function Login({ nextPage = '' }, context) {
+  console.log(nextPage);
   context.setTitle(title);
   context.setDescription(description);
   return (
     <div className={s.root}>
       <div className={s.container}>
         <h1>{title}</h1>
-        <a className={s.discord} href={`/login/discord${page && id ? `/${id}/${page}` : ''}`} target="_top">
+        <a
+          className={s.discord}
+          href={`/login-handler/discord/${nextPage}`}
+          target="_top"
+        >
           <svg
             className={s.icon}
             xmlns="http://www.w3.org/2000/svg"
@@ -56,8 +59,7 @@ function Login({ id, page }, context) {
 }
 
 Login.propTypes = {
-  id: PropTypes.string,
-  page: PropTypes.string,
+  nextPage: PropTypes.string,
 };
 
 Login.contextTypes = {

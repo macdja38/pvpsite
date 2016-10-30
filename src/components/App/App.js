@@ -11,7 +11,7 @@ import React, { Component, PropTypes } from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import s from './App.css';
 import Header from '../Header';
-import Feedback from '../Feedback';
+import Content from '../Content';
 import Footer from '../Footer';
 
 class App extends Component {
@@ -58,8 +58,7 @@ class App extends Component {
     return !this.props.error ? (
       <div>
         <Header user={this.props.user} />
-        {this.props.children}
-        <Feedback />
+        <Content>{this.props.children}</Content>
         <Footer />
       </div>
     ) : this.props.children;

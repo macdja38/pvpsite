@@ -38,7 +38,7 @@ export default {
         console.log('Fetching user');
         user = await resp.json();
       } catch (error) {
-        context.context.redirect(`/login/${params.serverId}/permissions`);
+        context.context.redirect(`/login/server/${params.serverId}/permissions`);
       }
     }
 
@@ -53,9 +53,9 @@ export default {
     }
 
     console.log(permissions);
-    if (!permissions) return context.context.redirect(`/login/${params.serverId}/permissions`);
+    if (!permissions) return context.context.redirect(`/login/server/${params.serverId}/permissions`);
     if (!user) return new Error('User Object missing.');
-    if (!serverData) return context.context.redirect(`/login/${params.serverId}/permissions`);
+    if (!serverData) return context.context.redirect(`/login/server/${params.serverId}/permissions`);
 
     return <Permissions user={user} serverId={params.serverId} serverData={serverData} permissions={permissions} />;
   },

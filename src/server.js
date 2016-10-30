@@ -8,13 +8,17 @@ import bodyParser from 'body-parser';
 import expressGraphQL from 'express-graphql';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import Html from './components/Html';
-import { ErrorPage } from './routes/error/ErrorPage';
-import errorPageStyle from './routes/error/ErrorPage.css';
 import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
 import logger from 'morgan';
+import R from 'rethinkdbdash';
+import RDBStore from 'session-rethinkdb';
+import Eris from 'eris';
+import raven from 'raven';
+import Html from './components/Html';
+import { ErrorPage } from './routes/error/ErrorPage';
+import errorPageStyle from './routes/error/ErrorPage.css';
 import base64 from './core/base64';
 import schema from './data/schema';
 import routes from './routes';
@@ -25,13 +29,9 @@ import permissions from './api/v1/permissions';
 import music from './api/v1/music';
 import oembed from './api/v1/oembed';
 import server from './api/v1/server';
-import R from 'rethinkdbdash';
 import authMiddleware from './core/auth';
-import RDBStore from 'session-rethinkdb';
-import assets from './assets'; // eslint-disable-line import/no-unresolved
-import raven from 'raven';
+import assets from './assets'; //eslint-disable-line import/no-unresolved
 
-import Eris from 'eris';
 const eris = new Eris(auth.discord.token, {
   autoreconnect: true,
   cleanContent: false,
@@ -46,6 +46,13 @@ const eris = new Eris(auth.discord.token, {
     MESSAGE_UPDATE: true,
     PRESENCE_UPDATE: true,
   },
+});
+
+const ravenClient = new raven.Client(sentry.serverDSN, { environment: process.env.NODE_ENV });
+ravenClient.patchGlobal((err) => {
+  console.log('Raven caught an error and is exiting');
+  console.error(err);
+  process.exit(1);
 });
 
 const r = new R({ servers: [
@@ -115,17 +122,17 @@ app.get(
     if (req.query.hasOwnProperty('guild_id')) {
       res.redirect(`/server/${req.query.guild_id}`);
     } else if (req.query.hasOwnProperty('state')) {
-      res.redirect(`/server/${base64.toText(req.query.state)}`);
+      res.redirect(`/${base64.toText(req.query.state)}`);
     } else {
       res.redirect('/server/');
     }
   } // auth success
 );
-app.get('/login/discord/:id?/:page?', (...args) => {
-  console.log(args);
-  return authMiddleware.authenticate('discord', {
-    state: base64.toBase64(`${args[0].params.id}/${args[0].params.page}`),
-  })(...args);
+app.get('/login-handler/discord/:place*?', (...args) => {
+  console.log(args[0].params);
+  return authMiddleware.authenticate('discord', args[0].params.place ? {
+    state: base64.toBase64(`${args[0].params.place}`),
+  } : {})(...args);
 });
 
 app.get('/logout', checkAuth, (req, res) => {
@@ -144,7 +151,7 @@ app.get('/info', checkAuth, (req, res) => {
 // -----------------------------------------------------------------------------
 app.use('/graphql', expressGraphQL(req => ({
   schema,
-  graphiql: true,
+  graphiql: false,
   rootValue: { request: req },
   pretty: process.env.NODE_ENV !== 'production',
 })));
@@ -208,6 +215,7 @@ app.get('*', async (req, res, next) => {
     res.status(statusCode);
     res.send(`<!doctype html>${html}`);
   } catch (err) {
+    ravenClient.captureError(err);
     console.log(err);
     next(err);
   }

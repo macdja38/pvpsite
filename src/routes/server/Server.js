@@ -16,6 +16,10 @@ import PrefixField from '../../components/PrefixField';
 function Server({ user, serverId, prefix }, context) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
+  if (!guild) {
+    context.setTitle('Guild Not Found');
+    return (<div><h2>Guild {serverId} Not Found</h2>Your Guild Could not be found</div>);
+  }
   context.setTitle(guild.name);
   context.setDescription(`Admin panel of ${guild.name}`);
   return (

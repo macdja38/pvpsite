@@ -12,6 +12,17 @@
 .root {
   background: #333;
   color: #fff;
+  position: fixed;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.bar {
+  color: #333333;
+  height: 1px;
+  margin: 0;
 }
 
 .container {

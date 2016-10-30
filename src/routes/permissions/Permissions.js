@@ -73,8 +73,9 @@ function Permissions({ user, serverId, permissions, serverData }, context) {
 
     const items = toDivs(permissions.server, serverData);
 
-    const clickHandler = function (...args) {
+    const clickHandler = function clickHandler(...args) {
       console.log(args);
+      console.log(this);
     };
 
     return (

@@ -16,11 +16,22 @@
 .root {
   background: #7289da;
   color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+.navBar {
+  position: fixed;
+  padding: 10px;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .container {
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 10px 0;
   max-width: var(--max-content-width);
 }
 
@@ -40,8 +51,35 @@
 }
 
 .banner {
+  position: relative;
+  z-index: 4;
   text-align: center;
 }
+
+@media (max-width: 999px) {
+  .banner {
+    margin-top: 43px;
+  }
+}
+
+@media (max-width: 543px) {
+  .root {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .root {
+    margin-top: 43px;
+  }
+}
+
+@media (max-width: 416px) {
+  .root {
+    margin-top: 43px;
+  }
+}
+
 
 .bannerTitle {
   margin: 0;
