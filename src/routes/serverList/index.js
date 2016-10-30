@@ -45,7 +45,7 @@ export default {
       }
     }
 
-    let commonServers = await commonServersResp.json();
+    const commonServers = await commonServersResp.json();
 
     // console.log('User'); // eslint-disable-line no-console
     // console.log(user); // eslint-disable-line no-console

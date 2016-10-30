@@ -32,7 +32,7 @@ function Music({ user, serverId, music }, context) {
         <ServerMenu className={s.nav} user={user} serverId={serverId} page="music" />
         <div className={s.root}>
           <div className={s.container}>
-            <h1 className={s.title}>{guild.name}'s Music</h1>
+            <h1 className={s.title}>{guild.name}&#39;s Music</h1>
             <table>
               <tbody>
                 <tr>

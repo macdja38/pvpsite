@@ -37,7 +37,7 @@ export default {
     error,
   ],
 
-  async action({ next, render, context, user, query }) {
+  async action({ next, render, context, user }) {
     const component = await next();
     if (component === undefined) return component;
     if (component instanceof Error) return component;

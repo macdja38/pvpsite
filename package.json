@@ -151,6 +151,7 @@
         "error",
         120
       ],
+      "no-prototype-builtins": "off",
       "arrow-parens": "off",
       "generator-star-spacing": "off",
       "import/extensions": "off",

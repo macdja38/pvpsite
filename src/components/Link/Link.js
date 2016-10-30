@@ -21,7 +21,8 @@ function isModifiedEvent(event) {
 class Link extends Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
-    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.url]).isRequired,
+    to: PropTypes.string.isRequired,
+    children: PropTypes.node,
     onClick: PropTypes.func,
   };
 
@@ -57,8 +58,8 @@ class Link extends Component { // eslint-disable-line react/prefer-stateless-fun
   };
 
   render() {
-    const { to, ...props } = this.props; // eslint-disable-line no-use-before-define
-    return <a href={history.createHref(to)} {...props} onClick={this.handleClick} />;
+    const { to, children, ...props } = this.props;
+    return <a href={to} {...props} onClick={this.handleClick} >{children}</a>;
   }
 
 }

@@ -2,9 +2,9 @@
  * Created by macdja38 on 2016-08-06.
  */
 
-import { auth, oauth } from '../config';
 import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
+import { auth, oauth } from '../config';
 import r from '../db/index.js';
 
 const scopes = ['identify', /* 'connections', (it is currently broken) */ 'guilds'];

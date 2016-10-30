@@ -5,7 +5,7 @@ import s from './Permissions.css';
 import ServerMenu from '../../components/ServerMenu';
 
 function toDivs(permissions, serverData, layer = 0) {
-  if (typeof(permissions) !== 'object') {
+  if (typeof permissions !== 'object') {
     return permissions;
   }
   return (<div>{
@@ -52,7 +52,7 @@ function toDivs(permissions, serverData, layer = 0) {
         default:
           levelNode = s.node;
       }
-      if (typeof(subNode) === 'boolean') {
+      if (typeof subNode === 'boolean') {
         spanClassName = (subNode === true) ? s.allowed : s.denied;
         // liClassName = s.permissions;
       } else {
@@ -83,8 +83,9 @@ function Permissions({ user, serverId, permissions, serverData }, context) {
         <ServerMenu className={s.nav} user={user} serverId={serverId} page="permissions" />
         <div className={s.root}>
           <div className={s.container}>
-            <h1 className={s.title}>{guild.name}'s Permissions</h1>
-            <div onClick={clickHandler}>
+            <h1 className={s.title}>{guild.name}&#39;s Permissions</h1>{
+              // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+            }<div onClick={clickHandler}>
               {items}
             </div>
           </div>

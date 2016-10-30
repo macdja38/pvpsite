@@ -22,14 +22,14 @@ function botOnServer(guild, commonServers) {
 }
 
 function userManageServer(guild, user) {
-  return (user.guilds.find(g => g.id === guild.id).permissions & 32) === 32;
+  return (user.guilds.find(g => g.id === guild.id).permissions & 32) === 32; // eslint-disable-line no-bitwise
 }
 
 function ServerList({ user, commonServers }, context) {
   context.setTitle(title);
   const sortedGuilds = user.guilds.sort((a, b) => {
-    if ((a.permissions & 32) !== (b.permissions & 32)) {
-      return (b.permissions & 32) - (a.permissions & 32);
+    if ((a.permissions & 32) !== (b.permissions & 32)) { // eslint-disable-line no-bitwise
+      return (b.permissions & 32) - (a.permissions & 32); // eslint-disable-line no-bitwise
     }
     return a.id - b.id;
   });
@@ -72,7 +72,7 @@ function ServerList({ user, commonServers }, context) {
     </div>);
   });
 
-  let Grid = makeResponsive(SpringGrid, {
+  const Grid = makeResponsive(SpringGrid, {
     maxWidth: 1300,
     defaultColumns: 4,
   });
@@ -80,7 +80,7 @@ function ServerList({ user, commonServers }, context) {
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <h1 className={s.title}>{user.username}'s Servers</h1>
+        <h1 className={s.title}>{user.username}&#39;s Servers</h1>
         <Grid
           className="grid"
           component="div"

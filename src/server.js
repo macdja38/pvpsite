@@ -30,7 +30,7 @@ import music from './api/v1/music';
 import oembed from './api/v1/oembed';
 import server from './api/v1/server';
 import authMiddleware from './core/auth';
-import assets from './assets'; //eslint-disable-line import/no-unresolved
+import assets from './assets'; // eslint-disable-line import/no-unresolved
 
 const eris = new Eris(auth.discord.token, {
   autoreconnect: true,
@@ -237,7 +237,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
       description={err.message}
       style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
     >
-    {ReactDOM.renderToString(<ErrorPage error={err} />)}
+      {ReactDOM.renderToString(<ErrorPage error={err} />)}
     </Html>
   );
   res.status(statusCode);
@@ -255,4 +255,9 @@ app.listen(port, () => {
 
 eris.connect().then(() => {
   console.log('Connected To Discord');
+});
+
+eris.on('error', error => {
+  console.error(error);
+  ravenClient.captureError(error);
 });
