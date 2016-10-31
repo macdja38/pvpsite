@@ -104,6 +104,4 @@ ServerList.propTypes = {
   title: PropTypes.string,
 };
 
-ServerList.contextTypes = { setTitle: PropTypes.func.isRequired };
-
 export default withStyles(s)(ServerList);

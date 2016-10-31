@@ -4,6 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Permissions.css';
 import ServerMenu from '../../components/ServerMenu';
 import Layout from '../../components/Layout';
+import Selector from '../../components/Selector';
 import fetch from '../../core/fetch';
 
 function buildNode(nodes, value) {
@@ -160,13 +161,20 @@ class Permissions extends Component {
 
     const items = toDivs(this.state.permissions.server, serverData);
 
+    console.log(serverData.channels);
+
+    let userChoices = serverData.roles || [];
+    userChoices.push(...serverData.members);
+
     return (
       <Layout user={user} >
         <div>
           <ServerMenu className={s.nav} user={user} serverId={serverId} page="permissions" />
-          <div className={s.root}>
             <div className={s.container}>
               <h1 className={s.title}>{title}</h1>
+              <Selector items={serverData.channels} />
+              <Selector items={userChoices} />
+              <div className={s.root}>
               <p>Click a Node to delete it (feature still in beta, refresh page before use).</p>{
               // eslint-disable-next-line jsx-a11y/no-static-element-interactions
               }<div onClick={(i, j, k) => this.clickHandler(i, j, k)} id="topLevelPermissionsId">
