@@ -11,18 +11,25 @@ import React from 'react';
 import Server from './Server';
 import fetch from '../../core/fetch';
 
+let title = 'Admin Panel';
+let description = 'Server admin panel';
+
 export default {
 
   path: '/server/:serverId/',
   auth: true,
 
-  async action(context, params) {
+  async action({ user, headers }, params) {
     const options = {
       method: 'get',
       credentials: 'include',
     };
-    if (context.headers) {
-      options.headers = context.headers;
+    if (headers) {
+      options.headers = headers;
+    }
+
+    if (!user) {
+      return { redirect: `/login/server/${params.serverId}/` };
     }
 
     let prefixResp;
@@ -32,28 +39,20 @@ export default {
       console.error('prefix Resp caught', error);
     }
 
-    let user;
-    if (context.user) {
-      console.log('Got cached User');
-      user = context.user;
-    } else {
-      try {
-        const resp = await fetch('/api/v1/user/', options);
-        console.log('Fetching user');
-        user = await resp.json();
-      } catch (error) {
-        return context.context.redirect(`/login/server/${params.serverId}/`);
-      }
-    }
-
     let prefix;
     if (prefixResp.status === 200) {
       prefix = (await prefixResp.json()).prefix;
     }
 
-    // if (!prefix) throw new Error('Prefix Object missing.');
-    if (!user) throw new Error('User Object missing.');
+    const guild = user.guilds.find(serverGuild => params.serverId === serverGuild.id);
 
-    return <Server user={user} serverId={params.serverId} prefix={prefix} />;
+    title = `${guild.name}'s settings`;
+    description = `Admin panel of ${guild.name}`;
+
+    return {
+      title,
+      description,
+      component: <Server guild={guild} user={user} serverId={params.serverId} prefix={prefix} />,
+    };
   },
 };

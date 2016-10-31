@@ -11,36 +11,30 @@ import React from 'react';
 import Permissions from './Permissions';
 import fetch from '../../core/fetch';
 
+let title = 'Permissions Page';
+let description = 'Permissions webadmin pannel';
+
 export default {
 
   path: '/server/:serverId/permissions',
   auth: true,
 
-  async action(context, params) {
+  async action({ user, headers }, params) {
     console.log(1);
     const options = {
       method: 'get',
       credentials: 'include',
     };
-    if (context.headers) {
-      options.headers = context.headers;
+    if (headers) {
+      options.headers = headers;
     }
+
+    if (!user) {
+      return { redirect: `/login/server/${params.serverId}/permissions` };
+    }
+
     const permissionsResp = await fetch(`/api/v1/permissions/${params.serverId}`, options);
     const serverDataResp = await fetch(`/api/v1/server/${params.serverId}`, options);
-
-    let user;
-    if (context.user) {
-      console.log('Got cached User');
-      user = context.user;
-    } else {
-      try {
-        const resp = await fetch('/api/v1/user/', options);
-        console.log('Fetching user');
-        user = await resp.json();
-      } catch (error) {
-        context.context.redirect(`/login/server/${params.serverId}/permissions`);
-      }
-    }
 
     let serverData;
     if (serverDataResp.status === 200) {
@@ -55,10 +49,23 @@ export default {
     }
 
     console.log(permissions);
-    if (!permissions) return context.context.redirect(`/login/server/${params.serverId}/permissions`);
-    if (!user) return context.context.redirect(`/login/server/${params.serverId}/permissions`);
-    if (!serverData) return context.context.redirect(`/login/server/${params.serverId}/permissions`);
+    if (!permissions) return { redirect: `/login/server/${params.serverId}/permissions` };
+    if (!user) return { redirect: `/login/server/${params.serverId}/permissions` };
+    if (!serverData) return { redirect: `/login/server/${params.serverId}/permissions` };
 
-    return <Permissions user={user} serverId={params.serverId} serverData={serverData} permissions={permissions} />;
+    const guild = user.guilds.find(serverGuild => params.serverId === serverGuild.id);
+
+    title = `${guild.name}'s Permissions`;
+    description = `${guild.name}'s Permissions Control panel`;
+
+    return {
+      title,
+      description,
+      component: <Permissions
+        user={user} serverId={params.serverId}
+        serverData={serverData}
+        permissions={permissions}
+      />,
+    };
   },
 };

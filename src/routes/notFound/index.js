@@ -8,17 +8,19 @@
  */
 
 import React from 'react';
-import Home from './Home';
+import NotFound from './NotFound';
+
+const title = 'Page Not Found';
 
 export default {
 
-  path: '/',
+  path: '*',
 
-  async action({ user }) {
+  action() {
     return {
-      title: 'Home',
-      description: 'Home Page',
-      component: <Home user={user} />,
+      title,
+      component: <NotFound title={title} />,
+      status: 404,
     };
   },
 

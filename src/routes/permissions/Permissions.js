@@ -3,6 +3,7 @@ import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Permissions.css';
 import ServerMenu from '../../components/ServerMenu';
+import Layout from '../../components/Layout';
 import fetch from '../../core/fetch';
 
 function buildNode(nodes, value) {
@@ -117,9 +118,8 @@ class Permissions extends Component {
     serverId: PropTypes.string,
     serverData: PropTypes.object,
     permissions: PropTypes.object,
+    title: PropTypes.string,
   };
-
-  static contextTypes = { setTitle: PropTypes.func.isRequired };
 
   clickHandler(proxy, nd, reactClick) {
     let server = this.state.permissions.server;
@@ -148,29 +148,25 @@ class Permissions extends Component {
   }
 
   render() {
-    const { user, serverId, permissions, serverData } = this.props;
-    const context = this.context;
+    const { user, serverId, permissions, serverData, title } = this.props;
 
-    try {
-      const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
-      context.setTitle(guild.name);
+    if (!this.state) {
+      this.state = {};
+    }
 
-      if (!this.state) {
-        this.state = {};
-      }
+    if (!this.state.permissions) {
+      this.state.permissions = permissions;
+    }
 
-      if (!this.state.permissions) {
-        this.state.permissions = permissions;
-      }
+    const items = toDivs(this.state.permissions.server, serverData);
 
-      const items = toDivs(this.state.permissions.server, serverData);
-
-      return (
+    return (
+      <Layout user={user} >
         <div>
           <ServerMenu className={s.nav} user={user} serverId={serverId} page="permissions" />
           <div className={s.root}>
             <div className={s.container}>
-              <h1 className={s.title}>{guild.name}&#39;s Permissions</h1>
+              <h1 className={s.title}>{title}</h1>
               <p>Click a Node to delete it (feature still in beta, refresh page before use).</p>{
               // eslint-disable-next-line jsx-a11y/no-static-element-interactions
               }<div onClick={(i, j, k) => this.clickHandler(i, j, k)} id="topLevelPermissionsId">
@@ -179,11 +175,8 @@ class Permissions extends Component {
             </div>
           </div>
         </div>
-      );
-    } catch (error) {
-      console.error(error);
-    }
-    return false;
+      </Layout>
+    );
   }
 }
 

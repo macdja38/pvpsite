@@ -10,26 +10,23 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Layout from '../../components/Layout';
-import s from './Content.css';
+import s from './NotFound.css';
 
-function Content({ path, title, content, user }) {
+function NotFound({ title }) {
   return (
-    <Layout user={user}>
+    <Layout full={false}>
       <div className={s.root}>
         <div className={s.container}>
-          {title && path !== '/' && <h1>{title}</h1>}
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+          <h1>{title}</h1>
+          <p>Sorry, the page you were trying to view does not exist.</p>
         </div>
       </div>
     </Layout>
   );
 }
 
-Content.propTypes = {
-  path: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  user: PropTypes.object,
+NotFound.propTypes = {
+  title: PropTypes.string.isRequired,
 };
 
-export default withStyles(s)(Content);
+export default withStyles(s)(NotFound);

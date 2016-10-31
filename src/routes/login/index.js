@@ -10,12 +10,19 @@
 import React from 'react';
 import Login from './Login';
 
+const title = 'Log In';
+const description = 'Login to the PvPCraft webadmin panel.';
+
 export default {
 
   path: '/login/:nextPage*', // /:id?/:page?
 
-  action(context, params) {
-    return <Login context={context} nextPage={params.nextPage} />;
+  action({ user }, params) {
+    return {
+      title,
+      description,
+      component: <Login user={user} title={title} nextPage={params.nextPage} />,
+    };
   },
 
 };

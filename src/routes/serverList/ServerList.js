@@ -12,7 +12,7 @@ import { oauth } from '../../config';
 
 import Link from '../../components/Link';
 
-const title = 'Server List';
+import Layout from '../../components/Layout';
 
 function botOnServer(guild, commonServers) {
   if (commonServers) {
@@ -25,8 +25,7 @@ function userManageServer(guild, user) {
   return (user.guilds.find(g => g.id === guild.id).permissions & 32) === 32; // eslint-disable-line no-bitwise
 }
 
-function ServerList({ user, commonServers }, context) {
-  context.setTitle(title);
+function ServerList({ user, commonServers, title }) {
   const sortedGuilds = user.guilds.sort((a, b) => {
     if ((a.permissions & 32) !== (b.permissions & 32)) { // eslint-disable-line no-bitwise
       return (b.permissions & 32) - (a.permissions & 32); // eslint-disable-line no-bitwise
@@ -78,28 +77,31 @@ function ServerList({ user, commonServers }, context) {
   });
 
   return (
-    <div className={s.root}>
-      <div className={s.container}>
-        <h1 className={s.title}>{user.username}&#39;s Servers</h1>
-        <Grid
-          className="grid"
-          component="div"
-          columnWidth={212}
-          gutterWidth={40}
-          gutterHeight={40}
-          itemHeight={304}
-          springConfig={{ stiffness: 170, damping: 26 }}
-        >
-          {items}
-        </Grid>
+    <Layout user={user}>
+      <div className={s.root}>
+        <div className={s.container}>
+          <h1 className={s.title}>{title}</h1>
+          <Grid
+            className="grid"
+            component="div"
+            columnWidth={212}
+            gutterWidth={40}
+            gutterHeight={40}
+            itemHeight={304}
+            springConfig={{ stiffness: 170, damping: 26 }}
+          >
+            {items}
+          </Grid>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 
 ServerList.propTypes = {
   user: PropTypes.object.isRequired,
   commonServers: PropTypes.array,
+  title: PropTypes.string,
 };
 
 ServerList.contextTypes = { setTitle: PropTypes.func.isRequired };

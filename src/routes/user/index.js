@@ -9,38 +9,34 @@
 
 import React from 'react';
 import User from './User';
-import fetch from '../../core/fetch';
+
+const title = 'Profile page';
+const description = 'Profile page';
 
 export default {
 
   path: '/user/:userId/',
   auth: true,
 
-  async action(context, params) {
+  async action({ user, headers }, params) {
+    if (!user) return { redirect: `/login/server/${params.serverId}/` };
+
     const options = {
       method: 'get',
       credentials: 'include',
     };
-    if (context.headers) {
-      options.headers = context.headers;
-    }
-
-    let user;
-    if (context.user) {
-      user = context.user;
-    } else {
-      try {
-        const resp = await fetch('/api/v1/user/', options);
-        user = await resp.json();
-      } catch (error) {
-        throw new Error(`User Object request failed. Error: ${error}`);
-      }
+    if (headers) {
+      options.headers = headers;
     }
 
     if (params.userId !== user.id) {
       console.log('User trying to fetch user page that\'s not their own.');
     }
 
-    return <User user={user} />;
+    return {
+      title,
+      description,
+      component: <User user={user} />,
+    };
   },
 };

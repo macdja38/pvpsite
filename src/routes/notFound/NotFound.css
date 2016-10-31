@@ -7,19 +7,15 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React from 'react';
-import Home from './Home';
+@import '../../components/variables.css';
 
-export default {
+.root {
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
-  path: '/',
-
-  async action({ user }) {
-    return {
-      title: 'Home',
-      description: 'Home Page',
-      component: <Home user={user} />,
-    };
-  },
-
-};
+.container {
+  margin: 0 auto;
+  padding: 0 0 40px;
+  max-width: var(--max-content-width);
+}

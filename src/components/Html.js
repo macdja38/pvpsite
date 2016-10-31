@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { analytics, oauth } from '../config';
 
-function Html({ title, description, style, script, children }) {
+function Html({ title, description, style, script, chunk, children }) {
   return (
     <html className="no-js" lang="en">
       <head>
@@ -24,11 +24,12 @@ function Html({ title, description, style, script, children }) {
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="theme-color" content="#ffffff" />
 
-        <style id="css" dangerouslySetInnerHTML={{ __html: style }} />
+        {style && <style id="css" dangerouslySetInnerHTML={{ __html: style }} />}
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
         {script && <script src={script} />}
+        {chunk && <script src={chunk} />}
         {analytics.google.trackingId &&
           <script
             dangerouslySetInnerHTML={{ __html:
@@ -75,6 +76,7 @@ Html.propTypes = {
   description: PropTypes.string,
   style: PropTypes.string.isRequired,
   script: PropTypes.string,
+  chunk: PropTypes.string,
   children: PropTypes.string,
 };
 

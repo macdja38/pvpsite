@@ -16,8 +16,9 @@ import R from 'rethinkdbdash';
 import RDBStore from 'session-rethinkdb';
 import Eris from 'eris';
 import raven from 'raven';
+import App from './components/App';
 import Html from './components/Html';
-import { ErrorPage } from './routes/error/ErrorPage';
+import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import base64 from './core/base64';
 import schema from './data/schema';
@@ -167,59 +168,45 @@ server(app, db, eris);
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
   try {
-    let css = new Set();
-    let statusCode = 200;
-    const data = {
-      title: 'PvPCraft',
-      description: 'PvPCraft discord bot',
-      style: '',
-      script: assets.main.js,
-      children: '',
+    const css = new Set();
+
+    // Global (context) variables that can be easily accessed from any React component
+    // https://facebook.github.io/react/docs/context.html
+    const context = {
+      // Enables critical path CSS rendering
+      // https://github.com/kriasoft/isomorphic-style-loader
+      insertCss: (...styles) => {
+        // eslint-disable-next-line no-underscore-dangle
+        styles.forEach(style => css.add(style._getCss()));
+      },
     };
 
-    await UniversalRouter.resolve(routes, {
+    const route = await UniversalRouter.resolve(routes, {
       user: req.user,
-      headers: req.headers,
       path: req.path,
+      headers: req.headers,
       query: req.query,
-      context: {
-        insertCss: (...styles) => {
-          styles.forEach(style => css.add(style._getCss())); // eslint-disable-line no-underscore-dangle, max-len
-        },
-        setDescription: value => (data.description = value),
-        setTitle: value => (data.title = value),
-        setMeta: (key, value) => (data[key] = value),
-        redirect(to) {
-          res.redirect(to);
-          /* const error = new Error(`Redirecting to "${to}"...`);
-          error.status = 301;
-          error.path = to;
-          throw error;*/
-        },
-      },
-      render(component, status = 200) {
-        css = new Set();
-        statusCode = status;
-        data.children = ReactDOM.renderToString(component);
-        data.style = [...css].join('');
-        return true;
-      },
     });
 
-    if (res.headersSent) {
+    if (route.redirect) {
+      res.redirect(route.status || 302, route.redirect);
       return;
     }
 
+    const data = { ...route };
+    data.children = ReactDOM.renderToString(<App context={context}>{route.component}</App>);
+    data.style = [...css].join('');
+    data.script = assets.main.js;
+    data.chunk = assets[route.chunk] && assets[route.chunk].js;
     const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
 
-    res.status(statusCode);
+    res.status(route.status || 200);
     res.send(`<!doctype html>${html}`);
   } catch (err) {
-    ravenClient.captureError(err);
-    console.log(err);
     next(err);
   }
 });
+
 
 //
 // Error handling
@@ -230,17 +217,17 @@ pe.skipPackage('express');
 
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.log(pe.render(err)); // eslint-disable-line no-console
-  const statusCode = err.status || 500;
+  ravenClient.captureError(err);
   const html = ReactDOM.renderToStaticMarkup(
     <Html
       title="Internal Server Error"
       description={err.message}
       style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
     >
-      {ReactDOM.renderToString(<ErrorPage error={err} />)}
+      {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
     </Html>
   );
-  res.status(statusCode);
+  res.status(err.status || 500);
   res.send(`<!doctype html>${html}`);
 });
 

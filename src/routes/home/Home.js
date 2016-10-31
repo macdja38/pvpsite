@@ -9,30 +9,30 @@
 
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import Layout from '../../components/Layout';
 import s from './Home.css';
 
-const title = 'Home';
-const description = 'Home Page';
-
-function Home(params, context) {
-  context.setTitle(title);
-  console.log(context);
-  context.setDescription(description);
+function Home({ user }) {
   return (
-    <div className={s.root}>
-      <div className={s.container}>
-        <h1 className={s.title}>PvPCraft Discord bot.</h1>
-        <p>
-          Welcome to the discord bot you&#39;ve always known you&#39;ve wanted but could never find.
-          Inside you will find the most advanced permissions system, highly configurable prompts, intelligently designed
-          rate limits and everything else you could ever want from a Discord bot. With dozens of modules available and
-          more available on request the pvpcraft Discord bot is the bot that is right for you!
-        </p>
+    <Layout user={user} >
+      <div className={s.root}>
+        <div className={s.container}>
+          <h1 className={s.title}>PvPCraft Discord bot.</h1>
+          <p>
+            Welcome to the discord bot you&#39;ve always known you&#39;ve wanted but could never find.
+            Inside you will find the most advanced permissions system, highly configurable prompts, intelligently
+            designed rate limits and everything else you could ever want from a Discord bot.
+            With dozens of modules available and more available on request the
+            pvpcraft Discord bot is the bot that is right for you!
+          </p>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 
-Home.contextTypes = { setTitle: PropTypes.func.isRequired, setDescription: PropTypes.func.isRequired };
+Home.propTypes = {
+  user: PropTypes.object,
+};
 
 export default withStyles(s)(Home);

@@ -11,19 +11,26 @@ import React from 'react';
 import ServerList from './ServerList';
 import fetch from '../../core/fetch';
 
+let title = 'Server List';
+const description = 'Server List Page';
+
 export default {
 
   path: '/server/',
   auth: true,
 
-  async action(context) {
+  async action({ user, headers }) {
+    if (!user) {
+      return { redirect: '/login/server/' };
+    }
+
     // console.log('Making request'); // eslint-disable-line no-console
     const options = {
       method: 'get',
       credentials: 'include',
     };
-    if (context.headers) {
-      options.headers = context.headers;
+    if (headers) {
+      options.headers = headers;
     }
 
     let commonServersResp;
@@ -33,24 +40,20 @@ export default {
       console.error('commonServers Resp caught', error);
     }
 
-    let user;
-    if (context.user) {
-      user = context.user;
+    let commonServers;
+    if (commonServersResp.status === 200) {
+      commonServers = await commonServersResp.json();
     } else {
-      try {
-        const resp = await fetch('/api/v1/user/', options);
-        user = await resp.json();
-      } catch (error) {
-        throw new Error(`User Object request failed. Error: ${error}`);
-      }
+      console.error(commonServersResp);
     }
 
-    const commonServers = await commonServersResp.json();
+    title = `${user.username}'s Servers`;
 
-    // console.log('User'); // eslint-disable-line no-console
-    // console.log(user); // eslint-disable-line no-console
-    if (!user) throw new Error('User Object missing.');
-    return <ServerList user={user} commonServers={commonServers} />;
+    return {
+      title,
+      description,
+      component: <ServerList title={title} user={user} commonServers={commonServers} />,
+    };
   },
 
 };
