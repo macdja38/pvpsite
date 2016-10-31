@@ -44,6 +44,8 @@ export default {
 
     const guild = user.guilds.find(serverGuild => params.serverId === serverGuild.id);
 
+    if (!guild) return { redirect: `/login/server/${params.serverId}/music` };
+
     title = `${guild.name}'s Music`;
     description = `Queued music for ${guild.name}`;
 

@@ -52,6 +52,8 @@ export default {
 
     const guild = user.guilds.find(serverGuild => params.serverId === serverGuild.id);
 
+    if (!guild) return { redirect: `/login/server/${params.serverId}/permissions` };
+
     title = `${guild.name}'s Permissions`;
     description = `${guild.name}'s Permissions Control panel`;
 

@@ -44,6 +44,8 @@ export default {
 
     const guild = user.guilds.find(serverGuild => params.serverId === serverGuild.id);
 
+    if (!guild) return { redirect: `/login/server/${params.serverId}` };
+
     title = `${guild.name}'s settings`;
     description = `Admin panel of ${guild.name}`;
 
