@@ -20,17 +20,14 @@ export default {
   auth: true,
 
   async action({ user, headers }, params) {
-    console.log(1);
+    if (!user) return { redirect: `/login/server/${params.serverId}/permissions` };
+
     const options = {
       method: 'get',
       credentials: 'include',
     };
     if (headers) {
       options.headers = headers;
-    }
-
-    if (!user) {
-      return { redirect: `/login/server/${params.serverId}/permissions` };
     }
 
     const permissionsResp = await fetch(`/api/v1/permissions/${params.serverId}`, options);

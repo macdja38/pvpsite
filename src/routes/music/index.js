@@ -20,6 +20,8 @@ export default {
   auth: true,
 
   async action({ user, headers }, params) {
+    if (!user) return { redirect: `/login/server/${params.serverId}/music` };
+
     const options = {
       method: 'get',
       credentials: 'include',

@@ -20,16 +20,14 @@ export default {
   auth: true,
 
   async action({ user, headers }, params) {
+    if (!user) return { redirect: `/login/server/${params.serverId}` };
+
     const options = {
       method: 'get',
       credentials: 'include',
     };
     if (headers) {
       options.headers = headers;
-    }
-
-    if (!user) {
-      return { redirect: `/login/server/${params.serverId}/` };
     }
 
     let prefixResp;
