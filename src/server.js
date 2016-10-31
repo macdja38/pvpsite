@@ -30,6 +30,7 @@ import permissions from './api/v1/permissions';
 import music from './api/v1/music';
 import oembed from './api/v1/oembed';
 import server from './api/v1/server';
+import erisInfo from './api/v1/erisInfo';
 import authMiddleware from './core/auth';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 
@@ -37,7 +38,7 @@ const eris = new Eris(auth.discord.token, {
   autoreconnect: true,
   cleanContent: false,
   messageLimit: 0,
-  maxShards: 4,
+  maxShards: auth.discord.shards,
   disableEvents: {
     VOICE_STATE_UPDATE: true,
     TYPING_START: true,
@@ -162,6 +163,7 @@ permissions(app, db, eris);
 music(app, db, eris);
 oembed(app, db, eris);
 server(app, db, eris);
+erisInfo(app, db, eris);
 
 //
 // Register server-side rendering middleware
