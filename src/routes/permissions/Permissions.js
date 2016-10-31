@@ -121,11 +121,15 @@ class Permissions extends Component {
 
   static contextTypes = { setTitle: PropTypes.func.isRequired };
 
-  clickHandler(node, proxy, nd, reactClick) {
+  clickHandler(proxy, nd, reactClick) {
     let server = this.state.permissions.server;
-    console.log(server);
-    server = recursiveAdd(server, generateNode(reactClick.explicitOriginalTarget).reverse(), null);
-    console.log(server);
+    let targetNode;
+    if (reactClick) {
+      targetNode = reactClick.explicitOriginalTarget;
+    } else {
+      targetNode = proxy.target;
+    }
+    server = recursiveAdd(server, generateNode(targetNode).reverse(), null);
     fetch(`/api/v1/permissions/${server.id}`, {
       method: 'PUT',
       headers: {
@@ -134,8 +138,13 @@ class Permissions extends Component {
       },
       credentials: 'include',
       body: JSON.stringify(server),
-    }).then(console.log).catch(console.error);
-    this.setState({ permissions: { server } });
+    }).then((...args) => {
+      this.setState({ permissions: { server } });
+      console.log(...args);
+    }).catch(error => {
+      console.log(error);
+      alert(error.toString());
+    });
   }
 
   render() {
@@ -164,7 +173,7 @@ class Permissions extends Component {
               <h1 className={s.title}>{guild.name}&#39;s Permissions</h1>
               <p>Click a Node to delete it (feature still in beta, refresh page before use).</p>{
               // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-              }<div onClick={(...args) => this.clickHandler('cat', ...args)} id="topLevelPermissionsId">
+              }<div onClick={(i, j, k) => this.clickHandler(i, j, k)} id="topLevelPermissionsId">
                 {items}
               </div>
             </div>
