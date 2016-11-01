@@ -61,7 +61,9 @@ export default {
       title,
       description,
       component: <Permissions
-        user={user} serverId={params.serverId}
+        guild={guild}
+        user={user}
+        serverId={params.serverId}
         serverData={serverData}
         permissions={permissions}
       />,

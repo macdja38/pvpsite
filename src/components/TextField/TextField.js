@@ -5,6 +5,7 @@ import s from './TextField.css';
 class TextField extends Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     text: PropTypes.string,
+    placeHolder: PropTypes.string,
     callback: PropTypes.func.isRequired,
   };
 
@@ -23,7 +24,12 @@ class TextField extends Component { // eslint-disable-line react/prefer-stateles
 
   render() {
     return (
-      <input className={s.input} value={this.state.text || ''} onChange={this.onChange} />
+      <input
+        className={s.input}
+        placeholder={this.props.placeHolder}
+        value={this.state.text || ''}
+        onChange={this.onChange}
+      />
     );
   }
 

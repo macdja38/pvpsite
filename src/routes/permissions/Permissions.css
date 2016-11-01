@@ -60,12 +60,12 @@
 }
 
 .button {
-  height: 60px;
+  height: 40px;
   padding: 0 16px;
   margin: 4px;
-  background-color: lightgray;
+  background-color: var(--menu-dark-white);
   cursor: pointer;
-  border: grey 1px solid;
+  border: lightgrey 1px solid;
 }
 
 .button:hover {
@@ -87,6 +87,8 @@
 
 .editEnabled {
   background-color: var(--discord-purple);
+  border-color: var(--discord-purple);
+  color: var(--discord-white);
   float: right;
 }
 
@@ -128,4 +130,16 @@
 
 .clearFix {
   display: block;
+}
+
+.hoverText:hover:after {
+  position: absolute;
+  top: auto;
+  content: attr(alt);
+  background-color: var(--discord-lightgrey);
+  color: #000;
+  line-height: 1.4em;
+  border: none;
+  padding: 2px 8px;
+  box-shadow: 5px 5px 5px var(--discord-black);
 }

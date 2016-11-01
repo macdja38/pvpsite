@@ -116,11 +116,12 @@ function toDivs(permissions, serverData, layer = 0) {
 class Permissions extends Component {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   static propTypes = {
-    user: PropTypes.object,
+    user: PropTypes.object.isRequired,
     serverId: PropTypes.string,
     serverData: PropTypes.object,
     permissions: PropTypes.object,
     title: PropTypes.string,
+    guild: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -133,6 +134,8 @@ class Permissions extends Component {
     this.nodeCallback = this.nodeCallback.bind(this);
     this.editClicked = this.editClicked.bind(this);
     this.state = { edit: false, applyEnabled: false };
+
+    this.state.canEdit = props.guild.owner || (props.guild.permissions & 8) === 8; // eslint-disable-line no-bitwise
   }
 
   channelCallback(channel) {
@@ -241,7 +244,7 @@ class Permissions extends Component {
 
       this.channelSelector = <Selector callback={this.channelCallback} items={channels} />;
       this.userAndGroupSelector = <Selector callback={this.userAndGroupCallback} items={userChoices} />;
-      this.nodeText = <TextInput callback={this.nodeCallback} />;
+      this.nodeText = <TextInput placeHolder={'Permission node'} callback={this.nodeCallback} />;
     }
 
     return (
@@ -251,41 +254,54 @@ class Permissions extends Component {
           <div className={s.container}>
             <h1 className={s.title}>{title}</h1>
             <div className={s.root}>
-              <div style={{ float: 'left', visibility: this.state.edit ? false : 'hidden' }}>
-                {this.channelSelector}
-                {this.userAndGroupSelector}
-                {this.nodeText}
+              {this.state.canEdit && <div>
+                <div style={{ float: 'left', visibility: this.state.edit ? false : 'hidden' }}>
+                  {this.channelSelector}
+                  {this.userAndGroupSelector}
+                  {this.nodeText}
+                  <button
+                    alt="Enter a permission node first"
+                    className={
+                      cx(s.button, s.buttonAllowed, this.state.edit && this.state.applyEnabled ? '' :
+                        cx(s.buttonDisabled, s.hoverText)
+                      )
+                    }
+                    onClick={this.allowClicked}
+                  >
+                    Allow
+                  </button>
+                  <button
+                    alt="Enter a permission node first"
+                    className={
+                      cx(s.button, s.buttonDenied, this.state.edit && this.state.applyEnabled ? '' :
+                        cx(s.buttonDisabled, s.hoverText)
+                      )
+                    }
+                    onClick={this.denyClicked}
+                  >
+                    Deny
+                  </button>
+                </div>
                 <button
-                  className={
-                    cx(s.button, s.buttonAllowed, this.state.edit && this.state.applyEnabled ? '' : s.buttonDisabled)
-                  }
-                  onClick={this.allowClicked}
+                  className={cx(s.button, this.state.edit ? s.editEnabled : s.editDisabled)}
+                  onClick={this.editClicked}
                 >
-                  Allow
-                </button>
-                <button
-                  className={
-                    cx(s.button, s.buttonDenied, this.state.edit && this.state.applyEnabled ? '' : s.buttonDisabled)
-                  }
-                  onClick={this.denyClicked}
-                >
-                  Deny
-                </button>
-              </div>
-              <button
-                className={cx(s.button, this.state.edit ? s.editEnabled : s.editDisabled)}
-                onClick={this.editClicked}
-              >
                 Edit
-              </button>
-              <div className={s.clearFix} />
-              <p style={{ visibility: this.state.edit ? false : 'hidden' }}>
+                </button>
+                <div className={s.clearFix} />
+                <p style={{ visibility: this.state.edit ? false : 'hidden' }}>
                 Click a Node to delete it (feature still in beta, refresh page before use). For a complete list of nodes
                 visit the documentation page.
-              </p>
+                </p>
+              </div>
+              }
               {
               // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-              }<div onClick={this.removeHandler} id="topLevelPermissionsId">
+              }<div
+                style={{ cursor: this.state.edit ? 'pointer' : false }}
+                onClick={this.removeHandler}
+                id="topLevelPermissionsId"
+              >
                 {items}
               </div>
             </div>

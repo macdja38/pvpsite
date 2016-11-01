@@ -33,7 +33,6 @@ function ServerList({ user, commonServers, title }) {
     return a.id - b.id;
   });
   const items = sortedGuilds.map((guild, b) => {
-    console.log(b, guild.name, guild.permissions);
     const botIsOnServer = botOnServer(guild, commonServers);
     const userHasManageServer = userManageServer(guild, user);
     return (<div

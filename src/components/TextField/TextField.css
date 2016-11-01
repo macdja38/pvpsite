@@ -3,13 +3,13 @@
 .input {
   cursor: pointer;
   font-size: 16px;
-  border: gray 1px solid;
-  background: lightgray no-repeat 14px 12px;
+  border: lightgray 1px solid;
+  background: var(--menu-dark-white) no-repeat 14px 12px;
   width: auto;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  height: 58px;
+  height: 38px;
   padding: 0;
   margin: 4px;
 }
