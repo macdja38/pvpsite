@@ -14,7 +14,7 @@ This documentation is primarily about text commands.
 ## General notes
 
 -----
-By default most permissions are unset and default to false make sure to read the permissions section to learn how to activate commands and choose who can use them.
+By default, most permissions are unset and default to false make sure to read the permissions section to learn how to activate commands and choose who can use them.
 
 When running commands for the bot make sure not to include **\<\>** or **[]**, they are only there to tell you what you need to edit.
 Things in **\<\>** are required for the command to run while things in **[]** are optional. 
@@ -64,10 +64,10 @@ This example builds on top of the previous channel specific permission. If you w
 
 -----
 
-Music module allows you to setup the bot to play a queue of songs in a voice channel.
+The Music module allows you to setup the bot to play a queue of songs in a voice channel.
 
-If the music lags I apologise in advance... Their is not much that can be done about that at the moment really it 
-boils down to more server space, and server space costs money. If you want to help the bot has a [Patreon](https://www.patreon.com/macdja38)
+If the music lags I apologise in advance... There is not much that can be done about that at the moment, and really it 
+boils down to more server space, which costs money. If you want to help out, the bot has a [Patreon](https://www.patreon.com/macdja38)
 and a [Paypal](https://www.paypal.me/pvpcraftbot).
 
 **Soundcloud and some other random websites are supported by the /play command.**
