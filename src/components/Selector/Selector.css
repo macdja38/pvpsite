@@ -2,7 +2,8 @@
 
 .dropbtn {
   background-color: white;
-  padding: 16px;
+  padding: 0 16px;
+  height: 60px;
   font-size: 16px;
   border: grey 1px solid;
   border-radius: 6px;
@@ -26,7 +27,8 @@
 }
 
 .dropdown {
-  padding: 4px;
+  padding: 0;
+  margin: 4px;
   border-radius: 6px;
   position: relative;
   display: inline-block;

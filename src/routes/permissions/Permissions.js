@@ -5,6 +5,7 @@ import s from './Permissions.css';
 import ServerMenu from '../../components/ServerMenu';
 import Layout from '../../components/Layout';
 import Selector from '../../components/Selector';
+import TextInput from '../../components/TextField';
 import fetch from '../../core/fetch';
 
 function buildNode(nodes, value) {
@@ -122,15 +123,62 @@ class Permissions extends Component {
     title: PropTypes.string,
   };
 
-  clickHandler(proxy, nd, reactClick) {
-    let server = this.state.permissions.server;
+  constructor(props) {
+    super(props);
+    this.allowClicked = this.allowClicked.bind(this);
+    this.denyClicked = this.denyClicked.bind(this);
+    this.removeHandler = this.removeHandler.bind(this);
+    this.channelCallback = this.channelCallback.bind(this);
+    this.userAndGroupCallback = this.userAndGroupCallback.bind(this);
+    this.nodeCallback = this.nodeCallback.bind(this);
+  }
+
+  channelCallback(channel) {
+    this.targetChannel = channel;
+  }
+
+  userAndGroupCallback(user) {
+    this.targetUserOrGroup = user;
+  }
+
+  nodeCallback(node) {
+    this.targetNode = node;
+  }
+
+  removeHandler(proxy, nd, reactClick) {
     let targetNode;
     if (reactClick) {
       targetNode = reactClick.explicitOriginalTarget;
     } else {
       targetNode = proxy.target;
     }
-    server = recursiveAdd(server, generateNode(targetNode).reverse(), null);
+    targetNode = generateNode(targetNode).reverse();
+    this.applyPermissionsChange(targetNode, null);
+  }
+
+  allowClicked() {
+    const channel = this.targetChannel.id;
+    const userOrGroup = this.targetUserOrGroup.id === '*' ? '*' :
+      ((this.targetUserOrGroup.r ? 'g' : 'u') + this.targetUserOrGroup.id);
+    const nodeText = this.targetNode;
+    const node = [channel, userOrGroup];
+    node.push(...nodeText.toLowerCase().split('.'));
+    this.applyPermissionsChange(node, true);
+  }
+
+  denyClicked() {
+    const channel = this.targetChannel.id;
+    const userOrGroup = this.targetUserOrGroup.id === '*' ? '*' :
+      ((this.targetUserOrGroup.r ? 'g' : 'u') + this.targetUserOrGroup.id);
+    const nodeText = this.targetNode;
+    const node = [channel, userOrGroup];
+    node.push(...nodeText.toLowerCase().split('.'));
+    this.applyPermissionsChange(node, true);
+  }
+
+  applyPermissionsChange(targetNode, value) {
+    let server = this.state.permissions.server;
+    server = recursiveAdd(server, targetNode, value);
     fetch(`/api/v1/permissions/${server.id}`, {
       method: 'PUT',
       headers: {
@@ -160,24 +208,41 @@ class Permissions extends Component {
     }
 
     const items = toDivs(this.state.permissions.server, serverData);
+    if (serverData.channels && serverData.roles && serverData.members) {
 
-    console.log(serverData.channels);
+      const channels = [{ id: '*', name: 'All' }];
+      channels.push(...serverData.channels.map(c => ({ id: c.id, name: c.type === 0 ? `#${c.name}` : c.name })));
 
-    let userChoices = serverData.roles || [];
-    userChoices.push(...serverData.members);
+      const userChoices = [{ id: '*', name: 'All' }];
+      userChoices.push(
+        ...(serverData.roles || [])
+          .map(r => {
+            r.r = true; // eslint-disable-line no-param-reassign
+            return r;
+          })
+      );
+      userChoices.push(...serverData.members);
+
+      this.channelSelector = <Selector callback={this.channelCallback} items={channels} />;
+      this.userAndGroupSelector = <Selector callback={this.userAndGroupCallback} items={userChoices} />;
+      this.nodeText = <TextInput callback={this.nodeCallback} />;
+    }
 
     return (
       <Layout user={user} >
         <div>
           <ServerMenu className={s.nav} user={user} serverId={serverId} page="permissions" />
-            <div className={s.container}>
-              <h1 className={s.title}>{title}</h1>
-              <Selector items={serverData.channels} />
-              <Selector items={userChoices} />
-              <div className={s.root}>
+          <div className={s.container}>
+            <h1 className={s.title}>{title}</h1>
+            {this.channelSelector}
+            {this.userAndGroupSelector}
+            {this.nodeText}
+            <button className={cx(s.button, s.buttonAllowed)} onClick={this.allowClicked} >Allow</button>
+            <button className={cx(s.button, s.buttonDenied)} onClick={this.denyClicked} >Deny</button>
+            <div className={s.root}>
               <p>Click a Node to delete it (feature still in beta, refresh page before use).</p>{
               // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-              }<div onClick={(i, j, k) => this.clickHandler(i, j, k)} id="topLevelPermissionsId">
+              }<div onClick={this.removeHandler} id="topLevelPermissionsId">
                 {items}
               </div>
             </div>

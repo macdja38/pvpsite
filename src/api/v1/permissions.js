@@ -9,16 +9,14 @@
  }*/
 
 function checkServerAuth(req, res, next) {
-  const id = req.params.id;
-  const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
-  if (req.isAuthenticated()
-    && guild
-    && ((guild.permissions & 8) === 8 // eslint-disable-line no-bitwise
-    || guild.owner)) return next();
+  if (req.isAuthenticated()) {
+    const id = req.params.id;
+    const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
+    if (guild && ((guild.permissions & 8) === 8 || guild.owner)) return next(); // eslint-disable-line no-bitwise
+  }
   res.sendStatus(403);
   return true;
 }
-
 
 module.exports = function register(app, { r, connPromise }) {
   /*  "/api/v1/prefix/:id"

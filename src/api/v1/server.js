@@ -39,7 +39,7 @@ module.exports = function register(app, db, eris) {
     const serverObject = {
       roles: server.roles.map(role => ({ id: role.id, name: role.name })),
       members: server.members.map(member => ({ id: member.id, name: member.user.username })),
-      channels: server.channels.map(channel => ({ id: channel.id, name: channel.name })),
+      channels: server.channels.map(channel => ({ id: channel.id, name: channel.name, type: channel.type })),
     };
     return res.json(serverObject);
   });

@@ -59,6 +59,22 @@
   padding: 0 15px;
 }
 
+.button {
+  height: 60px;
+  padding: 0 16px;
+  margin: 4px;
+  border-radius: 6px;
+  border: 1px solid;
+}
+
+.buttonAllowed {
+ color: #007f00;
+}
+
+.buttonDenied {
+  color: #7f0000
+}
+
 .denied::before {
   content: '\2613\0020';
   margin-right: 3px;
