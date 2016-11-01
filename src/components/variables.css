@@ -21,6 +21,16 @@
   --max-content-width: 1300px;
 
   /*
+   * Colours
+   * ======================================================================== */
+
+  --discord-purple: #7289da;
+  --discord-white: #fff;
+  --discord-lightgrey: #99aab5;
+  --discord-darkgrey: #2c2f33;
+  --discord-black: #23272a;
+
+  /*
    * Media queries breakpoints
    * ======================================================================== */
 

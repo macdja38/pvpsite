@@ -1,35 +1,33 @@
 @import '../../components/variables.css';
 
 .dropbtn {
-  background-color: white;
   padding: 0 16px;
   height: 60px;
   font-size: 16px;
-  border: grey 1px solid;
-  border-radius: 6px;
   cursor: pointer;
+  background: lightgray;
+  border: grey 1px solid;
 }
 
-.dropbtn:hover, .dropbtn:focus {
+.dropbtn:hover,
+.dropbtn:focus {
   background-color: grey;
 }
 
 .input {
-  border-radius: 3px;
   font-size: 16px;
   padding: 14px 20px 12px 45px;
   background: #e7e7e7 no-repeat 14px 12px;
-  border: 2px solid;
+  border: 1px solid;
   width: auto;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .dropdown {
   padding: 0;
   margin: 4px;
-  border-radius: 6px;
   position: relative;
   display: inline-block;
 }
@@ -54,7 +52,7 @@
   padding: 0 2px;
   text-decoration: none;
   display: block;
-  width: 100%
+  width: 100%;
 }
 
 .dropdownElement:hover {

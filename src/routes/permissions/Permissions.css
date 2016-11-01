@@ -63,16 +63,35 @@
   height: 60px;
   padding: 0 16px;
   margin: 4px;
-  border-radius: 6px;
-  border: 1px solid;
+  background-color: lightgray;
+  cursor: pointer;
+  border: grey 1px solid;
+}
+
+.button:hover {
+  background-color: grey;
 }
 
 .buttonAllowed {
- color: #007f00;
+  color: #007f00;
 }
 
 .buttonDenied {
-  color: #7f0000
+  color: #7f0000;
+}
+
+.buttonDisabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.editEnabled {
+  background-color: var(--discord-purple);
+  float: right;
+}
+
+.editDisabled {
+  float: right;
 }
 
 .denied::before {
@@ -93,4 +112,20 @@
 
 .allowed {
   color: #007f00;
+}
+
+.clearFix::after {
+  clear: both;
+  content: '.';
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+
+.clearFix {
+  display: inline-block;
+}
+
+.clearFix {
+  display: block;
 }

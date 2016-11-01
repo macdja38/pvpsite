@@ -10,7 +10,8 @@ class TextField extends Component { // eslint-disable-line react/prefer-stateles
 
   constructor(props) {
     super(props);
-    this.state = { text: props.text };
+    this.state = { text: props.text || '' };
+    props.callback(this.state.text);
     this.onChange = this.onChange.bind(this);
   }
 

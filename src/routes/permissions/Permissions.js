@@ -131,6 +131,8 @@ class Permissions extends Component {
     this.channelCallback = this.channelCallback.bind(this);
     this.userAndGroupCallback = this.userAndGroupCallback.bind(this);
     this.nodeCallback = this.nodeCallback.bind(this);
+    this.editClicked = this.editClicked.bind(this);
+    this.state = { edit: false, applyEnabled: false };
   }
 
   channelCallback(channel) {
@@ -143,9 +145,15 @@ class Permissions extends Component {
 
   nodeCallback(node) {
     this.targetNode = node;
+    if (this.state.applyEnabled && node === '') {
+      this.setState({ applyEnabled: false });
+    } else if (!this.state.applyEnabled && node !== '') {
+      this.setState({ applyEnabled: true });
+    }
   }
 
   removeHandler(proxy, nd, reactClick) {
+    if (!this.state.edit) return;
     let targetNode;
     if (reactClick) {
       targetNode = reactClick.explicitOriginalTarget;
@@ -156,7 +164,8 @@ class Permissions extends Component {
     this.applyPermissionsChange(targetNode, null);
   }
 
-  allowClicked() {
+  allowClicked(event) {
+    if (!this.state.edit || !this.state.applyEnabled) return;
     const channel = this.targetChannel.id;
     const userOrGroup = this.targetUserOrGroup.id === '*' ? '*' :
       ((this.targetUserOrGroup.r ? 'g' : 'u') + this.targetUserOrGroup.id);
@@ -164,16 +173,19 @@ class Permissions extends Component {
     const node = [channel, userOrGroup];
     node.push(...nodeText.toLowerCase().split('.'));
     this.applyPermissionsChange(node, true);
+    event.preventDefault();
   }
 
-  denyClicked() {
+  denyClicked(event) {
+    if (!this.state.edit || !this.state.applyEnabled) return;
     const channel = this.targetChannel.id;
     const userOrGroup = this.targetUserOrGroup.id === '*' ? '*' :
       ((this.targetUserOrGroup.r ? 'g' : 'u') + this.targetUserOrGroup.id);
     const nodeText = this.targetNode;
     const node = [channel, userOrGroup];
     node.push(...nodeText.toLowerCase().split('.'));
-    this.applyPermissionsChange(node, true);
+    this.applyPermissionsChange(node, false);
+    event.preventDefault();
   }
 
   applyPermissionsChange(targetNode, value) {
@@ -196,6 +208,11 @@ class Permissions extends Component {
     });
   }
 
+  editClicked(event) {
+    this.setState({ edit: !this.state.edit });
+    event.preventDefault();
+  }
+
   render() {
     const { user, serverId, permissions, serverData, title } = this.props;
 
@@ -209,7 +226,6 @@ class Permissions extends Component {
 
     const items = toDivs(this.state.permissions.server, serverData);
     if (serverData.channels && serverData.roles && serverData.members) {
-
       const channels = [{ id: '*', name: 'All' }];
       channels.push(...serverData.channels.map(c => ({ id: c.id, name: c.type === 0 ? `#${c.name}` : c.name })));
 
@@ -234,13 +250,40 @@ class Permissions extends Component {
           <ServerMenu className={s.nav} user={user} serverId={serverId} page="permissions" />
           <div className={s.container}>
             <h1 className={s.title}>{title}</h1>
-            {this.channelSelector}
-            {this.userAndGroupSelector}
-            {this.nodeText}
-            <button className={cx(s.button, s.buttonAllowed)} onClick={this.allowClicked} >Allow</button>
-            <button className={cx(s.button, s.buttonDenied)} onClick={this.denyClicked} >Deny</button>
             <div className={s.root}>
-              <p>Click a Node to delete it (feature still in beta, refresh page before use).</p>{
+              <div style={{ float: 'left', visibility: this.state.edit ? false : 'hidden' }}>
+                {this.channelSelector}
+                {this.userAndGroupSelector}
+                {this.nodeText}
+                <button
+                  className={
+                    cx(s.button, s.buttonAllowed, this.state.edit && this.state.applyEnabled ? '' : s.buttonDisabled)
+                  }
+                  onClick={this.allowClicked}
+                >
+                  Allow
+                </button>
+                <button
+                  className={
+                    cx(s.button, s.buttonDenied, this.state.edit && this.state.applyEnabled ? '' : s.buttonDisabled)
+                  }
+                  onClick={this.denyClicked}
+                >
+                  Deny
+                </button>
+              </div>
+              <button
+                className={cx(s.button, this.state.edit ? s.editEnabled : s.editDisabled)}
+                onClick={this.editClicked}
+              >
+                Edit
+              </button>
+              <div className={s.clearFix} />
+              <p style={{ visibility: this.state.edit ? false : 'hidden' }}>
+                Click a Node to delete it (feature still in beta, refresh page before use). For a complete list of nodes
+                visit the documentation page.
+              </p>
+              {
               // eslint-disable-next-line jsx-a11y/no-static-element-interactions
               }<div onClick={this.removeHandler} id="topLevelPermissionsId">
                 {items}
