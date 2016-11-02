@@ -26,15 +26,18 @@ module.exports = function register(app, { r, connPromise }) {
    */
   app.get('/api/v1/permissions/:id', /* checkServerAuth,*/ (req, res) => {
     connPromise.then((conn) => {
-      const serverPrefix = r.table('permissions').get(req.params.id).run(conn);
-      const defaultPrefix = r.table('permissions').get('*').run(conn);
-      Promise.all([serverPrefix, defaultPrefix])
-        .then(([serverPrefixResult, defaultPrefixResult]) => {
+      const serverPermissions = r.table('permissions').get(req.params.id).run(conn);
+      const defaultPermissions = r.table('permissions').get('*').run(conn);
+      Promise.all([serverPermissions, defaultPermissions])
+        .then(([serverPermissionsResult, defaultPermissionsResult]) => {
           const result = {};
-          if (serverPrefixResult) {
-            result.server = serverPrefixResult;
-          } else if (defaultPrefixResult) {
-            result.default = defaultPrefixResult;
+          if (serverPermissionsResult === null) {
+            result.server = { id: req.params.id };
+          } else if (serverPermissionsResult) {
+            result.server = serverPermissionsResult;
+          }
+          if (defaultPermissionsResult) {
+            result.default = defaultPermissionsResult;
           }
           res.json(result);
         }).catch(error => console.error(error));
