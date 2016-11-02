@@ -132,7 +132,7 @@
   display: block;
 }
 
-.hoverText:hover:after {
+.hoverText:hover::after {
   position: absolute;
   top: auto;
   content: attr(alt);
