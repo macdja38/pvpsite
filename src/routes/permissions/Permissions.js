@@ -230,7 +230,7 @@ class Permissions extends Component {
     const items = toDivs(this.state.permissions.server, serverData);
     if (serverData.channels && serverData.roles && serverData.members) {
       const channels = [{ id: '*', name: 'All' }];
-      channels.push(...serverData.channels.map(c => ({ id: c.id, name: c.type === 0 ? `#${c.name}` : c.name })));
+      channels.push(...serverData.channels.map(c => ({ id: c.id, name: c.type === 0 ? `# ${c.name}` : c.name })));
 
       const userChoices = [{ id: '*', name: 'All' }];
       userChoices.push(
@@ -242,9 +242,18 @@ class Permissions extends Component {
       );
       userChoices.push(...serverData.members);
 
-      this.channelSelector = <Selector callback={this.channelCallback} items={channels} />;
-      this.userAndGroupSelector = <Selector callback={this.userAndGroupCallback} items={userChoices} />;
-      this.nodeText = <TextInput placeHolder={'Permission node'} callback={this.nodeCallback} />;
+      this.channelSelector = (
+        <Selector
+          placeHolder="channels" callback={this.channelCallback} items={channels}
+        />);
+      this.userAndGroupSelector = (
+        <Selector
+          placeHolder="groups/users" callback={this.userAndGroupCallback} items={userChoices}
+        />);
+      this.nodeText = (
+        <TextInput
+          placeHolder="Permission node" callback={this.nodeCallback}
+        />);
     }
 
     return (

@@ -1,5 +1,12 @@
 @import '../../components/variables.css';
 
+.root {
+  padding: 0;
+  margin: 4px;
+  position: relative;
+  display: inline-block;
+}
+
 .dropbtn {
   padding: 0 16px;
   height: 40px;
@@ -16,43 +23,37 @@
 
 .input {
   font-size: 16px;
-  padding: 14px 20px 12px 45px;
-  background: #e7e7e7 no-repeat 14px 12px;
-  border: 1px solid;
-  width: auto;
+  padding: 10px 0;
+  background: var(--menu-dark-white) no-repeat 14px 12px;
+  border: lightgrey 1px solid;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-}
-
-.dropdown {
-  padding: 0;
-  margin: 4px;
-  position: relative;
-  display: inline-block;
+  display: block;
+  width: 100%;
 }
 
 .dropdownContent {
   display: none;
+  min-width: 200px;
   position: absolute;
   background-color: #f6f6f6;
-  min-width: 230px;
-  max-width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .dropdownList {
   padding: 0;
+  max-height: 400px;
+  overflow-x: hidden;
 }
 
 .dropdownElement {
   color: black;
-  padding: 0 2px;
+  margin: 0;
+  padding: 2px 40px;
   text-decoration: none;
-  display: block;
+  border: none;
   width: 100%;
+  display: block;
 }
 
 .dropdownElement:hover {

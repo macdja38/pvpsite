@@ -136,7 +136,7 @@
   position: absolute;
   top: auto;
   content: attr(alt);
-  background-color: var(--discord-lightgrey);
+  background-color: var(--menu-dark-white);
   color: #000;
   line-height: 1.4em;
   border: none;

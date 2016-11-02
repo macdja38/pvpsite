@@ -7,6 +7,7 @@ class Selector extends Component { // eslint-disable-line react/prefer-stateless
   static propTypes = {
     items: PropTypes.array.isRequired,
     callback: PropTypes.func,
+    placeHolder: PropTypes.string,
   };
 
   onChange(event) {
@@ -74,17 +75,19 @@ class Selector extends Component { // eslint-disable-line react/prefer-stateless
     const renderedItems = this.renderItems(this.state.displayItems);
 
     return (
-      <div className={s.dropdown}>
+      <div className={s.root}>
         <button onClick={(...args) => this.toggleVisibility(...args)} className={s.dropbtn}>{this.state.label}</button>
         <div className={s.dropdownContent} style={this.state.visability ? { display: 'block' } : { display: 'none' }}>
-          <input
-            className={s.input}
-            type="text"
-            placeholder="Search..."
-            onChange={(...args) => this.filterFunction(...args)}
-          />
-          <div className={s.dropdownList}>
-            {renderedItems}
+          <div>
+            <input
+              className={s.input}
+              type="text"
+              placeholder={this.props.placeHolder}
+              onChange={(...args) => this.filterFunction(...args)}
+            />
+            <div className={s.dropdownList}>
+              {renderedItems}
+            </div>
           </div>
         </div>
       </div>
