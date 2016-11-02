@@ -63,6 +63,7 @@ export default {
       component: <Permissions
         guild={guild}
         user={user}
+        title={title}
         serverId={params.serverId}
         serverData={serverData}
         permissions={permissions}

@@ -52,7 +52,7 @@ export default {
     return {
       title,
       description,
-      component: <Server guild={guild} user={user} serverId={params.serverId} prefix={prefix} />,
+      component: <Server title={title} guild={guild} user={user} serverId={params.serverId} prefix={prefix} />,
     };
   },
 };

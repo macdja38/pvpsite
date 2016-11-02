@@ -55,7 +55,7 @@ export default {
     return {
       title,
       description,
-      component: <Music user={user} serverId={params.serverId} music={music} />,
+      component: <Music title={title} user={user} serverId={params.serverId} music={music} />,
     };
   },
 };
