@@ -5,7 +5,7 @@ export default {
 
   path: '/',
 
-  async action({ user }) {
+  action({ user }) {
     return {
       title: 'Home',
       description: 'Home Page',
