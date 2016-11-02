@@ -14,10 +14,9 @@ import ServerMenu from '../../components/ServerMenu';
 import PrefixField from '../../components/PrefixField';
 import Layout from '../../components/Layout';
 
-function Server({ user, serverId, prefix, title, guild }, context) {
+function Server({ user, serverId, prefix, title, guild }) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   if (!guild) {
-    context.setTitle('Guild Not Found');
     return (<div><h2>Guild {serverId} Not Found</h2>Your Guild Could not be found</div>);
   }
   return (
