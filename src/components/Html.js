@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { analytics, oauth } from '../config';
+import { analytics, oauth } from '../client.config';
 
 function Html({ title, description, style, script, chunk, children }) {
   return (

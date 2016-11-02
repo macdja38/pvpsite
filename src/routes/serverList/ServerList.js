@@ -8,7 +8,7 @@ import cx from 'classnames';
 
 import s from './ServerList.css';
 
-import { oauth } from '../../config';
+import { oauth } from '../../client.config';
 
 import Link from '../../components/Link';
 
