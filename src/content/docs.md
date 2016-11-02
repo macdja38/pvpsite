@@ -77,12 +77,12 @@ and a [Paypal](https://www.paypal.me/pvpcraftbot).
 | init | temporarily binds the bot to the voice channel the user is in, and the text channel the command was used in | music​.init |
 | destroy | un-binds the bot from it's current voice and text channel and clears the queue​. | music​.destroy  |
 | play \<search term \| video link \| playlist \> | plays the song or playlist in the bound channel | music​.play  |
-| skip [target] | votes to skips the song at index in queue or the currently playing song | music.voteskip  |
-| skip [target] -f | force skips the song at index in queue or the currently playing song | music.forceskip |
+| skip [target] | votes to skips the song at index in queue or the currently playing song | music​.voteskip  |
+| skip [target] -f | force skips the song at index in queue or the currently playing song | music​.forceskip |
 | pause | pauses the current song | music​.pause |
 | resume | resumes the current song | music​.resume |
 | list | lists the contents of the queue | music​.list |
-| link | displays a link to the currently playing song | music.link | 
+| link | displays a link to the currently playing song | music​.link | 
 | time | displays the current time into the song | music​.time |
 | volume [volume] | if volume is provided it sets the volume, if not it displays the volume | music​.volume​.set or/and music​.volume​.list
 | shuffle | shuffles the current queue | music​.shuffle |
@@ -148,7 +148,7 @@ Moderation module, mod log was moved into feeds, this is now just purge, to disa
 
 | command  | description  | node  |
 |---|---|---|
-| purge \[count]\[ --user \<user>]\[ --before \<message id>]\[ --after \<message id>] | purges the text channel of messages | moderation.tools.purge |
+| purge \[count]\[ --user \<user>]\[ --before \<message id>]\[ --after \<message id>] | purges the text channel of messages | moderation​.tools​.purge |
 
 <br>
 
@@ -160,8 +160,10 @@ This is similar to the permissions system but for events like Warframe alerts an
 
 | command  | description  | node  |
 |---|---|---|
-| feeds \<start\|stop> \<feed node>\[ --channel <channel>] | enables or disables a specific feed within a channel. | feed.manage |
-| find \<node> | checks where a certain node goes | feed.find  |
+| feeds \<start\|stop> \<feed node>\[ --channel \<channel>] | enables or disables a specific feed within a channel. | feeds​.manage |
+| find \<node> | checks where a certain node goes | feeds​.find  |
+
+*in the next few days the node will be changed from feed. to feeds. 
 
 <br>
 
@@ -380,10 +382,10 @@ name of the role you want added to the user when they run `/rank join member`
 
 | command | description  | node  |
 |---|---|---|
-| pokemon \<pokemon> |	searches for a Pokemon |	pokemon.pokemon |
-| shiny \<pokemon> | searches for a shiny |	pokemon.shiny |
-| pokestat \<pokemon> |	gets a Pokemon’s stats |	pokemon.pokestat |
-| hiddenability \<pokemon> |	fetches a Pokemon’s hidden ability |	pokemon.hiddenability |
+| pokemon \<pokemon> |	searches for a Pokemon |	pokemon​.pokemon |
+| shiny \<pokemon> | searches for a shiny |	pokemon​.shiny |
+| pokestat \<pokemon> |	gets a Pokemon’s stats |	pokemon​.pokestat |
+| hiddenability \<pokemon> |	fetches a Pokemon’s hidden ability |	pokemon​.hiddenability |
 
 <br>
 
@@ -393,9 +395,9 @@ name of the role you want added to the user when they run `/rank join member`
 
 | command | description  | node  |
 |---|---|---|
-| mcping \<server address> | Pings a Minecraft server and displays some info about it. | minecraft.mcping |
-| mcavatar \<minecraft username> | Displays a user's Minecraft avatar | minecraft.avatar  |
-| mcskin \<minecraft username> | Displays a user's Minecraft skin | minecraft.mcskin | 
+| mcping \<server address> | Pings a Minecraft server and displays some info about it. | minecraft​.mcping |
+| mcavatar \<minecraft username> | Displays a user's Minecraft avatar | minecraft​.avatar  |
+| mcskin \<minecraft username> | Displays a user's Minecraft skin | minecraft​.mcskin | 
 
 <br>
 
@@ -433,7 +435,7 @@ Welcomes users to the server
 
 | command | description  | node  |
 |---|---|---|
-| setwelcome \<welcome message \| false>\[ -p]\[ --channel \<channel>] | Sets the welcome message | admin.welcome.set |
+| setwelcome \<welcome message \| false>\[ -p]\[ --channel \<channel>] | Sets the welcome message | admin​.welcome​.set |
 flag -p means the bot will private message the user.
 
 Variables
