@@ -38,7 +38,7 @@ const eris = new Eris(auth.discord.token, {
   autoreconnect: true,
   cleanContent: false,
   messageLimit: 0,
-  maxShards: auth.discord.shards,
+  maxShards: parseInt(auth.discord.shards, 10),
   disableEvents: {
     VOICE_STATE_UPDATE: true,
     TYPING_START: true,

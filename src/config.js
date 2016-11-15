@@ -16,7 +16,7 @@ export const databaseUrl = process.env.DATABASE_URL || 'sqlite:database.sqlite';
 
 export const oauth = {
   discord: {
-    url: process.env.OAUTH_DISCORD_URL || 'https://bot.pvpcraft.ca',
+    url: process.env.OAUTH_DISCORD_URL || 'http://localhost:3001',
   },
 };
 
@@ -39,6 +39,7 @@ export const auth = {
   // https://discordapp.com/developers
   discord: {
     id: process.env.DISCORD_CLIENT_ID || '',
+    shards: process.env.DISCORD_CLIENT_SHARDS || '1',
     secret: process.env.DISCORD_CLIENT_SECRET || '',
     token: process.env.DISCORD_CLIENT_TOKEN || '',
   },
@@ -47,8 +48,8 @@ export const auth = {
 
 export const database = {
   reThinkDB: {
-    host: 'localhost',
-    port: '28015',
-    db: 'pvpcraft',
+    host: process.env.RETHINKDB_HOST || 'localhost',
+    port: process.env.RETHINKDB_PORT || '28015',
+    db: process.env.RETHINKDB_DB || 'tau',
   },
 };
