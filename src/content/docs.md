@@ -355,7 +355,7 @@ The **visible name** of a rank is the label for the rank that is visible to the 
 | rank add \<visible name> --role \<mention or exact name of an existing role> | adds the role from --role to the list of joinable ranks under the name of \<**visible name**> | admin​.rank​.add |
 | rank remove \<visible name> | removes a rank from the list of join-able ranks |	admin​.rank​.remove |
 | rank join \<visible name> | adds the user of the command to the rank they request |	rank​.join​.use && rank​.join​.\<visible name> |
-| rank leave \<visible name> |	removes the user of the command from the rank they request | rank​.leave​.user && rank​.leave​.\<visible name> |
+| rank leave \<visible name> |	removes the user of the command from the rank they request | rank​.leave​.use && rank​.leave​.\<visible name> |
 | rank list |	Lists all of the ranks | rank​.list |
 
 #### Examples
