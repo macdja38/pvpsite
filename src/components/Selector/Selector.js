@@ -8,7 +8,20 @@ class Selector extends Component { // eslint-disable-line react/prefer-stateless
     items: PropTypes.array.isRequired,
     callback: PropTypes.func,
     placeHolder: PropTypes.string,
+    label: PropTypes.string.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.state.label = this.props.items[0].name;
+    this.state.itemId = this.props.items[0].id;
+    this.props.callback(this.props.items[0]);
+    this.state.items = this.props.items;
+    this.state.displayItems = this.props.items;
+    this.state.visability = false;
+    this.toggleVisibility = this.toggleVisibility.bind(this);
+  }
 
   onChange(event) {
     this.setState({ selected: 'changed' });
@@ -55,28 +68,12 @@ class Selector extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   render() {
-    if (!this.state) {
-      this.state = {};
-    }
-    if (typeof this.state.visability !== 'boolean') {
-      this.state.visability = false;
-    }
-    if (!this.state.items) {
-      this.state.items = this.props.items;
-      this.state.displayItems = this.props.items;
-    }
-
-    if (!this.state.label) {
-      this.state.label = this.props.items[0].name;
-      this.state.itemId = this.props.items[0].id;
-      this.props.callback(this.props.items[0]);
-    }
-
     const renderedItems = this.renderItems(this.state.displayItems);
 
     return (
       <div className={s.root}>
-        <button onClick={(...args) => this.toggleVisibility(...args)} className={s.dropbtn}>{this.state.label}</button>
+        {this.props.label && <span><label htmlFor={this.props.label}>{this.props.label}</label><br /></span>}
+        <button onClick={this.toggleVisibility} id={this.props.label} className={s.dropbtn}>{this.state.label}</button>
         <div className={s.dropdownContent} style={this.state.visability ? { display: 'block' } : { display: 'none' }}>
           <div>
             <input

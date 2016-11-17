@@ -48,6 +48,13 @@
   padding: 5px;
 }
 
+.allGroupsAndUsers {
+  border: none;
+  border-left: solid #7289da;
+  margin: 0 5px;
+  padding: 5px;
+}
+
 .nodeStart {
   border: none;
   margin: 0 5px;

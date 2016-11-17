@@ -70,29 +70,34 @@ function toDivs(permissions, serverData, layer = 0) {
           if (serverData && serverData.hasOwnProperty('channels') && key !== '*') {
             const channel = serverData.channels.find(c => c.id === key);
             if (channel && channel.hasOwnProperty('name')) {
-              label = `#${channel.name}`;
+              label = `Channel: #${channel.name}`;
             }
+          } else if (key === '*') {
+            label = 'All Channels';
           }
           break;
         case 1:
           if (key[0] === 'u') {
             levelNode = s.user;
-            if (serverData && serverData.hasOwnProperty('members') && key !== '*') {
+            if (serverData && serverData.hasOwnProperty('members')) {
               const userId = key.slice(1);
               const user = serverData.members.find(m => m.id === userId);
               if (user && user.hasOwnProperty('name')) {
                 label = `User: ${user.name}`;
               }
             }
-          } else {
+          } else if (key[0] === 'g') {
             levelNode = s.group;
-            if (serverData && serverData.hasOwnProperty('roles') && key !== '*') {
+            if (serverData && serverData.hasOwnProperty('roles')) {
               const groupId = key.slice(1);
               const group = serverData.roles.find(g => g.id === groupId);
               if (group && group.hasOwnProperty('name')) {
                 label = `Role: ${group.name}`;
               }
             }
+          } else if (key === '*') {
+            levelNode = s.allGroupsAndUsers;
+            label = 'All Roles/Users';
           }
           break;
         case 2:
@@ -193,7 +198,7 @@ class Permissions extends Component {
 
   applyPermissionsChange(targetNode, value) {
     let server = this.state.permissions.server;
-    server = recursiveAdd(server, targetNode, value);
+    server = recursiveAdd(server, targetNode.map(n => n.replace(/\u200B/g, '')), value);
     fetch(`/api/v1/permissions/${server.id}`, {
       method: 'PUT',
       headers: {
@@ -244,11 +249,11 @@ class Permissions extends Component {
 
       this.channelSelector = (
         <Selector
-          placeHolder="channels" callback={this.channelCallback} items={channels}
+          placeHolder="channels" label={'Channels'} callback={this.channelCallback} items={channels}
         />);
       this.userAndGroupSelector = (
         <Selector
-          placeHolder="groups/users" callback={this.userAndGroupCallback} items={userChoices}
+          placeHolder="groups/users" label={'Users/Roles'} callback={this.userAndGroupCallback} items={userChoices}
         />);
       this.nodeText = (
         <TextInput
