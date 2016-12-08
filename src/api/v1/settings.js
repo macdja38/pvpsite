@@ -20,7 +20,7 @@ function checkServerAuth(req, res, next) {
   return true;
 }
 
-let settingsMap = {
+/* const settingsMap = {
   ranks: {
     deleteAfter: {
       type: 'boolean',
@@ -38,7 +38,7 @@ let settingsMap = {
       description: 'How long after the command is executed should the input be deleted (seconds)',
     },
   },
-};
+}; */
 
 
 module.exports = function register(app, { r, connPromise }) {

@@ -39,6 +39,7 @@ export default {
     require('./permissions').default,
     require('./login').default,
     require('./music').default,
+    require('./hat').default,
 
     // place new routes before...
     require('./content').default,
