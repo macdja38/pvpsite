@@ -19,11 +19,15 @@ By default, most permissions are unset and default to false make sure to read th
 When running commands for the bot make sure not to include **\<\>** or **[]**, they are only there to tell you what you need to edit.
 Things in **\<\>** are required for the command to run while things in **[]** are optional. 
 
+If you don't have pvpcraft yet click [here](https://invite.pvpcraft.ca) to invite him
+
 <br>
 
 ## Permissions
 
 -----
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/M8z7Jofc6bU" frameborder="0" allowfullscreen></iframe>
 
 Permissions are the cornerstone of every system of **PvPCraft** they allow you to limit commands to a specific channel,
 role or user in whatever way you deem fit.
