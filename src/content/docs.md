@@ -291,7 +291,7 @@ This is similar to the permissions system but for events like Warframe alerts an
     </tbody>
 </table>
 
-So for example once you have allowed yourself the permissions node required (`feed.manage`, see the permissions section at the top) you can run the following command to log just users joining voice.
+So for example once you have allowed yourself the permissions node required (`feeds.manage`, see the permissions section at the top) you can run the following command to log just users joining voice.
 
 ```
 /feeds start moderation.voice.join
