@@ -43,7 +43,6 @@
     "raven": "^0.12.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-fabricjs": "^0.1.6",
     "react-masonry-component": "^4.2.1",
     "react-stonecutter": "^0.3.1",
     "request": "^2.78.0",
