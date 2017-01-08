@@ -21,7 +21,10 @@ function toDivs(settingsMap) {
       if (setting.type === 'category') {
         return toDivs(setting.children);
       } else if (setting.type === 'boolean') {
-        return <div><input type="checkbox" /></div>;
+        return (<div key={setting.key}>
+          {setting.name}
+          <input type="checkbox" name={setting.name} alt={setting.description} />
+        </div>);
       }
       return <div />;
     })
