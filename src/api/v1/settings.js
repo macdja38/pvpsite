@@ -21,28 +21,44 @@ function checkServerAuth(req, res, next) {
 }
 
 const settingsMap = {
-  ranks: {
-    deleteAfter: {
-      type: 'boolean',
-      name: 'delete after input',
-      description: 'Deletes the users input after running a command and deletes the bot\'s response after a delay',
+  layout: [
+    {
+      type: 'category',
+      name: 'ranks',
+      key: 'ranks',
+      description: 'joinable ranks',
+      children: [
+        {
+          type: 'boolean',
+          name: 'delete after input',
+          key: 'deleteAfter',
+          default: false,
+          description: 'Deletes the users input after running a command and deletes the bot\'s response after a delay',
+        },
+        {
+          type: 'int',
+          name: 'delete delay (seconds)',
+          key: 'deleteDelay',
+          default: 0,
+          description: 'How long after the command is executed should the input be deleted (seconds)',
+        },
+        {
+          type: 'list',
+          name: 'delete delay (seconds)',
+          key: 'joinableRanks',
+          default: [],
+          description: 'list of ranks that should be excusive',
+        },
+        {
+          type: 'boolean',
+          key: 'exclusive',
+          name: 'exclusive',
+          default: false,
+          description: 'yea... this is obvious',
+        },
+      ],
     },
-    deleteDelay: {
-      type: 'int',
-      name: 'delete delay (seconds)',
-      description: 'How long after the command is executed should the input be deleted (seconds)',
-    },
-    joinableRanks: {
-      type: 'list',
-      name: 'delete delay (seconds)',
-      description: 'How long after the command is executed should the input be deleted (seconds)',
-    },
-    admin: {
-      type: 'role',
-      name: 'role that is given admin permissions for this command',
-      description: 'yea... this is obvious',
-    },
-  },
+  ],
 };
 
 

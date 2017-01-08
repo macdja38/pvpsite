@@ -14,7 +14,22 @@ import ServerMenu from '../../components/ServerMenu';
 import PrefixField from '../../components/PrefixField';
 import Layout from '../../components/Layout';
 
-function CustomConfig({ user, serverId, prefix, title, guild }) {
+function toDivs(settingsMap) {
+  console.log(settingsMap);
+  return (<div>{
+    settingsMap.map(setting => {
+      if (setting.type === 'category') {
+        return toDivs(setting.children);
+      } else if (setting.type === 'boolean') {
+        return <div><input type="checkbox" /></div>;
+      }
+      return <div />;
+    })
+  }</div>);
+}
+
+function CustomConfig({ user, serverId, prefix, title, guild, settingsMap }) {
+  console.log(settingsMap.layout);
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   if (!guild) {
     return (<div><h2>Guild {serverId} Not Found</h2>Your Guild Could not be found</div>);
@@ -32,6 +47,7 @@ function CustomConfig({ user, serverId, prefix, title, guild }) {
             />
             </div>
               : '')}
+            {toDivs(settingsMap.layout)}
           </div>
         </div>
       </div>
@@ -41,6 +57,7 @@ function CustomConfig({ user, serverId, prefix, title, guild }) {
 
 CustomConfig.propTypes = {
   user: PropTypes.object.isRequired,
+  settingsMap: PropTypes.object.isRequired,
   serverId: PropTypes.string.isRequired,
   prefix: PropTypes.array,
   title: PropTypes.string,

@@ -30,7 +30,17 @@ export default {
       options.headers = headers;
     }
 
-    let hasParams = params.anything;
+    let settingsMapResp;
+    try {
+      settingsMapResp = await fetch(`/api/v1/settings/${params.serverId}`, options);
+    } catch (error) {
+      return { redirect: `/login/server/${params.serverId}/${params.anything}`};
+    }
+
+    let settingsMap;
+    if (settingsMapResp.status === 200) {
+      settingsMap = (await settingsMapResp.json());
+    }
 
     let prefixResp;
     try {
@@ -54,7 +64,14 @@ export default {
     return {
       title,
       description,
-      component: <CustomConfig title={title} guild={guild} user={user} serverId={params.serverId} prefix={prefix} />,
+      component: <CustomConfig
+        title={title}
+        guild={guild}
+        user={user}
+        serverId={params.serverId}
+        prefix={prefix}
+        settingsMap={settingsMap}
+      />,
     };
   },
 };

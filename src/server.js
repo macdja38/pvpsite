@@ -32,6 +32,7 @@ import oembed from './api/v1/oembed';
 import server from './api/v1/server';
 import erisInfo from './api/v1/erisInfo';
 import avatarProxy from './api/v1/avatarProxy';
+import settings from './api/v1/settings';
 import authMiddleware from './core/auth';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 
@@ -165,6 +166,7 @@ music(app, db, eris);
 oembed(app, db, eris);
 server(app, db, eris);
 erisInfo(app, db, eris);
+settings(app, db, eris);
 avatarProxy(app);
 
 //
