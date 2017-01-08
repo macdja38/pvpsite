@@ -20,7 +20,7 @@ function checkServerAuth(req, res, next) {
   return true;
 }
 
-/* const settingsMap = {
+const settingsMap = {
   ranks: {
     deleteAfter: {
       type: 'boolean',
@@ -37,8 +37,13 @@ function checkServerAuth(req, res, next) {
       name: 'delete delay (seconds)',
       description: 'How long after the command is executed should the input be deleted (seconds)',
     },
+    admin: {
+      type: 'role',
+      name: 'role that is given admin permissions for this command',
+      description: 'yea... this is obvious',
+    },
   },
-}; */
+};
 
 
 module.exports = function register(app, { r, connPromise }) {
@@ -48,8 +53,9 @@ module.exports = function register(app, { r, connPromise }) {
    *    DELETE: deletes contact by id
    */
   app.get('/api/v1/settings/:id', checkServerAuth, (req, res) => {
-    connPromise.then((conn) => {
-      const queue = r.table('servers').get(req.params.id).run(conn);
+    connPromise.then((/* conn */) => {
+      res.json(settingsMap);
+      /* const queue = r.table('servers').get(req.params.id).run(conn);
       Promise.all([queue])
         .then(([queueResult]) => {
           if (queueResult && queueResult.hasOwnProperty('queue')) { // eslint-disable-line no-prototype-builtins
@@ -57,7 +63,7 @@ module.exports = function register(app, { r, connPromise }) {
           } else {
             res.json({ queue: [] });
           }
-        }).catch(error => console.error(error));
+        }).catch(error => console.error(error));*/
     });
   });
 

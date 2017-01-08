@@ -8,10 +8,8 @@
  */
 
 import React from 'react';
-import Server from './Server';
+import CustomConfig from './CustomConfig';
 import fetch from '../../core/fetch';
-
-import customConfig from '../customConfig';
 
 let title = 'Admin Panel';
 let description = 'Server admin panel';
@@ -32,7 +30,7 @@ export default {
       options.headers = headers;
     }
 
-    if (params.anything) return customConfig.action({ user, headers }, params);
+    let hasParams = params.anything;
 
     let prefixResp;
     try {
@@ -56,7 +54,7 @@ export default {
     return {
       title,
       description,
-      component: <Server title={title} guild={guild} user={user} serverId={params.serverId} prefix={prefix} />,
+      component: <CustomConfig title={title} guild={guild} user={user} serverId={params.serverId} prefix={prefix} />,
     };
   },
 };
