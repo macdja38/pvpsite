@@ -13,6 +13,7 @@ import s from './CustomConfig.css';
 import ServerMenu from '../../components/ServerMenu';
 import PrefixField from '../../components/PrefixField';
 import Layout from '../../components/Layout';
+import InputBox from '../../components/menuItems/InputBox'
 
 function toDivs(settingsMap) {
   console.log(settingsMap);
@@ -21,10 +22,14 @@ function toDivs(settingsMap) {
       if (setting.type === 'category') {
         return toDivs(setting.children);
       } else if (setting.type === 'boolean') {
-        return (<div key={setting.key}>
-          {setting.name}
-          <input type="checkbox" name={setting.name} alt={setting.description} />
-        </div>);
+        return (
+          <InputBox>
+            <div key={setting.key}>
+              {setting.name}
+              <input type="checkbox" name={setting.name} alt={setting.description} />
+            </div>
+          </InputBox>
+        );
       }
       return <div />;
     })
