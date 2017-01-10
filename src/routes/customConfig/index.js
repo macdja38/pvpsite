@@ -16,10 +16,11 @@ let description = 'Server admin panel';
 
 export default {
 
-  path: '/server/:serverId/:anything?',
+  path: '/server/:serverId/:urlLocation*?',
   auth: true,
 
   async action({ user, headers }, params) {
+    console.log(params);
     if (!user) return { redirect: `/login/server/${params.serverId}` };
 
     const options = {
@@ -34,7 +35,7 @@ export default {
     try {
       settingsMapResp = await fetch(`/api/v1/settings/${params.serverId}`, options);
     } catch (error) {
-      return { redirect: `/login/server/${params.serverId}/${params.anything}`};
+      return { redirect: `/login/server/${params.serverId}/${params.urlLocation}`};
     }
 
     let settingsMap;
@@ -70,6 +71,7 @@ export default {
         user={user}
         serverId={params.serverId}
         prefix={prefix}
+        urlLocation={params.urlLocation}
         settingsMap={settingsMap}
       />,
     };

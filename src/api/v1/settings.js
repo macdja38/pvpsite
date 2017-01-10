@@ -21,8 +21,9 @@ function checkServerAuth(req, res, next) {
 }
 
 const settingsMap = {
-  layout: [
-    {
+  type: 'pageSelector',
+  children: {
+    ranks: {
       type: 'category',
       name: 'ranks',
       key: 'ranks',
@@ -30,7 +31,46 @@ const settingsMap = {
       children: [
         {
           type: 'boolean',
-          name: 'delete after input',
+          name: 'delete after input for ranks',
+          key: 'deleteAfter',
+          default: false,
+          description: 'Deletes the users input after running a command and deletes the bot\'s response after a delay',
+        },
+        {
+          type: 'int',
+          name: 'delete delay (seconds)',
+          key: 'deleteDelay',
+          default: 0,
+          description: 'How long after the command is executed should the input be deleted (seconds)',
+        },
+        {
+          type: 'list',
+          name: 'delete delay (seconds)',
+          key: 'joinableRanks',
+          default: [],
+          content: {
+            type: 'role',
+          },
+          description: 'list of ranks that should be excusive',
+        },
+        {
+          type: 'boolean',
+          key: 'exclusive',
+          name: 'exclusive',
+          default: false,
+          description: 'yea... this is obvious',
+        },
+      ],
+    },
+    cats: {
+      type: 'category',
+      name: 'cats',
+      key: 'cats',
+      description: 'cat provider',
+      children: [
+        {
+          type: 'boolean',
+          name: 'delete after input for cats',
           key: 'deleteAfter',
           default: false,
           description: 'Deletes the users input after running a command and deletes the bot\'s response after a delay',
@@ -58,7 +98,7 @@ const settingsMap = {
         },
       ],
     },
-  ],
+  },
 };
 
 

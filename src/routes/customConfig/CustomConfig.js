@@ -1,43 +1,53 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './CustomConfig.css';
 import ServerMenu from '../../components/ServerMenu';
-import PrefixField from '../../components/PrefixField';
+import CustomServerMenu from '../../components/menuItems/ServerMenu';
 import Layout from '../../components/Layout';
-import InputBox from '../../components/menuItems/InputBox'
+import InputBox from '../../components/menuItems/InputBox';
 
-function toDivs(settingsMap) {
-  console.log(settingsMap);
-  return (<div>{
-    settingsMap.map(setting => {
-      if (setting.type === 'category') {
-        return toDivs(setting.children);
-      } else if (setting.type === 'boolean') {
-        return (
-          <InputBox>
-            <div key={setting.key}>
-              {setting.name}
-              <input type="checkbox" name={setting.name} alt={setting.description} />
-            </div>
-          </InputBox>
-        );
-      }
-      return <div />;
-    })
-  }</div>);
+function toDivs(settings, serverId, urlLocation) {
+  console.log(settings);
+  console.log(urlLocation);
+  if (settings.type === 'pageSelector') {
+    return (<div key={settings.key}>
+      <CustomServerMenu serverId={serverId} pages={Object.keys(settings.children)} page={urlLocation[0]} />
+      {toDivs(settings.children[urlLocation[0]])}
+    </div>);
+  } else if (settings.type === 'category') {
+    return <InputBox key={settings.key}><div>{settings.children.map(c => toDivs(c))}</div></InputBox>;
+  } else if (settings.type === 'boolean') {
+    return (
+      <InputBox key={settings.key}>
+        <div key={settings.key}>
+          {settings.name}
+          <input type="checkbox" name={settings.name} alt={settings.description} />
+        </div>
+      </InputBox>
+    );
+  } else if (settings.type === 'int') {
+    return (
+      <InputBox key={settings.key}>
+        <div key={settings.key}>
+          {settings.name}
+          <input type="text" name={settings.name} alt={settings.description} />
+        </div>
+      </InputBox>
+    );
+  } else if (settings.type === 'list') {
+    return (
+      <InputBox key={settings.key}>
+        <div key={settings.key}>
+          {settings.name}
+          <input type="text" name={settings.name} alt={settings.description} />
+        </div>
+      </InputBox>
+    );
+  }
+  return <div key={settings.key}>{settings.key}</div>;
 }
 
-function CustomConfig({ user, serverId, prefix, title, guild, settingsMap }) {
-  console.log(settingsMap.layout);
+function CustomConfig({ user, serverId, title, guild, settingsMap, urlLocation }) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   if (!guild) {
     return (<div><h2>Guild {serverId} Not Found</h2>Your Guild Could not be found</div>);
@@ -49,13 +59,7 @@ function CustomConfig({ user, serverId, prefix, title, guild, settingsMap }) {
         <div className={s.root}>
           <div className={s.container}>
             <h1 className={s.title}>{title} changed</h1>
-            {(prefix ? <div>Prefix: <PrefixField
-              serverId={serverId}
-              prefix={prefix}
-            />
-            </div>
-              : '')}
-            {toDivs(settingsMap.layout)}
+            {toDivs(settingsMap, serverId, urlLocation.split('/'))}
           </div>
         </div>
       </div>
@@ -67,9 +71,9 @@ CustomConfig.propTypes = {
   user: PropTypes.object.isRequired,
   settingsMap: PropTypes.object.isRequired,
   serverId: PropTypes.string.isRequired,
-  prefix: PropTypes.array,
   title: PropTypes.string,
   guild: PropTypes.object,
+  urlLocation: PropTypes.string,
 };
 
 export default withStyles(s)(CustomConfig);
