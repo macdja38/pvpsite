@@ -13,14 +13,14 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './ServerMenu.css';
 import Link from '../../Link';
 
-function ServerMenu({ serverId, page, pages }) {
+function ServerMenu({ serverId, botId, page, pages }) {
   return (
     <div className={cx(s.root)} role="navigation">
       <div className={s.menu}>
         {pages.map(p => (<Link
           key={p}
           className={p === page ? cx(s.link, s.active) : s.link}
-          to={`/server/${serverId}/${p}`}
+          to={`/bot/${botId}/server/${serverId}/${p}`}
         >{p}</Link>))}
       </div>
     </div>
@@ -28,8 +28,9 @@ function ServerMenu({ serverId, page, pages }) {
 }
 
 ServerMenu.propTypes = {
-  serverId: PropTypes.string,
-  pages: PropTypes.array,
+  serverId: PropTypes.string.isRequired,
+  botId: PropTypes.string.isRequired,
+  pages: PropTypes.array.isRequired,
   page: PropTypes.string,
 };
 

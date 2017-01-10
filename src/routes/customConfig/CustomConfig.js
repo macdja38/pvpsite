@@ -6,16 +6,23 @@ import CustomServerMenu from '../../components/menuItems/ServerMenu';
 import Layout from '../../components/Layout';
 import InputBox from '../../components/menuItems/InputBox';
 
-function toDivs(settings, serverId, urlLocation) {
+function toDivs(settings, serverId, botId, urlLocation) {
   console.log(settings);
   console.log(urlLocation);
   if (settings.type === 'pageSelector') {
     return (<div key={settings.key}>
-      <CustomServerMenu serverId={serverId} pages={Object.keys(settings.children)} page={urlLocation[0]} />
-      {toDivs(settings.children[urlLocation[0]])}
+      <CustomServerMenu
+        botId={botId}
+        serverId={serverId}
+        pages={Object.keys(settings.children)}
+        page={urlLocation[0]}
+      />
+      {toDivs(settings.children[urlLocation[0]], serverId, botId, urlLocation.slice(1))}
     </div>);
   } else if (settings.type === 'category') {
-    return <InputBox key={settings.key}><div>{settings.children.map(c => toDivs(c))}</div></InputBox>;
+    return (<InputBox key={settings.key}>
+      <div>{settings.children.map(c => toDivs(c, serverId, botId, urlLocation.slice(1)))}</div>
+    </InputBox>);
   } else if (settings.type === 'boolean') {
     return (
       <InputBox key={settings.key}>
@@ -47,7 +54,7 @@ function toDivs(settings, serverId, urlLocation) {
   return <div key={settings.key}>{settings.key}</div>;
 }
 
-function CustomConfig({ user, serverId, title, guild, settingsMap, urlLocation }) {
+function CustomConfig({ user, serverId, botId, title, guild, settingsMap, urlLocation }) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   if (!guild) {
     return (<div><h2>Guild {serverId} Not Found</h2>Your Guild Could not be found</div>);
@@ -59,7 +66,7 @@ function CustomConfig({ user, serverId, title, guild, settingsMap, urlLocation }
         <div className={s.root}>
           <div className={s.container}>
             <h1 className={s.title}>{title} changed</h1>
-            {toDivs(settingsMap, serverId, urlLocation.split('/'))}
+            {toDivs(settingsMap.layout, serverId, botId, urlLocation.split('/'))}
           </div>
         </div>
       </div>
@@ -70,6 +77,7 @@ function CustomConfig({ user, serverId, title, guild, settingsMap, urlLocation }
 CustomConfig.propTypes = {
   user: PropTypes.object.isRequired,
   settingsMap: PropTypes.object.isRequired,
+  botId: PropTypes.string.isRequired,
   serverId: PropTypes.string.isRequired,
   title: PropTypes.string,
   guild: PropTypes.object,

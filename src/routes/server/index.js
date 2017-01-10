@@ -18,15 +18,11 @@ let description = 'Server admin panel';
 
 export default {
 
-  path: '/server/:anything*',
+  path: '/server/:serverId',
   auth: true,
 
   async action({ user, headers }, params) {
-    const paramsSplit = params.anything.split('/');
-    const serverId = paramsSplit.shift();
-    let urlLocation = false;
-    if (paramsSplit.length > 0) urlLocation = paramsSplit.join('/');
-    if (!user) return { redirect: `/login/server/${serverId}` };
+    if (!user) return { redirect: `/login/server/${params.serverId}` };
 
     const options = {
       method: 'get',
@@ -36,13 +32,9 @@ export default {
       options.headers = headers;
     }
 
-    if (urlLocation) {
-      return customConfig.action({ user, headers }, { serverId, urlLocation });
-    }
-
     let prefixResp;
     try {
-      prefixResp = await fetch(`/api/v1/prefix/${serverId}`, options);
+      prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, options);
     } catch (error) {
       console.error('prefix Resp caught', error);
     }
@@ -52,9 +44,9 @@ export default {
       prefix = (await prefixResp.json()).prefix;
     }
 
-    const guild = user.guilds.find(serverGuild => serverId === serverGuild.id);
+    const guild = user.guilds.find(serverGuild => params.serverId === serverGuild.id);
 
-    if (!guild) return { redirect: `/login/server/${serverId}` };
+    if (!guild) return { redirect: `/login/server/${params.serverId}` };
 
     title = `${guild.name}'s settings`;
     description = `Admin panel of ${guild.name}`;
@@ -62,7 +54,7 @@ export default {
     return {
       title,
       description,
-      component: <Server title={title} guild={guild} user={user} serverId={serverId} prefix={prefix} />,
+      component: <Server title={title} guild={guild} user={user} serverId={params.serverId} prefix={prefix} />,
     };
   },
 };

@@ -16,10 +16,15 @@ let description = 'Server admin panel';
 
 export default {
 
-  path: '/server/:serverId/:urlLocation*?',
+  path: '/bot/:botId/server/:serverId/:urlLocation*',
   auth: true,
 
   async action({ user, headers }, params) {
+    /* const paramsSplit = params.anything.split('/');
+     const serverId = paramsSplit.shift();
+     let urlLocation = false;
+     if (paramsSplit.length > 0) urlLocation = paramsSplit.join('/');
+     */
     console.log(params);
     if (!user) return { redirect: `/login/server/${params.serverId}` };
 
@@ -31,28 +36,34 @@ export default {
       options.headers = headers;
     }
 
-    let settingsMapResp;
+    let settingsResp;
     try {
-      settingsMapResp = await fetch(`/api/v1/settings/${params.serverId}`, options);
+      settingsResp = await fetch(`/api/v1/settings/bot/${params.botId}/guild/${params.serverId}`, options);
     } catch (error) {
-      return { redirect: `/login/server/${params.serverId}/${params.urlLocation}`};
+      return { redirect: `/login/server/${params.serverId}/${params.urlLocation}` };
     }
 
+    let settingsMapResp;
+    try {
+      settingsMapResp = await fetch(`/api/v1/settingsMap/bot/${params.botId}/guild/${params.serverId}`, options);
+    } catch (error) {
+      return { redirect: `/login/server/${params.serverId}/${params.urlLocation}` };
+    }
+
+    console.log(settingsResp);
+    let settings;
+    if (settingsResp.status === 200) {
+      settings = (await settingsResp.json());
+    } else {
+      settings = {};
+    }
+
+    console.log(settingsMapResp);
     let settingsMap;
     if (settingsMapResp.status === 200) {
       settingsMap = (await settingsMapResp.json());
-    }
-
-    let prefixResp;
-    try {
-      prefixResp = await fetch(`/api/v1/prefix/${params.serverId}`, options);
-    } catch (error) {
-      console.error('prefix Resp caught', error);
-    }
-
-    let prefix;
-    if (prefixResp.status === 200) {
-      prefix = (await prefixResp.json()).prefix;
+    } else {
+      settingsMap = {};
     }
 
     const guild = user.guilds.find(serverGuild => params.serverId === serverGuild.id);
@@ -69,9 +80,10 @@ export default {
         title={title}
         guild={guild}
         user={user}
+        botId={params.botId}
         serverId={params.serverId}
-        prefix={prefix}
         urlLocation={params.urlLocation}
+        settings={settings}
         settingsMap={settingsMap}
       />,
     };

@@ -10,7 +10,7 @@
 
 function checkServerAuth(req, res, next) {
   if (req.isAuthenticated()) {
-    const id = req.params.id;
+    const id = req.params.guildId;
     const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
     if (guild) {
       return next();
@@ -102,50 +102,47 @@ const settingsMap = {
 };
 
 
-module.exports = function register(app, { r, connPromise }) {
-  /*  "/api/v1/prefix/:id"
-   *    GET: find contact by id
-   *    PUT: update contact by id
-   *    DELETE: deletes contact by id
-   */
-  app.get('/api/v1/settings/:id', checkServerAuth, (req, res) => {
-    connPromise.then((/* conn */) => {
-      res.json(settingsMap);
-      /* const queue = r.table('servers').get(req.params.id).run(conn);
-      Promise.all([queue])
-        .then(([queueResult]) => {
-          if (queueResult && queueResult.hasOwnProperty('queue')) { // eslint-disable-line no-prototype-builtins
-            res.json(queueResult);
-          } else {
-            res.json({ queue: [] });
-          }
-        }).catch(error => console.error(error));*/
-    });
+module.exports = function register(app, { r }) {
+  app.get('/api/v1/settingsMap/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    r
+      .table('settingsMap')
+      .get(`${req.params.botId}|${req.params.guildId}`)
+      .run()
+      .then(c => res.json(c));
   });
 
-  /* app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
-    connPromise.then((conn) => {
-      const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
-      r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
-        .then(() => {
-          res.json({ success: true });
-        })
-        .catch(() => {
-          res.json({ success: false });
-        });
-    });
+  app.get('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    r
+      .table('settings')
+      .get(`${req.params.botId}|${req.params.guildId}`)
+      .run()
+      .then(c => res.json(c));
   });
 
-  app.delete('/api/v1/prefix/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
-    const prefix = { prefix: req.body.prefix, id: req.params.id };
-    r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
-      .then(() => {
-        res.json({ success: true });
-      })
-      .catch(() => {
-        res.json({ success: false });
-      });
-  }));
-  */
+  app.put('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    r
+      .table('settings')
+      .get(`${req.params.botId}|${req.params.guildId}`)
+      .run()
+      .then(c => res.json(c));
+  });
+
+  app.put('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    const body = req.body;
+    body.id = `${req.params.botId}|${req.params.guildId}`;
+    r
+      .table('settings')
+      .insert(body, { conflict: 'update' })
+      .run()
+      .then(c => res.json(c));
+  });
+
+  app.delete('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    r
+      .table('settings')
+      .get(`${req.params.botId}|${req.params.guildId}`)
+      .run()
+      .then(c => res.json(c));
+  });
 };
 
