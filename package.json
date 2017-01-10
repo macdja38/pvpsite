@@ -38,6 +38,7 @@
     "normalize.css": "5.0.0",
     "passport": "0.3.2",
     "passport-discord": "^0.1.1",
+    "passport-oauth2-refresh": "^1.0.0",
     "postcss-flexbugs-fixes": "^2.0.0",
     "pretty-error": "2.0.2",
     "raven": "^0.12.1",
