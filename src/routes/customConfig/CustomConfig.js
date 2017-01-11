@@ -6,55 +6,55 @@ import CustomServerMenu from '../../components/menuItems/ServerMenu';
 import Layout from '../../components/Layout';
 import InputBox from '../../components/menuItems/InputBox';
 
-function toDivs(settings, serverId, botId, urlLocation) {
-  console.log(settings);
+function toDivs(settingsMap, settings, serverId, botId, urlLocation) {
+  console.log(settingsMap);
   console.log(urlLocation);
-  if (settings.type === 'pageSelector') {
-    return (<div key={settings.key}>
+  if (settingsMap.type === 'pageSelector') {
+    return (<div key={settingsMap.key}>
       <CustomServerMenu
         botId={botId}
         serverId={serverId}
-        pages={Object.keys(settings.children)}
+        pages={Object.keys(settingsMap.children)}
         page={urlLocation[0]}
       />
-      {toDivs(settings.children[urlLocation[0]], serverId, botId, urlLocation.slice(1))}
+      {toDivs(settingsMap.children[urlLocation[0]], serverId, botId, urlLocation.slice(1))}
     </div>);
-  } else if (settings.type === 'category') {
-    return (<InputBox key={settings.key}>
-      <div>{settings.children.map(c => toDivs(c, serverId, botId, urlLocation.slice(1)))}</div>
+  } else if (settingsMap.type === 'category') {
+    return (<InputBox key={settingsMap.key}>
+      <div>{settingsMap.children.map(c => toDivs(c, serverId, botId, urlLocation.slice(1)))}</div>
     </InputBox>);
-  } else if (settings.type === 'boolean') {
+  } else if (settingsMap.type === 'boolean') {
     return (
-      <InputBox key={settings.key}>
-        <div key={settings.key}>
-          {settings.name}
-          <input type="checkbox" name={settings.name} alt={settings.description} />
+      <InputBox key={settingsMap.key}>
+        <div key={settingsMap.key}>
+          {settingsMap.name}
+          <input type="checkbox" name={settingsMap.name} alt={settingsMap.description} />
         </div>
       </InputBox>
     );
-  } else if (settings.type === 'int') {
+  } else if (settingsMap.type === 'int') {
     return (
-      <InputBox key={settings.key}>
-        <div key={settings.key}>
-          {settings.name}
-          <input type="text" name={settings.name} alt={settings.description} />
+      <InputBox key={settingsMap.key}>
+        <div key={settingsMap.key}>
+          {settingsMap.name}
+          <input type="text" name={settingsMap.name} alt={settingsMap.description} />
         </div>
       </InputBox>
     );
-  } else if (settings.type === 'list') {
+  } else if (settingsMap.type === 'list') {
     return (
-      <InputBox key={settings.key}>
-        <div key={settings.key}>
-          {settings.name}
-          <input type="text" name={settings.name} alt={settings.description} />
+      <InputBox key={settingsMap.key}>
+        <div key={settingsMap.key}>
+          {settingsMap.name}
+          <input type="text" name={settingsMap.name} alt={settingsMap.description} />
         </div>
       </InputBox>
     );
   }
-  return <div key={settings.key}>{settings.key}</div>;
+  return <div key={settingsMap.key}>{settingsMap.key}</div>;
 }
 
-function CustomConfig({ user, serverId, botId, title, guild, settingsMap, urlLocation }) {
+function CustomConfig({ user, serverId, settings, botId, title, guild, settingsMap, urlLocation }) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
   if (!guild) {
     return (<div><h2>Guild {serverId} Not Found</h2>Your Guild Could not be found</div>);
@@ -66,7 +66,7 @@ function CustomConfig({ user, serverId, botId, title, guild, settingsMap, urlLoc
         <div className={s.root}>
           <div className={s.container}>
             <h1 className={s.title}>{title} changed</h1>
-            {toDivs(settingsMap.layout, serverId, botId, urlLocation.split('/'))}
+            {toDivs(settingsMap.layout, settings.data, serverId, botId, urlLocation.split('/'))}
           </div>
         </div>
       </div>
@@ -77,6 +77,7 @@ function CustomConfig({ user, serverId, botId, title, guild, settingsMap, urlLoc
 CustomConfig.propTypes = {
   user: PropTypes.object.isRequired,
   settingsMap: PropTypes.object.isRequired,
+  settings: PropTypes.object,
   botId: PropTypes.string.isRequired,
   serverId: PropTypes.string.isRequired,
   title: PropTypes.string,

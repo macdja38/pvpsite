@@ -120,6 +120,8 @@ module.exports = function register(app, { r }) {
   });
 
   app.put('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    const body = req.body;
+    body.id = `${req.params.botId}|${req.params.guildId}`;
     r
       .table('settings')
       .get(`${req.params.botId}|${req.params.guildId}`)
@@ -127,7 +129,7 @@ module.exports = function register(app, { r }) {
       .then(c => res.json(c));
   });
 
-  app.put('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+  app.patch('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
     const body = req.body;
     body.id = `${req.params.botId}|${req.params.guildId}`;
     r
@@ -140,7 +142,7 @@ module.exports = function register(app, { r }) {
   app.delete('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
     r
       .table('settings')
-      .get(`${req.params.botId}|${req.params.guildId}`)
+      .delete(`${req.params.botId}|${req.params.guildId}`)
       .run()
       .then(c => res.json(c));
   });
