@@ -70,7 +70,7 @@ const app = express();
 const RDBStoreSession = new RDBStore(session);
 
 const store = new RDBStoreSession(r, {
-  browserSessionsMaxAge: 5000, // optional, default is 60000 (60 seconds). Time between clearing expired sessions.
+  browserSessionsMaxAge: 60000, // optional, default is 60000 (60 seconds). Time between clearing expired sessions.
   table: 'session', // optional, default is 'session'. Table to store sessions in.
 });
 
@@ -113,7 +113,7 @@ app.use(session({
   sameSite: true,
   store,
   saveUninitialized: true,
-  cookie: { secure: 'auto', maxAge: 86400000 },
+  cookie: { secure: 'auto', maxAge: 2592000000 },
 }));
 
 app.use(passport.initialize());
