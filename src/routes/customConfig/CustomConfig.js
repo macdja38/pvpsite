@@ -6,9 +6,23 @@ import CustomServerMenu from '../../components/menuItems/ServerMenu';
 import Layout from '../../components/Layout';
 import InputBox from '../../components/menuItems/InputBox';
 
-function toDivs(settingsMap, settings, serverId, botId, urlLocation) {
-  console.log(settingsMap);
-  console.log(urlLocation);
+function childOrObject(item, key) {
+  if (item.hasOwnProperty(key)) return item[key];
+  return {};
+}
+
+function thingOrDefault(settings, defaults, key = 'value') {
+  if (settings.hasOwnProperty(key)) return settings[key];
+  if (defaults.hasOwnProperty(key)) return defaults[key];
+  return true;
+  throw new Error('no setting or default value defined');
+}
+
+function toDivs(settingsMap, settings, serverId, botId, urlLocation, currentPath) {
+  console.log('Iteration', urlLocation);
+  console.log('settings:', settings);
+  console.log('settingsMap:', settingsMap);
+  console.log('urlLocation:', urlLocation);
   if (settingsMap.type === 'pageSelector') {
     return (<div key={settingsMap.key}>
       <CustomServerMenu
@@ -17,18 +31,37 @@ function toDivs(settingsMap, settings, serverId, botId, urlLocation) {
         pages={Object.keys(settingsMap.children)}
         page={urlLocation[0]}
       />
-      {toDivs(settingsMap.children[urlLocation[0]], serverId, botId, urlLocation.slice(1))}
+      {toDivs(settingsMap.children[urlLocation[0]],
+        childOrObject(settings, urlLocation[0]),
+        serverId,
+        botId,
+        urlLocation.slice(1),
+        currentPath.slice(0).push(settingsMap.key))}
     </div>);
   } else if (settingsMap.type === 'category') {
     return (<InputBox key={settingsMap.key}>
-      <div>{settingsMap.children.map(c => toDivs(c, serverId, botId, urlLocation.slice(1)))}</div>
+      <div>{
+      settingsMap.children.map((c) =>
+        toDivs(c,
+          childOrObject(settings, c.key),
+          serverId,
+          botId,
+          urlLocation,
+          currentPath.slice(0).push(settingsMap.key)))
+    }</div>
     </InputBox>);
   } else if (settingsMap.type === 'boolean') {
+    console.log(thingOrDefault(settings, settingsMap));
     return (
       <InputBox key={settingsMap.key}>
         <div key={settingsMap.key}>
           {settingsMap.name}
-          <input type="checkbox" name={settingsMap.name} alt={settingsMap.description} />
+          <input
+            type="checkbox"
+            name={settingsMap.name}
+            alt={settingsMap.description}
+            checked={thingOrDefault(settings, settingsMap)}
+          />
         </div>
       </InputBox>
     );
@@ -37,7 +70,12 @@ function toDivs(settingsMap, settings, serverId, botId, urlLocation) {
       <InputBox key={settingsMap.key}>
         <div key={settingsMap.key}>
           {settingsMap.name}
-          <input type="text" name={settingsMap.name} alt={settingsMap.description} />
+          <input
+            type="text"
+            name={settingsMap.name}
+            alt={settingsMap.description}
+            value={thingOrDefault(settings, settingsMap)}
+          />
         </div>
       </InputBox>
     );
@@ -46,7 +84,12 @@ function toDivs(settingsMap, settings, serverId, botId, urlLocation) {
       <InputBox key={settingsMap.key}>
         <div key={settingsMap.key}>
           {settingsMap.name}
-          <input type="text" name={settingsMap.name} alt={settingsMap.description} />
+          <input
+            type="text"
+            name={settingsMap.name}
+            alt={settingsMap.description}
+            value={thingOrDefault(settings, settingsMap)}
+          />
         </div>
       </InputBox>
     );
