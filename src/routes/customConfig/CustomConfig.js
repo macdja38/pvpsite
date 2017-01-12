@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import deepmerge from 'deepmerge';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './CustomConfig.css';
 import ServerMenu from '../../components/ServerMenu';
@@ -9,6 +10,12 @@ import InputBox from '../../components/menuItems/InputBox';
 function childOrObject(item, key) {
   if (item.hasOwnProperty(key)) return item[key];
   return {};
+}
+
+function buildNode(nodes, value) {
+  if (nodes.length == 0) return [value];
+  var key = nodes.shift();
+  return {[key]: buildNode(nodes, value)};
 }
 
 function thingOrDefault(delta, settings, defaults, key = 'value') {
@@ -39,7 +46,7 @@ class CustomConfig extends Component {
     return (event) => {
       console.log(key);
       console.log(event.target.value);
-      this.state[key] = event.target.value;
+      this.setState({ delta: deepmerge(this.state.delta, buildNode(key, event.target.value)) });
     };
   }
 
@@ -144,13 +151,16 @@ class CustomConfig extends Component {
           <div className={s.root}>
             <div className={s.container}>
               <h1 className={s.title}>{title} changed</h1>
-              {this.toDivs(settingsMap.layout,
-                this.state.settings,
-                this.state.delta,
-                serverId,
-                botId,
-                urlLocation.split('/'),
-                [])}
+              <form onSubmit={this.handleSubmit}>
+                {this.toDivs(settingsMap.layout,
+                  this.state.settings,
+                  this.state.delta,
+                  serverId,
+                  botId,
+                  urlLocation.split('/'),
+                  [])}
+                <input type="submit" value="submit" />
+              </form>
             </div>
           </div>
         </div>
