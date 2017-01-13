@@ -122,16 +122,18 @@ module.exports = function register(app, { r }) {
   app.put('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
     const body = req.body;
     body.id = `${req.params.botId}|${req.params.guildId}`;
+    console.log('put', body);
     r
       .table('settings')
-      .get(`${req.params.botId}|${req.params.guildId}`)
+      .insert(body, { conflict: 'update' })
       .run()
-      .then(c => res.json(c));
+      .then(c => { console.log(c); return res.json(c); });
   });
 
   app.patch('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
     const body = req.body;
     body.id = `${req.params.botId}|${req.params.guildId}`;
+    console.log('patch', body);
     r
       .table('settings')
       .insert(body, { conflict: 'update' })

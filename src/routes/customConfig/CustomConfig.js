@@ -6,6 +6,7 @@ import ServerMenu from '../../components/ServerMenu';
 import CustomServerMenu from '../../components/menuItems/ServerMenu';
 import Layout from '../../components/Layout';
 import InputBox from '../../components/menuItems/InputBox';
+import fetch from '../../core/fetch';
 
 function childOrObject(item, key) {
   if (item.hasOwnProperty(key)) return item[key];
@@ -13,9 +14,9 @@ function childOrObject(item, key) {
 }
 
 function buildNode(nodes, value) {
-  if (nodes.length == 0) return [value];
-  var key = nodes.shift();
-  return {[key]: buildNode(nodes, value)};
+  if (nodes.length === 0) return value;
+  const key = nodes.shift();
+  return { [key]: buildNode(nodes, value) };
 }
 
 function thingOrDefault(delta, settings, defaults, key = 'value') {
@@ -36,29 +37,58 @@ class CustomConfig extends Component {
   constructor(props) {
     super(props);
     this.state = { settings: props.settings.data, delta: {} };
+    this.serverId = props.serverId;
+    this.botId = props.botId;
 
     this.toDivs = this.toDivs.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(key) {
+  handleChange(key, currentDelta, settings, settingsMap) {
     return (event) => {
       console.log(key);
-      console.log(event.target.value);
-      this.setState({ delta: deepmerge(this.state.delta, buildNode(key, event.target.value)) });
+      let value;
+      const itemValue = event.target.value;
+      if (settingsMap.type === 'boolean') {
+        value = !thingOrDefault(currentDelta, settings, settingsMap);
+      } else if (settingsMap.type === 'number') {
+        value = parseFloat(itemValue);
+      } else if (settingsMap.type === 'text') {
+        value = event.target.value;
+      }
+      console.log(event.target.value, value);
+      const newValue = buildNode(key, { value });
+      console.log(newValue);
+      console.log(JSON.stringify(newValue));
+      const delta = deepmerge(this.state.delta, newValue);
+      console.log(delta);
+      this.setState({ delta });
+      console.log(this.state);
     };
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
     console.log(this);
+    fetch(`/api/v1/settings/bot/${this.botId}/guild/${this.serverId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ data: this.state.delta }),
+    }).then(() => {
+      alert('Job Done!');
+    });
+    event.preventDefault();
   }
 
   toDivs(settingsMap, settings, delta, serverId, botId, urlLocation, currentPath) {
-    console.log('Iteration', urlLocation);
-    console.log('settings:', settings);
-    console.log('settingsMap:', settingsMap);
-    console.log('urlLocation:', urlLocation);
+    console.log('and another one');
+    console.log(settingsMap);
+    console.log(settings);
+    console.log(delta);
     if (settingsMap.type === 'pageSelector') {
       return (<div key={settingsMap.key}>
         <CustomServerMenu
@@ -73,30 +103,30 @@ class CustomConfig extends Component {
           serverId,
           botId,
           urlLocation.slice(1),
-          duplicateAndPush(currentPath, settingsMap.key))}
+          duplicateAndPush(currentPath, urlLocation[0]))}
       </div>);
     } else if (settingsMap.type === 'category') {
       return (<InputBox key={settingsMap.key}>
         <div>{
-          settingsMap.children.map((c) =>
-            this.toDivs(c,
-              childOrObject(settings, c.key),
-              childOrObject(delta, c.key),
+          Object.keys(settingsMap.children).map((key) => {
+            return this.toDivs(settingsMap.children[key],
+              childOrObject(settings, key),
+              childOrObject(delta, key),
               serverId,
               botId,
               urlLocation,
-              duplicateAndPush(currentPath, settingsMap.key)))
+              duplicateAndPush(currentPath, key));
+          })
         }</div>
       </InputBox>);
     } else if (settingsMap.type === 'boolean') {
-      console.log(thingOrDefault(delta, settings, settingsMap));
       return (
         <InputBox key={settingsMap.key}>
           <div key={settingsMap.key}>
             {settingsMap.name}
             <input
               type="checkbox"
-              onChange={this.handleChange(duplicateAndPush(currentPath, settingsMap.key))}
+              onChange={this.handleChange(currentPath, delta, settings, settingsMap)}
               name={settingsMap.name}
               alt={settingsMap.description}
               checked={thingOrDefault(delta, settings, settingsMap)}
@@ -104,14 +134,14 @@ class CustomConfig extends Component {
           </div>
         </InputBox>
       );
-    } else if (settingsMap.type === 'int') {
+    } else if (settingsMap.type === 'number') {
       return (
         <InputBox key={settingsMap.key}>
           <div key={settingsMap.key}>
             {settingsMap.name}
             <input
-              type="text"
-              onChange={this.handleChange(duplicateAndPush(currentPath, settingsMap.key))}
+              type="number"
+              onChange={this.handleChange(currentPath, delta, settings, settingsMap)}
               name={settingsMap.name}
               alt={settingsMap.description}
               value={thingOrDefault(delta, settings, settingsMap)}
@@ -119,14 +149,15 @@ class CustomConfig extends Component {
           </div>
         </InputBox>
       );
-    } else if (settingsMap.type === 'list') {
+    } else if (settingsMap.type === 'text') {
+      console.log(delta, settings, settingsMap);
       return (
         <InputBox key={settingsMap.key}>
           <div key={settingsMap.key}>
             {settingsMap.name}
             <input
               type="text"
-              onChange={this.handleChange(duplicateAndPush(currentPath, settingsMap.key))}
+              onChange={this.handleChange(currentPath, delta, settings, settingsMap)}
               name={settingsMap.name}
               alt={settingsMap.description}
               value={thingOrDefault(delta, settings, settingsMap)}
@@ -159,7 +190,7 @@ class CustomConfig extends Component {
                   botId,
                   urlLocation.split('/'),
                   [])}
-                <input type="submit" value="submit" />
+                <input type="submit" value="submit" name="save" label="save" />
               </form>
             </div>
           </div>
