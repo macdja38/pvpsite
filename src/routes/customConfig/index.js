@@ -50,7 +50,6 @@ export default {
       return { redirect: `/login/server/${params.serverId}/${params.urlLocation}` };
     }
 
-    console.log(settingsResp);
     let settings;
     if (settingsResp.status === 200) {
       settings = (await settingsResp.json());
@@ -58,7 +57,6 @@ export default {
       settings = {};
     }
 
-    console.log(settingsMapResp);
     let settingsMap;
     if (settingsMapResp.status === 200) {
       settingsMap = (await settingsMapResp.json());

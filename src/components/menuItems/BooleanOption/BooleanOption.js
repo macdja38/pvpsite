@@ -11,14 +11,15 @@ import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './BooleanOption.css';
 
-class PrefixField extends Component { // eslint-disable-line react/prefer-stateless-function
+class BooleanOption extends Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
     children: PropTypes.element.isRequired,
+    value: PropTypes.anything,
   };
 
   render() {
-    const { children } = this.props; // eslint-disable-line no-use-before-define
+    const { children, value } = this.props; // eslint-disable-line no-use-before-define
     return (
       <div
         className={s.box}
@@ -28,4 +29,4 @@ class PrefixField extends Component { // eslint-disable-line react/prefer-statel
 
 }
 
-export default withStyles(s)(PrefixField);
+export default withStyles(s)(BooleanOption);
