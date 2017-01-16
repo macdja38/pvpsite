@@ -125,10 +125,11 @@ class CustomConfig extends Component {
           <div key={settingsMap.key}>
             {settingsMap.name}
             <input
+              className={s.check}
               type="checkbox"
               onChange={this.handleChange(currentPath, delta, settings, settingsMap)}
               name={settingsMap.name}
-              alt={settingsMap.description}
+              title={settingsMap.description}
               checked={thingOrDefault(delta, settings, settingsMap)}
             />
           </div>
@@ -140,26 +141,27 @@ class CustomConfig extends Component {
           <div key={settingsMap.key}>
             {settingsMap.name}
             <input
+              className={s.number}
               type="number"
               onChange={this.handleChange(currentPath, delta, settings, settingsMap)}
               name={settingsMap.name}
-              alt={settingsMap.description}
+              title={settingsMap.description}
               value={thingOrDefault(delta, settings, settingsMap)}
             />
           </div>
         </InputBox>
       );
     } else if (settingsMap.type === 'text') {
-      console.log(delta, settings, settingsMap);
       return (
         <InputBox key={settingsMap.key}>
           <div key={settingsMap.key}>
             {settingsMap.name}
             <input
+              className={s.text}
               type="text"
               onChange={this.handleChange(currentPath, delta, settings, settingsMap)}
               name={settingsMap.name}
-              alt={settingsMap.description}
+              title={settingsMap.description}
               value={thingOrDefault(delta, settings, settingsMap)}
             />
           </div>
@@ -190,7 +192,7 @@ class CustomConfig extends Component {
                   botId,
                   urlLocation.split('/'),
                   [])}
-                <input type="submit" value="submit" name="save" label="save" />
+                <input className={s.save} type="submit" value="Save" name="save" />
               </form>
             </div>
           </div>
