@@ -36,7 +36,7 @@ function duplicateAndPush(array, ...params) {
 class CustomConfig extends Component {
   constructor(props) {
     super(props);
-    this.state = { settings: props.settings.data, delta: {} };
+    this.state = { settings: (props.settings || { data: {} }).data, delta: {} };
     this.serverId = props.serverId;
     this.botId = props.botId;
 
