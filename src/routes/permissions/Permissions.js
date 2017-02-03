@@ -269,7 +269,7 @@ class Permissions extends Component {
             <h1 className={s.title}>{title}</h1>
             <div className={s.root}>
               {this.state.canEdit && <div>
-                <div style={{ float: 'left', visibility: this.state.edit ? false : 'hidden' }}>
+                <div className={this.state.edit ? s.active : s.hidden} style={{ float: 'left' }}>
                   {this.channelSelector}
                   {this.userAndGroupSelector}
                   {this.nodeText}
@@ -295,6 +295,11 @@ class Permissions extends Component {
                   >
                     Deny
                   </button>
+                  <br />
+                  <p>
+                    Click a Node to delete it (feature still in beta, refresh page before use).
+                    For a complete list of nodes visit the documentation page.
+                  </p>
                 </div>
                 <button
                   className={cx(s.button, this.state.edit ? s.editEnabled : s.editDisabled)}
@@ -303,10 +308,6 @@ class Permissions extends Component {
                 Edit
                 </button>
                 <div className={s.clearFix} />
-                <p style={{ visibility: this.state.edit ? false : 'hidden' }}>
-                Click a Node to delete it (feature still in beta, refresh page before use). For a complete list of nodes
-                visit the documentation page.
-                </p>
               </div>
               }
               {

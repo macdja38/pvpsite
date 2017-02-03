@@ -43,6 +43,7 @@ const config = {
 
           // https://babeljs.io/docs/usage/options/
           babelrc: false,
+          comments: false,
           presets: [
             // JSX, Flow
             // https://github.com/babel/babel/tree/master/packages/babel-preset-react
@@ -83,6 +84,7 @@ const config = {
       {
         test: /\.css/,
         loaders: [
+          // ExtractTextPlugin.extract('style', 'css?{discardComments:{removeAll:true}}'),
           'isomorphic-style-loader',
           `css-loader?${JSON.stringify({
             // CSS Loader https://github.com/webpack/css-loader
@@ -158,6 +160,8 @@ const config = {
   postcss(bundler) {
     return {
       default: [
+        // Minify the results
+        // require('cssnano')({ autoprefixer: false, comments: { removeAll: true } }),
         // Transfer @import rule by inlining content, e.g. @import 'normalize.css'
         // https://github.com/jonathantneal/postcss-partial-import
         require('postcss-partial-import')({ addDependencyTo: bundler }),

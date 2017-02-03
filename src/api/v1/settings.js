@@ -8,9 +8,9 @@
  return true;
  }*/
 
-function checkServerAuth(req, res, next) {
+function checkOnServer(req, res, next) {
   if (req.isAuthenticated()) {
-    const id = req.params.id;
+    const id = req.params.guildId;
     const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
     if (guild) {
       return next();
@@ -20,70 +20,78 @@ function checkServerAuth(req, res, next) {
   return true;
 }
 
-/* const settingsMap = {
-  ranks: {
-    deleteAfter: {
-      type: 'boolean',
-      name: 'delete after input',
-      description: 'Deletes the users input after running a command and deletes the bot\'s response after a delay',
-    },
-    deleteDelay: {
-      type: 'int',
-      name: 'delete delay (seconds)',
-      description: 'How long after the command is executed should the input be deleted (seconds)',
-    },
-    joinableRanks: {
-      type: 'list',
-      name: 'delete delay (seconds)',
-      description: 'How long after the command is executed should the input be deleted (seconds)',
-    },
-  },
-}; */
+function checkServerAuth(req, res, next) {
+  if (req.isAuthenticated()) {
+    const id = req.params.guildId;
+    const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
+    if (guild && ((guild.permissions & 8) === 8 || guild.owner)) return next(); // eslint-disable-line no-bitwise
+  }
+  res.sendStatus(403);
+  return true;
+}
 
+module.exports = function register(app, { r }) {
+  app.get('/api/v1/settingsMap/bot/:botId/guild/:guildId', checkOnServer, (req, res) => {
+    const guildSpecificPromise = r
+      .table('settingsMap')
+      .get(`${req.params.botId}|${req.params.guildId}`)
+      .run();
 
-module.exports = function register(app, { r, connPromise }) {
-  /*  "/api/v1/prefix/:id"
-   *    GET: find contact by id
-   *    PUT: update contact by id
-   *    DELETE: deletes contact by id
-   */
-  app.get('/api/v1/settings/:id', checkServerAuth, (req, res) => {
-    connPromise.then((conn) => {
-      const queue = r.table('servers').get(req.params.id).run(conn);
-      Promise.all([queue])
-        .then(([queueResult]) => {
-          if (queueResult && queueResult.hasOwnProperty('queue')) { // eslint-disable-line no-prototype-builtins
-            res.json(queueResult);
-          } else {
-            res.json({ queue: [] });
-          }
-        }).catch(error => console.error(error));
-    });
-  });
+    const botGlobalPromise = r
+      .table('settingsMap')
+      .get(`${req.params.botId}|*`)
+      .run();
 
-  /* app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
-    connPromise.then((conn) => {
-      const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
-      r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
-        .then(() => {
-          res.json({ success: true });
-        })
-        .catch(() => {
-          res.json({ success: false });
-        });
-    });
-  });
-
-  app.delete('/api/v1/prefix/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
-    const prefix = { prefix: req.body.prefix, id: req.params.id };
-    r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
-      .then(() => {
-        res.json({ success: true });
-      })
-      .catch(() => {
-        res.json({ success: false });
+    botGlobalPromise.then(botGlobal => {
+      guildSpecificPromise.then(guildSpecific => {
+        res.json(guildSpecific || botGlobal);
       });
-  }));
-  */
+    });
+
+    botGlobalPromise.catch(() => {
+      res.sendStatus(404);
+    });
+    guildSpecificPromise.catch(() => {
+      res.sendStatus(404);
+    });
+  });
+
+  app.get('/api/v1/settings/bot/:botId/guild/:guildId', checkOnServer, (req, res) => {
+    r
+      .table('settings')
+      .get(`${req.params.botId}|${req.params.guildId}`)
+      .run()
+      .then(c => res.json(c));
+  });
+
+  app.put('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    const body = req.body;
+    body.id = `${req.params.botId}|${req.params.guildId}`;
+    console.log('put', body);
+    r
+      .table('settings')
+      .insert(body, { conflict: 'update' })
+      .run()
+      .then(c => { console.log(c); return res.json(c); });
+  });
+
+  app.patch('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    const body = req.body;
+    body.id = `${req.params.botId}|${req.params.guildId}`;
+    console.log('patch', body);
+    r
+      .table('settings')
+      .insert(body, { conflict: 'update' })
+      .run()
+      .then(c => res.json(c));
+  });
+
+  app.delete('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+    r
+      .table('settings')
+      .delete(`${req.params.botId}|${req.params.guildId}`)
+      .run()
+      .then(c => res.json(c));
+  });
 };
 

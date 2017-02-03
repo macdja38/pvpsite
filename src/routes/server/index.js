@@ -16,7 +16,7 @@ let description = 'Server admin panel';
 
 export default {
 
-  path: '/server/:serverId/',
+  path: '/server/:serverId',
   auth: true,
 
   async action({ user, headers }, params) {

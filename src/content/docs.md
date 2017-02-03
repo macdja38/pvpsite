@@ -23,7 +23,7 @@ If you don't have pvpcraft yet click [here](https://invite.pvpcraft.ca) to invit
 
 <br>
 
-## Permissions
+## Settings & Permissions
 
 -----
 
@@ -36,9 +36,10 @@ If you are familiar with linux commands this chart should be enough. Just rememb
 
 | command  | description  | node  |
 |---|---|---|
-| perms set \<allow\|deny\|remove> <node>\[ --channel \<channel>]\[ --role \<role>]\[ --user \<user>] | sets permission nodes | Discord Perm Administrator |
+| perms set \<allow\|deny\|remove> \<node>\[ --channel \<channel>]\[ --role \<role>]\[ --user \<user>] | sets permission nodes | Discord Perm Administrator |
 | perms list  |  displays a link to the website with the current permissions setup | Discord Perm Administrator  |
 | perms hardreset  |  removes all user defined permissions  |  Server Owner  |
+| setting | generates a link that will allow anyone with admin perms to configure part of the bot through a web ui | Admin |
   
 Though few, these commands form the most powerful permissions system known to Discord. Look at another module and find a node, something like music.play
 If you want to give away all commands beginning with music, you can add the wildcard *, eg: `music.*`. 
@@ -136,7 +137,7 @@ to draw.
 
 | command  | description  | node  |
 |---|---|---|
-| giveaway \<enable\|disable>\>[ --channel \<channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
+| giveaway \<enable\|disable>\[ --channel \<channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
 | clear | clears all entries | admin​.giveaway​.clear  |
 | count | counts all entries | admin​.giveaway​.count  |
 | draw [count] | clears all entries | admin​.giveaway​.draw  |
@@ -204,42 +205,42 @@ This is similar to the permissions system but for events like Warframe alerts an
     </thead>
     <tbody>
     <tr>
-        <td style="background-color: #FFB600;">moderation​.message​.deleted</td>
+        <td style="background-color: #3F0000; color: white;">moderation​.message​.deleted</td>
         <td>Logs message deletes</td>
         <td>msglog​.whitelist​.messagedeleted</td>
     </tr>
     <tr>
-        <td style="background-color: #FFFF00;">moderation​.message​.updated</td>
+        <td style="background-color: #3F7F00;">moderation​.message​.updated</td>
         <td>Logs message edits</td>
         <td>msglog​.whitelist​.messageupdate</td>
     </tr>
     <tr>
-        <td style="background-color: #CC0000; color: white;">moderation​.channel​.created</td>
+        <td style="background-color: #BEFF00; color: black;">moderation​.channel​.created</td>
         <td>Logs channel creation</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #CC0000; color: white;">moderation​.channel​.deleted</td>
+        <td style="background-color: #BE0000; color: white;">moderation​.channel​.deleted</td>
         <td>Logs channel deletion</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #CC0000; color: white;">moderation​.channel​.updated</td>
+        <td style="background-color: #BE7F00; color: white;">moderation​.channel​.updated</td>
         <td>Logs channel edits</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #FF0000; color: white;">moderation​.server​.updated</td>
+        <td style="background-color: #3F7F00; color: white;">moderation​.server​.updated</td>
         <td>Logs server updates</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #FF0000; color: white;">moderation​.role​.created</td>
+        <td style="background-color: #FFFF00; color: black;">moderation​.role​.created</td>
         <td>Logs role creation</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #FF0000; color: white;">moderation​.role​.updated</td>
+        <td style="background-color: #FF7F00; color: white;">moderation​.role​.updated</td>
         <td>Logs edits to roles</td>
         <td></td>
     </tr>
@@ -249,43 +250,43 @@ This is similar to the permissions system but for events like Warframe alerts an
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #A400A4; color: white;">moderation​.member​.added</td>
+        <td style="background-color: #7FFF00; color: black;">moderation​.member​.added</td>
         <td>Logs joins</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #A400A4; color: white;">moderation​.member​.removed</td>
+        <td style="background-color: #7F3F00; color: white;">moderation​.member​.removed</td>
         <td>Logs leaves/kicks</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #A400A4; color: white;">moderation​.member​.banned</td>
+        <td style="background-color: #7F0000; color: white;">moderation​.member​.banned</td>
         <td>Logs user bans</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #A400A4; color: white;">moderation​.member​.unbanned</td>
+        <td style="background-color: #7FBE00; color: white;">moderation​.member​.unbanned</td>
         <td>Logs use unbans</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #111180; color: white;">moderation​.member​.updated</td>
+        <td style="background-color: #3F7F00; color: white;">moderation​.member​.updated</td>
         <td>Logs server specific user changes</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #14D5E2;">moderation​.voice​.join</td>
+        <td style="background-color: #117F00; color: white;">moderation​.user</td>
+        <td>Logs user changes</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td style="background-color: #003FE2; color: white;">moderation​.voice​.join</td>
         <td>Logs voice joins</td>
         <td></td>
     </tr>
     <tr>
-        <td style="background-color: #14D5E2;">moderation​.voice​.leave</td>
+        <td style="background-color: #00BEE2;">moderation​.voice​.leave</td>
         <td>Logs voice leaves</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td style="background-color: #111180; color: white;">moderation​.user</td>
-        <td>Logs user changes</td>
         <td></td>
     </tr>
     </tbody>

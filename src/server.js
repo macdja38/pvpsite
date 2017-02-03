@@ -32,14 +32,16 @@ import oembed from './api/v1/oembed';
 import server from './api/v1/server';
 import erisInfo from './api/v1/erisInfo';
 import avatarProxy from './api/v1/avatarProxy';
+import settings from './api/v1/settings';
 import authMiddleware from './core/auth';
+// noinspection JSFileReferences
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 
 const eris = new Eris(auth.discord.token, {
   autoreconnect: true,
   cleanContent: false,
   messageLimit: 0,
-  maxShards: parseInt(auth.discord.shards, 10),
+  maxShards: parseInt(auth.discord.shards, 10) || 14,
   disableEvents: {
     VOICE_STATE_UPDATE: true,
     TYPING_START: true,
@@ -69,7 +71,7 @@ const app = express();
 const RDBStoreSession = new RDBStore(session);
 
 const store = new RDBStoreSession(r, {
-  browserSessionsMaxAge: 5000, // optional, default is 60000 (60 seconds). Time between clearing expired sessions.
+  browserSessionsMaxAge: 60000, // optional, default is 60000 (60 seconds). Time between clearing expired sessions.
   table: 'session', // optional, default is 'session'. Table to store sessions in.
 });
 
@@ -112,7 +114,7 @@ app.use(session({
   sameSite: true,
   store,
   saveUninitialized: true,
-  cookie: { secure: 'auto', maxAge: 86400000 },
+  cookie: { secure: 'auto', maxAge: 2592000000 },
 }));
 
 app.use(passport.initialize());
@@ -165,6 +167,7 @@ music(app, db, eris);
 oembed(app, db, eris);
 server(app, db, eris);
 erisInfo(app, db, eris);
+settings(app, db, eris);
 avatarProxy(app);
 
 //
@@ -248,7 +251,29 @@ eris.connect().then(() => {
   console.log('Connected To Discord');
 });
 
+eris.on('ready', () => {
+  console.log('Ready as ', eris.user.username);
+});
+
 eris.on('error', error => {
   console.error(error);
   ravenClient.captureError(error);
+});
+
+process.on('unhandledRejection', (reason, p) => {
+  if (ravenClient) {
+    ravenClient.captureError(reason, {
+      extra: { promise: p },
+    }, (result) => {
+      console.error(
+        'Unhandled Rejection at: Promise',
+        p,
+        'reason:',
+        reason,
+        ` sentry Id: ${ravenClient.getIdent(result)}`
+      );
+    });
+  } else {
+    console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
+  }
 });

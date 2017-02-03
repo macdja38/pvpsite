@@ -35,12 +35,13 @@ export default {
     require('./user').default,
     require('./login').default,
     require('./serverList').default,
-    require('./server').default,
     require('./permissions').default,
     require('./login').default,
     require('./music').default,
+    require('./customConfig').default,
 
     // place new routes before...
+    require('./server').default,
     require('./content').default,
     require('./notFound').default,
   ],
