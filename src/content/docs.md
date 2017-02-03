@@ -23,7 +23,7 @@ If you don't have pvpcraft yet click [here](https://invite.pvpcraft.ca) to invit
 
 <br>
 
-## Permissions
+## Settings & Permissions
 
 -----
 
@@ -39,6 +39,7 @@ If you are familiar with linux commands this chart should be enough. Just rememb
 | perms set \<allow\|deny\|remove> \<node>\[ --channel \<channel>]\[ --role \<role>]\[ --user \<user>] | sets permission nodes | Discord Perm Administrator |
 | perms list  |  displays a link to the website with the current permissions setup | Discord Perm Administrator  |
 | perms hardreset  |  removes all user defined permissions  |  Server Owner  |
+| setting | generates a link that will allow anyone with admin perms to configure part of the bot through a web ui | Admin |
   
 Though few, these commands form the most powerful permissions system known to Discord. Look at another module and find a node, something like music.play
 If you want to give away all commands beginning with music, you can add the wildcard *, eg: `music.*`. 
