@@ -14,7 +14,7 @@ export const host = process.env.WEBSITE_HOSTNAME || `localhost:${port}`;
 
 export const oauth = {
   discord: {
-    url: process.env.OAUTH_DISCORD_URL || 'https://bot.pvpcraft.ca',
+    url: process.env.OAUTH_DISCORD_URL || 'https://betabot.pvpcraft.ca',
   },
 };
 
@@ -36,7 +36,7 @@ export const auth = {
 
   // https://discordapp.com/developers
   discord: {
-    id: process.env.DISCORD_CLIENT_ID || '168133784078647296',
+    id: process.env.DISCORD_CLIENT_ID || '168673089138196480',
   },
 
 };

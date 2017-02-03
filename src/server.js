@@ -34,13 +34,14 @@ import erisInfo from './api/v1/erisInfo';
 import avatarProxy from './api/v1/avatarProxy';
 import settings from './api/v1/settings';
 import authMiddleware from './core/auth';
+// noinspection JSFileReferences
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 
 const eris = new Eris(auth.discord.token, {
   autoreconnect: true,
   cleanContent: false,
   messageLimit: 0,
-  maxShards: parseInt(auth.discord.shards, 10),
+  maxShards: parseInt(auth.discord.shards, 10) || 14,
   disableEvents: {
     VOICE_STATE_UPDATE: true,
     TYPING_START: true,
@@ -250,7 +251,29 @@ eris.connect().then(() => {
   console.log('Connected To Discord');
 });
 
+eris.on('ready', () => {
+  console.log('Ready as ', eris.user.username);
+});
+
 eris.on('error', error => {
   console.error(error);
   ravenClient.captureError(error);
+});
+
+process.on('unhandledRejection', (reason, p) => {
+  if (ravenClient) {
+    ravenClient.captureError(reason, {
+      extra: { promise: p },
+    }, (result) => {
+      console.error(
+        'Unhandled Rejection at: Promise',
+        p,
+        'reason:',
+        reason,
+        ` sentry Id: ${ravenClient.getIdent(result)}`
+      );
+    });
+  } else {
+    console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
+  }
 });

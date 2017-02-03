@@ -23,7 +23,6 @@ function thingOrDefault(delta, settings, defaults, key = 'value') {
   if (delta.hasOwnProperty(key)) return delta[key];
   if (settings.hasOwnProperty(key)) return settings[key];
   if (defaults.hasOwnProperty(key)) return defaults[key];
-  return true;
   throw new Error('no setting or default value defined');
 }
 
@@ -108,15 +107,14 @@ class CustomConfig extends Component {
     } else if (settingsMap.type === 'category') {
       return (<InputBox key={settingsMap.key}>
         <div>{
-          Object.keys(settingsMap.children).map((key) => {
-            return this.toDivs(settingsMap.children[key],
+          Object.keys(settingsMap.children).map((key) =>
+            this.toDivs(settingsMap.children[key],
               childOrObject(settings, key),
               childOrObject(delta, key),
               serverId,
               botId,
               urlLocation,
-              duplicateAndPush(currentPath, key));
-          })
+              duplicateAndPush(currentPath, key)))
         }</div>
       </InputBox>);
     } else if (settingsMap.type === 'boolean') {
@@ -210,7 +208,7 @@ CustomConfig.propTypes = {
   serverId: PropTypes.string.isRequired,
   title: PropTypes.string,
   guild: PropTypes.object,
-  urlLocation: PropTypes.string,
+  urlLocation: PropTypes.string.isRequired,
 };
 
 export default withStyles(s)(CustomConfig);

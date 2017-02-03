@@ -11,8 +11,6 @@ import React from 'react';
 import Server from './Server';
 import fetch from '../../core/fetch';
 
-import customConfig from '../customConfig';
-
 let title = 'Admin Panel';
 let description = 'Server admin panel';
 

@@ -69,7 +69,6 @@ const strategy = new DiscordStrategy(
 
 function getUpdatedUserData(profile) {
   return new Promise((resolve, reject) => {
-    console.log('getUpdatedUserData called');
     let tryCount = 3;
     const attempt = () => {
       tryCount--; // eslint-disable-line
@@ -77,12 +76,11 @@ function getUpdatedUserData(profile) {
         reject(new Error('too many tries'));
       }
       strategy.userProfile(profile.accessToken, (profileErr, newUser) => {
-        console.log('tried to fetch user profile', typeof newUser);
         if (profileErr) {
-          console.error(profileErr);
           refresh.requestNewAccessToken(profile.provider, profile.refreshToken, (refreshErr, accessToken) => {
-            if (refreshErr) return console.error(refreshErr);
-            console.log('got new access token ', accessToken);
+            if (refreshErr) {
+              return;
+            }
             profile.accessToken = accessToken; // eslint-disable-line
             attempt(profile);
           });
@@ -99,9 +97,8 @@ function getUpdatedUserData(profile) {
 
 passport.serializeUser((user, done) => done(null, user.id));
 
-passport.deserializeUser((id, done) => {
-  console.log('deserialise User called');
-  return r
+passport.deserializeUser((id, done) =>
+  r
     .table('users')
     .get(id)
     .run()
@@ -109,7 +106,6 @@ passport.deserializeUser((id, done) => {
       const age = new Date(user.fetched);
       const timeSinceFetchedInMinutes = (Date.now() - age) / 1000 / 60;
       if (timeSinceFetchedInMinutes > 4) {
-        console.log('outdated info');
         if (!currentRequests.hasOwnProperty(user.id)) {
           currentRequests[user.id] = getUpdatedUserData(user);
           setTimeout(() => {
@@ -120,8 +116,8 @@ passport.deserializeUser((id, done) => {
         return;
       }
       done(null, user);
-    });
-});
+    })
+);
 
 passport.use(strategy);
 refresh.use(strategy);

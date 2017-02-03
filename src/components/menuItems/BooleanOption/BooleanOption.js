@@ -15,11 +15,11 @@ class BooleanOption extends Component { // eslint-disable-line react/prefer-stat
 
   static propTypes = {
     children: PropTypes.element.isRequired,
-    value: PropTypes.anything,
+//    value: PropTypes.anything,
   };
 
   render() {
-    const { children, value } = this.props; // eslint-disable-line no-use-before-define
+    const { children /* , value*/ } = this.props; // eslint-disable-line no-use-before-define
     return (
       <div
         className={s.box}

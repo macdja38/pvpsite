@@ -8,7 +8,7 @@
  return true;
  }*/
 
-function checkServerAuth(req, res, next) {
+function checkOnServer(req, res, next) {
   if (req.isAuthenticated()) {
     const id = req.params.guildId;
     const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
@@ -20,98 +20,43 @@ function checkServerAuth(req, res, next) {
   return true;
 }
 
-const settingsMap = {
-  type: 'pageSelector',
-  children: {
-    ranks: {
-      type: 'category',
-      name: 'ranks',
-      key: 'ranks',
-      description: 'joinable ranks',
-      children: [
-        {
-          type: 'boolean',
-          name: 'delete after input for ranks',
-          key: 'deleteAfter',
-          default: false,
-          description: 'Deletes the users input after running a command and deletes the bot\'s response after a delay',
-        },
-        {
-          type: 'int',
-          name: 'delete delay (seconds)',
-          key: 'deleteDelay',
-          default: 0,
-          description: 'How long after the command is executed should the input be deleted (seconds)',
-        },
-        {
-          type: 'list',
-          name: 'delete delay (seconds)',
-          key: 'joinableRanks',
-          default: [],
-          content: {
-            type: 'role',
-          },
-          description: 'list of ranks that should be excusive',
-        },
-        {
-          type: 'boolean',
-          key: 'exclusive',
-          name: 'exclusive',
-          default: false,
-          description: 'yea... this is obvious',
-        },
-      ],
-    },
-    cats: {
-      type: 'category',
-      name: 'cats',
-      key: 'cats',
-      description: 'cat provider',
-      children: [
-        {
-          type: 'boolean',
-          name: 'delete after input for cats',
-          key: 'deleteAfter',
-          default: false,
-          description: 'Deletes the users input after running a command and deletes the bot\'s response after a delay',
-        },
-        {
-          type: 'int',
-          name: 'delete delay (seconds)',
-          key: 'deleteDelay',
-          default: 0,
-          description: 'How long after the command is executed should the input be deleted (seconds)',
-        },
-        {
-          type: 'list',
-          name: 'delete delay (seconds)',
-          key: 'joinableRanks',
-          default: [],
-          description: 'list of ranks that should be excusive',
-        },
-        {
-          type: 'boolean',
-          key: 'exclusive',
-          name: 'exclusive',
-          default: false,
-          description: 'yea... this is obvious',
-        },
-      ],
-    },
-  },
-};
-
+function checkServerAuth(req, res, next) {
+  if (req.isAuthenticated()) {
+    const id = req.params.guildId;
+    const guild = req.user.guilds.find(possibleGuild => possibleGuild.id === id);
+    if (guild && ((guild.permissions & 8) === 8 || guild.owner)) return next(); // eslint-disable-line no-bitwise
+  }
+  res.sendStatus(403);
+  return true;
+}
 
 module.exports = function register(app, { r }) {
-  app.get('/api/v1/settingsMap/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
-    r
+  app.get('/api/v1/settingsMap/bot/:botId/guild/:guildId', checkOnServer, (req, res) => {
+    const guildSpecificPromise = r
       .table('settingsMap')
       .get(`${req.params.botId}|${req.params.guildId}`)
-      .run()
-      .then(c => res.json(c));
+      .run();
+
+    const botGlobalPromise = r
+      .table('settingsMap')
+      .get(`${req.params.botId}|*`)
+      .run();
+
+    botGlobalPromise.then(botGlobal => {
+      guildSpecificPromise.then(guildSpecific => {
+        res.json(guildSpecific || botGlobal);
+      });
+    });
+
+    botGlobalPromise.catch(() => {
+      res.sendStatus(404);
+    });
+    guildSpecificPromise.catch(() => {
+      res.sendStatus(404);
+    });
   });
 
-  app.get('/api/v1/settings/bot/:botId/guild/:guildId', checkServerAuth, (req, res) => {
+  app.get('/api/v1/settings/bot/:botId/guild/:guildId', checkOnServer, (req, res) => {
     r
       .table('settings')
       .get(`${req.params.botId}|${req.params.guildId}`)
