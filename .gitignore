@@ -7,3 +7,6 @@ node_modules
 ncp-debug.log
 npm-debug.log
 .idea
+
+src/config.js
+src/client.config.js
