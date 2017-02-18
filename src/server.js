@@ -133,10 +133,9 @@ app.get(
     }
   } // auth success
 );
-app.get('/login-handler/discord/:place*?', (...args) => {
-  console.log(args[0].params);
-  return authMiddleware.authenticate('discord', args[0].params.place ? {
-    state: base64.toBase64(`${args[0].params.place}`),
+app.get('/login-handler/discord/*?', (...args) => {
+  return authMiddleware.authenticate('discord', args[0].params[0] ? {
+    state: base64.toBase64(`${args[0].params[0]}`),
   } : {})(...args);
 });
 
