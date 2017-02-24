@@ -7,22 +7,6 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-/*
-import React from 'react';
-import App from '../components/App';
-
-// Child routes
-import home from './home';
-import userPage from './user';
-import serverList from './serverList';
-import server from './server';
-import permissions from './permissions';
-import login from './login';
-import music from './music';
-import content from './content';
-import error from './error';
-*/
-
 /* eslint-disable global-require */
 
 export default {
@@ -58,32 +42,3 @@ export default {
   },
 
 };
-
-/*
-export default {
-
-  path: '/',
-
-  children: [
-    login,
-    home,
-    userPage,
-    server,
-    serverList,
-    permissions,
-    music,
-    content,
-    error,
-  ],
-
-  async action({ next, render, context, user }) {
-    const component = await next();
-    if (component === undefined) return component;
-    if (component instanceof Error) return component;
-    return render(
-      <App context={userContext} user={user} >{component}</App>
-    );
-  },
-
-};
-*/
