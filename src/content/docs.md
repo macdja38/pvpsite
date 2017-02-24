@@ -285,6 +285,11 @@ This is similar to the permissions system but for events like Warframe alerts an
         <td></td>
     </tr>
     <tr>
+        <td style="background-color: #007FE2; color: white;">moderation​.voice​.switch</td>
+        <td>Logs voice joins</td>
+        <td></td>
+    </tr>
+    <tr>
         <td style="background-color: #00BEE2;">moderation​.voice​.leave</td>
         <td>Logs voice leaves</td>
         <td></td>
