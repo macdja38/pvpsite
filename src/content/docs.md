@@ -337,7 +337,6 @@ Also if you have given yourself * you will have to deny yourself the white-list 
 | alert[s] join \<item> | Allows a user to get notifications when an item comes up | warframe​.alerts​.join |
 | alert[s] leave \<item> | Stops notifying a user about when an item comes up | warframe​.alerts​.leave |
 | alert[s] list | Lists all the items users join or/and leave | warframe​.alerts​.list |
-| alert[s] enable --channel \<channel> | Enable alert tracking | warframe​.alert |
 
 #### Misc
 
