@@ -207,12 +207,12 @@ This is similar to the permissions system but for events like Warframe alerts an
     <tr>
         <td style="background-color: #3F0000; color: white;">moderation​.message​.deleted</td>
         <td>Logs message deletes</td>
-        <td>msglog​.whitelist​.messagedeleted</td>
+        <td>msglog.whitelist.message.deleted</td>
     </tr>
     <tr>
         <td style="background-color: #3F7F00;">moderation​.message​.updated</td>
         <td>Logs message edits</td>
-        <td>msglog​.whitelist​.messageupdate</td>
+        <td>msglog.whitelist.message.updated</td>
     </tr>
     <tr>
         <td style="background-color: #BEFF00; color: black;">moderation​.channel​.created</td>
@@ -272,27 +272,27 @@ This is similar to the permissions system but for events like Warframe alerts an
     <tr>
         <td style="background-color: #3F7F00; color: white;">moderation​.member​.updated</td>
         <td>Logs server specific user changes</td>
-        <td></td>
+        <td>msglog.whitelist.member.updated</td>
     </tr>
     <tr>
         <td style="background-color: #117F00; color: white;">moderation​.user</td>
         <td>Logs user changes</td>
-        <td></td>
+        <td>msglog.whitelist.user</td>
     </tr>
     <tr>
         <td style="background-color: #003FE2; color: white;">moderation​.voice​.join</td>
         <td>Logs voice joins</td>
-        <td></td>
+        <td>msglog.whitelist.voice.join</td>
     </tr>
     <tr>
         <td style="background-color: #007FE2; color: white;">moderation​.voice​.switch</td>
-        <td>Logs voice joins</td>
-        <td></td>
+        <td>Logs voice moves</td>
+        <td>msglog.whitelist.voice.switch</td>
     </tr>
     <tr>
         <td style="background-color: #00BEE2;">moderation​.voice​.leave</td>
         <td>Logs voice leaves</td>
-        <td></td>
+        <td>msglog.whitelist.voice.leave</td>
     </tr>
     </tbody>
 </table>
