@@ -30,7 +30,7 @@ function checkServerAuth(req, res, next) {
   return true;
 }
 
-module.exports = function register(app, { r }) {
+export default function register(app, { r }) {
   app.get('/api/v1/settingsMap/bot/:botId/guild/:guildId', checkOnServer, (req, res) => {
     const guildSpecificPromise = r
       .table('settingsMap')

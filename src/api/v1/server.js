@@ -21,7 +21,7 @@ function checkServerAuth(req, res, next) {
 }
 */
 
-module.exports = function register(app, db, eris) {
+export default function register(app, db, eris) {
   app.get('/api/v1/servers/', /* checkServerAuth,*/ (req, res) => {
     if (!req.isAuthenticated()) {
       res.sendStatus(403);

@@ -35,7 +35,7 @@ import avatarProxy from './api/v1/avatarProxy';
 import settings from './api/v1/settings';
 import authMiddleware from './core/auth';
 // noinspection JSFileReferences
-import assets from './assets'; // eslint-disable-line import/no-unresolved
+import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 
 const eris = new Eris(auth.discord.token, {
   autoreconnect: true,
@@ -117,6 +117,10 @@ app.use(session({
   cookie: { secure: 'auto', maxAge: 2592000000 },
 }));
 
+if (__DEV__) {
+  app.enable('trust proxy');
+}
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -131,7 +135,7 @@ app.get(
     } else {
       res.redirect('/server/');
     }
-  } // auth success
+  }, // auth success
 );
 app.get('/login-handler/discord/*?', (...args) => {
   return authMiddleware.authenticate('discord', args[0].params[0] ? {
@@ -155,9 +159,9 @@ app.get('/info', checkAuth, (req, res) => {
 // -----------------------------------------------------------------------------
 app.use('/graphql', expressGraphQL(req => ({
   schema,
-  graphiql: false,
+  graphiql: __DEV__,
   rootValue: { request: req },
-  pretty: process.env.NODE_ENV !== 'production',
+  pretty: __DEV__,
 })));
 prefix(app, db, eris);
 user(app, db, eris);
@@ -202,7 +206,7 @@ app.get('*', async (req, res, next) => {
     const data = { ...route };
     data.children = ReactDOM.renderToString(<App context={context}>{route.component}</App>);
     data.style = [...css].join('');
-    data.script = assets.main.js;
+    data.scripts = [assets.vendor.js, assets.client.js];
     data.chunk = assets[route.chunk] && assets[route.chunk].js;
     const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
 
@@ -269,7 +273,7 @@ process.on('unhandledRejection', (reason, p) => {
         p,
         'reason:',
         reason,
-        ` sentry Id: ${ravenClient.getIdent(result)}`
+        ` sentry Id: ${ravenClient.getIdent(result)}`,
       );
     });
   } else {

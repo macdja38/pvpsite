@@ -30,7 +30,7 @@ const ContextType = {
  *
  *   ReactDOM.render(<App context={context}><HomePage /></App>, container);
  */
-class App extends React.Component {
+class App extends React.PureComponent {
 
   static propTypes = {
     context: PropTypes.shape(ContextType).isRequired,

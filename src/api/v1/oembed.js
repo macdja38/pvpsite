@@ -5,7 +5,7 @@
 import { oauth } from '../../config';
 import logoUrl from '../../components/Header/logo-small.png';
 
-module.exports = function register(app) {
+export default function register(app) {
   /*  '/api/v1/prefix/:id'
    *    GET: find contact by id
    *    PUT: update contact by id

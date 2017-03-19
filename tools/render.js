@@ -1,7 +1,7 @@
 /**
  * React Starter Kit (https://www.reactstarterkit.com/)
  *
- * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
+ * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
@@ -45,7 +45,7 @@ async function render() {
     const url = `http://${server.host}${route}`;
     const fileName = route.endsWith('/') ? 'index.html' : `${path.basename(route, '.html')}.html`;
     const dirName = path.join('build/public', route.endsWith('/') ? route : path.dirname(route));
-    const dist = `${dirName}${fileName}`;
+    const dist = path.join(dirName, fileName);
     const timeStart = new Date();
     const response = await fetch(url);
     const timeEnd = new Date();

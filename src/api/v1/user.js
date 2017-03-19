@@ -20,7 +20,7 @@ function checkUser(req, res, next) {
   return true;
 }
 
-module.exports = function register(app, { r }) {
+export default function register(app, { r }) {
   app.get('/api/v1/user/', checkUser, (req, res) => {
     console.log('Got user request');
     if (req.user) {

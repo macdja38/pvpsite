@@ -13,4 +13,4 @@ r.init(database.reThinkDB, [
   },
 ]);
 
-module.exports = r;
+export default r;

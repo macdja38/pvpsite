@@ -33,7 +33,7 @@ function loginCallbackHandler(objectMapper, type) {
             .then(() => r
               .table('users')
               .get(userProfile.id)
-              .run()
+              .run(),
             )
             .then((newUser) => {
               done(null, newUser);
@@ -53,7 +53,7 @@ function saveProfile(profile) {
     .then(() => r
       .table('users')
       .get(userProfile.id)
-      .run()
+      .run(),
     );
 }
 
@@ -64,7 +64,7 @@ const strategy = new DiscordStrategy(
     scope: scopes,
     callbackURL: `${oauth.discord.url}/login/discord/callback`,
   },
-  loginCallbackHandler(profile => profile, 'discord')
+  loginCallbackHandler(profile => profile, 'discord'),
 );
 
 function getUpdatedUserData(profile) {
@@ -116,8 +116,7 @@ passport.deserializeUser((id, done) =>
         return;
       }
       done(null, user);
-    })
-);
+    }));
 
 passport.use(strategy);
 refresh.use(strategy);
@@ -129,4 +128,4 @@ passport.checkIfLoggedIn = (req, res, next) => {
   return res.status(401).send('You\'re not logged in');
 };
 
-module.exports = passport;
+export default passport;
