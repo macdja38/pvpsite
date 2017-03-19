@@ -80,7 +80,7 @@ and a [Paypal](https://www.paypal.me/pvpcraftbot).
 | command  | description  | node  |
 |---|---|---|
 | init | temporarily binds the bot to the voice channel the user is in, and the text channel the command was used in | music​.init |
-| destroy | un-binds the bot from it's current voice and text channel and clears the queue​. | music​.destroy  |
+| destroy | un-binds the bot from it's current voice and text channel​. | music​.destroy  |
 | play \<search term \| video link \| playlist \> | plays the song or playlist in the bound channel | music​.play  |
 | skip [target] | votes to skips the song at index in queue or the currently playing song | music​.voteskip  |
 | skip [target] -f | force skips the song at index in queue or the currently playing song | music​.forceskip |
@@ -89,6 +89,7 @@ and a [Paypal](https://www.paypal.me/pvpcraftbot).
 | list | lists the contents of the queue | music​.list |
 | link | displays a link to the currently playing song | music​.link | 
 | time | displays the current time into the song | music​.time |
+| clear [--user \<user\>] | clears the queue, if a user is supplied only clears that user from the queue | music.clear |
 | volume [volume] | if volume is provided it sets the volume, if not it displays the volume | music​.volume​.set or/and music​.volume​.list
 | shuffle | shuffles the current queue | music​.shuffle |
 
@@ -138,9 +139,9 @@ to draw.
 | command  | description  | node  |
 |---|---|---|
 | giveaway \<enable\|disable>\[ --channel \<channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
-| clear | clears all entries | admin​.giveaway​.clear  |
-| count | counts all entries | admin​.giveaway​.count  |
-| draw [count] | clears all entries | admin​.giveaway​.draw  |
+| gclear | clears all entries | admin​.giveaway​.clear  |
+| gcount | counts all entries | admin​.giveaway​.count  |
+| gdraw [count] | clears all entries | admin​.giveaway​.draw  |
 | enter |  enters a giveaway  |  giveaway​.enter  |
 
 <br>
