@@ -15,41 +15,45 @@ import Layout from '../../components/Layout';
 
 function Music({ user, serverId, music, title }) {
   // const avatarURL = `https://discordapp.com/api/users/85257659694993408/avatars/${user.avatar}.jpg`;
+  let items;
   try {
-    const items = music.queue.map((song, position) =>
+    items = music.queue.map((song, position) =>
       <tr key={position}>
         <td>{position}</td>
         <td>{song.title}</td>
-        <td>{song.author}</td>
+        <td>{song.author.name}</td>
         <td>{song.lengthSeconds}</td>
-        <td>{song.user.name}</td>
+        <td>{song.user_name}</td>
       </tr>
     );
-    return (
-      <Layout user={user}>
-        <div>
-          <ServerMenu className={s.nav} user={user} serverId={serverId} page="music" />
-          <div className={s.root}>
-            <div className={s.container}>
-              <h1 className={s.title}>{title}</h1>
-              <table>
-                <tbody>
-                  <tr>
-                    <th>#</th>
-                    <th>Song</th>
-                    <th>Uploader</th>
-                    <th>Duration</th>
-                    <th>Added by</th>
-                  </tr>
-                  {items}
-                </tbody>
-              </table>
-            </div>
+  } catch (error) {
+    items = [];
+    console.error(error);
+  }
+  return (
+    <Layout user={user}>
+      <div>
+        <ServerMenu className={s.nav} user={user} serverId={serverId} page="music" />
+        <div className={s.root}>
+          <div className={s.container}>
+            <h1 className={s.title}>{title}</h1>
+            <table>
+              <tbody>
+                <tr>
+                  <th>#</th>
+                  <th>Song</th>
+                  <th>Uploader</th>
+                  <th>Duration</th>
+                  <th>Added by</th>
+                </tr>
+                {items}
+              </tbody>
+            </table>
           </div>
         </div>
-      </Layout>
-    );
-  } catch (error) { console.error(error); }
+      </div>
+    </Layout>
+  );
 }
 
 Music.propTypes = {
