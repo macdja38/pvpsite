@@ -169,8 +169,6 @@ This is similar to the permissions system but for events like Warframe alerts an
 | feeds \<start\|stop> \<feed node>\[ --channel \<channel>] | enables or disables a specific feed within a channel. | feeds​.manage |
 | find \<node> | checks where a certain node goes | feeds​.find  |
 
-*in the next few days the node will be changed from feed. to feeds. 
-
 <br>
 
 ### Available feeds
