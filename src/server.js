@@ -205,7 +205,9 @@ app.get('*', async (req, res, next) => {
 
     const data = { ...route };
     data.children = ReactDOM.renderToString(<App context={context}>{route.component}</App>);
-    data.style = [...css].join('');
+    data.styles = [
+      { id: 'css', cssText: [...css].join('') },
+    ];
     data.scripts = [assets.vendor.js, assets.client.js];
     data.chunk = assets[route.chunk] && assets[route.chunk].js;
     const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
