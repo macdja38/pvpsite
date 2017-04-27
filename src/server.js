@@ -110,11 +110,14 @@ function checkAuth(req, res, next) {
 app.use(session({
   secret: 'keyboard cat-acomb',
   resave: false,
-  httpOnly: true,
-  sameSite: true,
   store,
-  saveUninitialized: true,
-  cookie: { secure: 'auto', maxAge: 2592000000 },
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    sameSite: true,
+    secure: "auto", // true, server setup is behind a proxy and hsts is deployed for pvpcraft.ca with long duration
+    maxAge: 2592000000
+  },
 }));
 
 if (__DEV__) {
