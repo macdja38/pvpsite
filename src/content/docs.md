@@ -154,7 +154,10 @@ Moderation module, mod log was moved into feeds, this is now just purge, to disa
 
 | command  | description  | node  |
 |---|---|---|
-| purge \[count]\[ --user \<user>]\[ --before \<message id>]\[ --after \<message id>] | purges the text channel of messages | moderation​.tools​.purge |
+| purge \[count]\[ --user \<user>]\[ --before \<message id>]\[ --after \<message id>][-d] | purges the text channel of messages | moderation​.tools​.purge |
+
+
+If used the -d flag will drop messages purged using the command instead of logging them.
 
 <br>
 
