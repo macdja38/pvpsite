@@ -327,6 +327,7 @@ Also if you have given yourself * you will have to deny yourself the white-list 
 | trial | gets links to the current trial statistics | warframe​.trial |
 | wiki \<item name> | searches the wiki for an item | warframe​.wiki |
 | sortie | gets the current sortie | warframe​.sortie |
+| rift | gets the current fissures | warframe​.rift |
 | farm | gets a random farming guide | warframe​.farm |
 | damage | gets Telkhines damage table | warframe​.damage |
 | primeaccess | gets the prime access info | warframe​.access |
