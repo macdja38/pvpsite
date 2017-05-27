@@ -27,7 +27,6 @@ const CONTENT_DIR = join(__dirname, './content');
 
 // Extract 'front matter' metadata and generate HTML
 const parseContent = (path, fileContent, extension) => {
-  console.log('Parsing Content');
   const fmContent = fm(fileContent);
   let htmlContent;
   switch (extension) {

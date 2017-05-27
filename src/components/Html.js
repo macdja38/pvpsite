@@ -100,13 +100,4 @@ class Html extends Component {
  }
  */
 
-Html.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  style: PropTypes.string.isRequired,
-  script: PropTypes.string,
-  chunk: PropTypes.string,
-  children: PropTypes.string,
-};
-
 export default Html;

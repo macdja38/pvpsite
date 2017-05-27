@@ -69,29 +69,5 @@ export default function register(app, { r, connPromise }, eris) {
     console.dir(data, { depth: 4 });
     res.json(data);
   });
-
-  app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
-    connPromise.then((conn) => {
-      const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
-      r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
-        .then(() => {
-          res.json({ success: true });
-        })
-        .catch(() => {
-          res.json({ success: false });
-        });
-    });
-  });
-
-  app.delete('/api/v1/prefix/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
-    const prefix = { prefix: req.body.prefix, id: req.params.id };
-    r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
-      .then(() => {
-        res.json({ success: true });
-      })
-      .catch(() => {
-        res.json({ success: false });
-      });
-  }));
-};
+}
 
