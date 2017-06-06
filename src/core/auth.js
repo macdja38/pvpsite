@@ -39,7 +39,7 @@ function loginCallbackHandler(objectMapper, type) {
               done(null, newUser);
             });
         })
-        .catch(err => console.log('Error Getting User', err)); // eslint-disable-line no-console
+        .catch(err => {done(err); console.log('Error Getting User', err)}); // eslint-disable-line no-console
     }
   };
 }
@@ -79,7 +79,7 @@ function getUpdatedUserData(profile) {
         if (profileErr) {
           refresh.requestNewAccessToken(profile.provider, profile.refreshToken, (refreshErr, accessToken) => {
             if (refreshErr) {
-              return;
+              return reject(refreshErr);
             }
             profile.accessToken = accessToken; // eslint-disable-line
             attempt(profile);
@@ -116,7 +116,7 @@ passport.deserializeUser((id, done) =>
         return;
       }
       done(null, user);
-    }));
+    }).catch(done));
 
 passport.use(strategy);
 refresh.use(strategy);
