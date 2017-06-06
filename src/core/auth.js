@@ -39,13 +39,12 @@ function loginCallbackHandler(objectMapper, type) {
               done(null, newUser);
             });
         })
-        .catch(err => {done(err); console.log('Error Getting User', err)}); // eslint-disable-line no-console
+        .catch(err => { done(err); console.log('Error Getting User', err) }); // eslint-disable-line no-console
     }
   };
 }
 
 function saveProfile(profile) {
-  console.log('saving profile with access token ', profile.accessToken, ' and id ', profile.id);
   const userProfile = profile;
   return r.table('users')
     .insert(userProfile, { conflict: 'update' })
@@ -68,6 +67,7 @@ const strategy = new DiscordStrategy(
 );
 
 function getUpdatedUserData(profile) {
+  console.log("Was told to update user profile");
   return new Promise((resolve, reject) => {
     let tryCount = 3;
     const attempt = () => {
@@ -112,7 +112,7 @@ passport.deserializeUser((id, done) =>
             delete currentRequests[user.id];
           }, 10000);
         }
-        currentRequests[user.id].then(userResult => done(null, userResult)).catch(error => done(error));
+        currentRequests[user.id].then(userResult => done(null, userResult)).catch(error => done(null, null));
         return;
       }
       done(null, user);
