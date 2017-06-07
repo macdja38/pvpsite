@@ -67,7 +67,6 @@ const strategy = new DiscordStrategy(
 );
 
 function getUpdatedUserData(profile) {
-  console.log("Was told to update user profile");
   return new Promise((resolve, reject) => {
     let tryCount = 3;
     const attempt = () => {

@@ -12,7 +12,6 @@ export default function register(app) {
    *    DELETE: deletes contact by id
    */
   app.get('/api/v1/oembed/', (req, res) => {
-    console.log(req.query);
     if (req.query.type === 'video') {
       res.json({
         type: 'video',

@@ -29,7 +29,11 @@ class Html extends Component {
           <link
             rel="alternate"
             type="application/json+oembed"
-            href={`${oauth.discord.url}/api/v1/oembed?type=photo&url=f&title=${title}&description=${description}`}
+            href={`${oauth.discord.url}/api/v1/oembed?type=photo&url=f&title=${
+              encodeURIComponent(title)
+            }&description=${
+              encodeURIComponent(description)
+            }`}
             title={title}
           />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
