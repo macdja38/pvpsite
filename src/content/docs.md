@@ -141,7 +141,7 @@ to draw.
 | giveaway \<enable\|disable>\[ --channel \<channel>] | enables or disables the giveaways. If no channel is provided it will use the last one used, or if none has been used the channel the message was sent in​. | admin​.giveaway​.setup |
 | gclear | clears all entries | admin​.giveaway​.clear  |
 | gcount | counts all entries | admin​.giveaway​.count  |
-| gdraw [count] | draws a winner | admin​.giveaway​.draw  |
+| gdraw [count] | draws one or more winners | admin​.giveaway​.draw  |
 | enter |  enters a giveaway  |  giveaway​.enter  |
 
 <br>
