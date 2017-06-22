@@ -3,13 +3,56 @@ title: Documentation
 description: Instructions for usage of PvPCraft Discord bot.
 component: ContentPage
 ---
+<style>
+.carbon-wrap {
+  display: block;
+  background: #f1f1f1;
+  padding: 15px 15px 10px 15px;
+ }
+ 
+ .carbon-wrap > a {
+  display: block;
+ }
+
+ .carbon-wrap::after {
+   content: "";
+   display: table;
+   clear: both;
+ }
+ 
+ .carbon-poweredby {
+ 	color: #6e6e6e;
+ 	text-decoration: underline;
+ 	font-size: 65%;
+ 	font-style: italic;
+ 	text-align: center;
+ 	display: block;
+ 	margin: 8px 0 0 0;
+ }
+ 
+ .carbon-img {
+ 	float: left;
+ 	margin-right: 10px;
+ }
+ 
+ .carbon-text {
+ 	font-size: 80%;
+ 	line-height: 130%;
+ 	min-width: 120px;
+ 	color: #06c;
+ }
+</style>
+<div style="float: left; max-width: 600px">
 Hello and Welcome to PvPCraft's documentation. Some features that are still being tested may not be documented.
 
 Prefixes default to /, // and !! but can be changed in your servers settings page.
 
 This documentation is primarily about text commands.
-
-<br>
+</div>
+<div style="float: right; width: 300px; height: 170px">
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=botpvpcraftca" id="_carbonads_js"></script>
+</div>
+<br style="clear: both"/>
 
 ## General notes
 
