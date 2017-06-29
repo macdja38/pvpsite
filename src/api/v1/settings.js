@@ -93,5 +93,4 @@ export default function register(app, { r }) {
       .run()
       .then(c => res.json(c));
   });
-};
-
+}

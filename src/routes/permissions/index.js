@@ -35,7 +35,9 @@ export default {
 
     let serverData;
     if (serverDataResp.status === 200) {
+      console.log(serverDataResp);
       serverData = await serverDataResp.json();
+      console.log(serverData);
     } else {
       serverData = { id: params.serverId };
     }

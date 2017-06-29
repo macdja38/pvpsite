@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './User.css';
 import Layout from '../../components/Layout';
@@ -19,6 +20,6 @@ function User({ user }) {
 }
 
 
-User.propTypes = { user: PropTypes.object };
+User.propTypes = { user: PropTypes.object.isRequired };
 
 export default withStyles(s)(User);

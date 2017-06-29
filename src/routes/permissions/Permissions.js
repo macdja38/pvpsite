@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Permissions.css';
@@ -243,7 +244,7 @@ class Permissions extends Component {
           .map(r => {
             r.r = true; // eslint-disable-line no-param-reassign
             return r;
-          })
+          }),
       );
       userChoices.push(...serverData.members);
 
@@ -277,7 +278,7 @@ class Permissions extends Component {
                     alt="Enter a permission node first"
                     className={
                       cx(s.button, s.buttonAllowed, this.state.edit && this.state.applyEnabled ? '' :
-                        cx(s.buttonDisabled, s.hoverText)
+                        cx(s.buttonDisabled, s.hoverText),
                       )
                     }
                     onClick={this.allowClicked}
@@ -288,7 +289,7 @@ class Permissions extends Component {
                     alt="Enter a permission node first"
                     className={
                       cx(s.button, s.buttonDenied, this.state.edit && this.state.applyEnabled ? '' :
-                        cx(s.buttonDisabled, s.hoverText)
+                        cx(s.buttonDisabled, s.hoverText),
                       )
                     }
                     onClick={this.denyClicked}

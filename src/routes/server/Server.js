@@ -7,7 +7,8 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Server.css';
 import ServerMenu from '../../components/ServerMenu';
@@ -43,8 +44,12 @@ Server.propTypes = {
   user: PropTypes.object.isRequired,
   serverId: PropTypes.string.isRequired,
   prefix: PropTypes.array,
-  title: PropTypes.string,
-  guild: PropTypes.object,
+  title: PropTypes.string.isRequired,
+  guild: PropTypes.object.isRequired,
+};
+
+Server.defaultProps = {
+  prefix: false,
 };
 
 export default withStyles(s)(Server);

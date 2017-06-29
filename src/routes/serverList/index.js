@@ -33,7 +33,7 @@ export default {
       options.headers = headers;
     }
 
-    let commonServersResp;
+    /* let commonServersResp;
     try {
       commonServersResp = await fetch('/api/v1/servers/', options);
     } catch (error) {
@@ -45,14 +45,14 @@ export default {
       commonServers = await commonServersResp.json();
     } else {
       console.error(commonServersResp);
-    }
+    }*/
 
     title = `${user.username}'s Servers`;
 
     return {
       title,
       description,
-      component: <ServerList title={title} user={user} commonServers={commonServers} />,
+      component: <ServerList title={title} user={user} />,
     };
   },
 

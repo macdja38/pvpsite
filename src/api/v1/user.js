@@ -76,5 +76,4 @@ export default function register(app, { r }) {
       res.json({ success: false });
     });
   });
-};
-
+}

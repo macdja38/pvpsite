@@ -30,7 +30,7 @@ function shardToJson(shard) {
 
     if (key === 'client') return;
 
-    else if (!shard[key]) {
+    if (!shard[key]) {
       copy[key] = shard[key];
     } else if (shard[key] instanceof Set) {
       copy[key] = Array.from(shard[key]);
@@ -46,7 +46,7 @@ function shardToJson(shard) {
   return copy;
 }
 
-export default function register(app, { r, connPromise }, eris) {
+export default function register(app, { r }, eris) {
   /*  "/api/v1/prefix/:id"
    *    GET: find contact by id
    *    PUT: update contact by id

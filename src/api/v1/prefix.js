@@ -19,51 +19,46 @@ function checkServerAuth(req, res, next) {
 }
 
 
-export default function register(app, { r, connPromise }) {
+export default function register(app, { r }) {
   /*  "/api/v1/prefix/:id"
    *    GET: find contact by id
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
   app.get('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
-    connPromise.then((conn) => {
-      const serverPrefix = r.table('servers').get(req.params.id).run(conn);
-      const defaultPrefix = r.table('servers').get('*').run(conn);
-      Promise.all([serverPrefix, defaultPrefix])
-        .then(([serverPrefixResult, defaultPrefixResult]) => {
-          if (serverPrefixResult && serverPrefixResult.hasOwnProperty('prefix')) { // eslint-disable-line
-            res.json(serverPrefixResult);
-          } else if (defaultPrefixResult && defaultPrefixResult.hasOwnProperty('prefix')) { // eslint-disable-line
-            res.json(defaultPrefixResult);
-          } else {
-            res.json({ prefix: [] });
-          }
-        }).catch(error => console.error(error));
-    });
+    const serverPrefix = r.table('servers').get(req.params.id).run();
+    const defaultPrefix = r.table('servers').get('*').run();
+    Promise.all([serverPrefix, defaultPrefix])
+      .then(([serverPrefixResult, defaultPrefixResult]) => {
+        if (serverPrefixResult && serverPrefixResult.hasOwnProperty('prefix')) { // eslint-disable-line
+          res.json(serverPrefixResult);
+        } else if (defaultPrefixResult && defaultPrefixResult.hasOwnProperty('prefix')) { // eslint-disable-line
+          res.json(defaultPrefixResult);
+        } else {
+          res.json({ prefix: [] });
+        }
+      }).catch(error => console.error(error));
   });
 
   app.put('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
-    connPromise.then((conn) => {
-      const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
-      r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
-        .then(() => {
-          res.json({ success: true });
-        })
-        .catch(() => {
-          res.json({ success: false });
-        });
-    });
-  });
-
-  app.delete('/api/v1/prefix/:id', checkServerAuth, (req, res) => connPromise.then((conn) => {
-    const prefix = { prefix: req.body.prefix, id: req.params.id };
-    r.table('servers').insert(prefix, { conflict: 'update' }).run(conn)
+    const prefix = { prefix: req.body.prefix.split(',').map(pre => pre.trim()), id: req.params.id };
+    r.table('servers').insert(prefix, { conflict: 'update' }).run()
       .then(() => {
         res.json({ success: true });
       })
       .catch(() => {
         res.json({ success: false });
       });
-  }));
-};
+  });
 
+  app.delete('/api/v1/prefix/:id', checkServerAuth, (req, res) => {
+    const prefix = { prefix: req.body.prefix, id: req.params.id };
+    r.table('servers').insert(prefix, { conflict: 'update' }).run()
+      .then(() => {
+        res.json({ success: true });
+      })
+      .catch(() => {
+        res.json({ success: false });
+      });
+  });
+}

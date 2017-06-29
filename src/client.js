@@ -179,7 +179,7 @@ async function onLocationChange(location) {
     ReactDOM.render(
       <App context={context}>{route.component}</App>,
       container,
-      () => onRenderComplete(route, location)
+      () => onRenderComplete(route, location),
     );
   } catch (err) {
     if (process.env.NODE_ENV !== 'production') {

@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import deepmerge from 'deepmerge';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './CustomConfig.css';

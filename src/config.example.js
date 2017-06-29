@@ -42,6 +42,11 @@ export const auth = {
     token: process.env.DISCORD_CLIENT_TOKEN || '',
   },
 
+  pvpApi: {
+    id: process.env.DISCORD_CLIENT_ID || '157914012892397568',
+    token: process.env.PVPAPI_CLIENT_TOKEN || '',
+  },
+
 };
 
 export const database = {

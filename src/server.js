@@ -14,7 +14,6 @@ import passport from 'passport';
 import logger from 'morgan';
 import R from 'rethinkdbdash';
 import RDBStore from 'session-rethinkdb';
-import Eris from 'eris';
 import raven from 'raven';
 import App from './components/App';
 import Html from './components/Html';
@@ -30,14 +29,13 @@ import permissions from './api/v1/permissions';
 import music from './api/v1/music';
 import oembed from './api/v1/oembed';
 import server from './api/v1/server';
-import erisInfo from './api/v1/erisInfo';
 import avatarProxy from './api/v1/avatarProxy';
 import settings from './api/v1/settings';
 import authMiddleware from './core/auth';
 // noinspection JSFileReferences
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 
-const eris = new Eris(auth.discord.token, {
+/* const eris = new Eris(auth.discord.token, {
   autoreconnect: true,
   cleanContent: false,
   messageLimit: 0,
@@ -51,7 +49,7 @@ const eris = new Eris(auth.discord.token, {
     MESSAGE_UPDATE: true,
     PRESENCE_UPDATE: true,
   },
-});
+});*/
 
 const ravenClient = new raven.Client(sentry.serverDSN, { environment: process.env.NODE_ENV });
 ravenClient.patchGlobal((err) => {
@@ -115,8 +113,8 @@ app.use(session({
   cookie: {
     httpOnly: true,
     sameSite: true,
-    secure: "auto", // true, server setup is behind a proxy and hsts is deployed for pvpcraft.ca with long duration
-    maxAge: 2592000000
+    secure: 'auto', // true, server setup is behind a proxy and hsts is deployed for pvpcraft.ca with long duration
+    maxAge: 2592000000,
   },
 }));
 
@@ -140,11 +138,11 @@ app.get(
     }
   }, // auth success
 );
-app.get('/login-handler/discord/*?', (...args) => {
-  return authMiddleware.authenticate('discord', args[0].params[0] ? {
+app.get('/login-handler/discord/*?', (...args) =>
+  authMiddleware.authenticate('discord', args[0].params[0] ? {
     state: base64.toBase64(`${args[0].params[0]}`),
-  } : {})(...args);
-});
+  } : {})(...args),
+);
 
 app.get('/logout', checkAuth, (req, res) => {
   req.logout();
@@ -166,14 +164,13 @@ app.use('/graphql', expressGraphQL(req => ({
   rootValue: { request: req },
   pretty: __DEV__,
 })));
-prefix(app, db, eris);
-user(app, db, eris);
-permissions(app, db, eris);
-music(app, db, eris);
-oembed(app, db, eris);
-server(app, db, eris);
-erisInfo(app, db, eris);
-settings(app, db, eris);
+prefix(app, db);
+user(app, db);
+permissions(app, db);
+music(app, db);
+oembed(app, db);
+server(app, db);
+settings(app, db);
 avatarProxy(app);
 
 //
@@ -240,7 +237,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
       style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
     >
       {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
-    </Html>
+    </Html>,
   );
   res.status(err.status || 500);
   res.send(`<!doctype html>${html}`);
@@ -254,19 +251,6 @@ app.listen(port, () => {
   console.log(`The server is running at http://localhost:${port}/`);
 });
 /* eslint-enable no-console */
-
-eris.connect().then(() => {
-  console.log('Connected To Discord');
-});
-
-eris.on('ready', () => {
-  console.log('Ready as ', eris.user.username);
-});
-
-eris.on('error', error => {
-  console.error(error);
-  ravenClient.captureError(error);
-});
 
 process.on('unhandledRejection', (reason, p) => {
   if (ravenClient) {

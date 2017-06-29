@@ -93,7 +93,7 @@ const config = {
               localIdentName: isDebug ? '[name]-[local]-[hash:base64:5]' : '[hash:base64:5]',
               // CSS Nano http://cssnano.co/options/
               minimize: !isDebug,
-              discardComments: {removeAll: true},
+              discardComments: { removeAll: true },
             },
           },
           {
@@ -293,7 +293,7 @@ const serverConfig = {
 
     // Do not create separate chunks of the server bundle
     // https://webpack.github.io/docs/list-of-plugins.html#limitchunkcountplugin
-    new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
+    new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
 
     // Adds a banner to the top of each generated chunk
     // https://webpack.github.io/docs/list-of-plugins.html#bannerplugin

@@ -20,4 +20,4 @@ export default function register(app) {
       req.params.id}/${req.params.hash}/${req.params.filename}`)
     .pipe(res);
   });
-};
+}
