@@ -49,8 +49,6 @@
     "raven": "^0.12.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-masonry-component": "^4.2.1",
-    "react-stonecutter": "^0.3.1",
     "request": "^2.78.0",
     "rethinkdb-init": "^0.2.2",
     "rethinkdbdash": "^2.3.23",
