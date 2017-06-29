@@ -37,7 +37,7 @@ export default function register(app) {
    *    GET: find server by id
    */
   app.get('/api/v1/server/:id', checkAuth, (req, res) => {
-    fetch(`http://localhost:3032/v1/server/${req.params.id}`, {
+    fetch(`${auth.endpoint}/v1/server/${req.params.id}`, {
       headers: {
         id: auth.pvpApi.id,
         token: auth.pvpApi.token,
