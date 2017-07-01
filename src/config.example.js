@@ -55,5 +55,6 @@ export const database = {
     host: process.env.RETHINKDB_HOST || 'localhost',
     port: process.env.RETHINKDB_PORT || '28015',
     db: process.env.RETHINKDB_DB || 'pvpcraft',
+    buffer: parseInt(process.env.RETHINKDB_BUFFER || '10', 10),
   },
 };
