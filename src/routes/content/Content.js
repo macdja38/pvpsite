@@ -7,23 +7,43 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Layout from '../../components/Layout';
 import s from './Content.css';
 
-function Content({ path, title, content, user }) {
-  return (
-    <Layout user={user}>
-      <div className={s.root}>
-        <div className={s.container}>
-          {title && path !== '/' && <h1>{title}</h1>}
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+import fetch from '../../core/fetch';
+
+class Content extends Component {
+  componentDidMount() {
+    if (document && document.getElementById('_carbonads_js')) {
+      fetch('//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=botpvpcraftca', { mode: 'no-cors' })
+        .then(res => {
+          if (res.ok) {
+            return res.text();
+          }
+
+          throw new Error(res.statusText);
+        })
+        .then(js => { console.log(js); window.eval(js); }).catch(console.error);
+    }
+  }
+
+  render() {
+    console.log('render of Content called');
+    const { path, title, content, user } = this.props;
+    return (
+      <Layout user={user}>
+        <div className={s.root}>
+          <div className={s.container}>
+            {title && path !== '/' && <h1>{title}</h1>}
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </div>
         </div>
-      </div>
-    </Layout>
-  );
+      </Layout>
+    );
+  }
 }
 
 Content.propTypes = {
