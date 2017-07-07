@@ -1,0 +1,5 @@
+.scroll {
+  padding: 18px 0 18px 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

@@ -12,7 +12,6 @@ import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
 import logger from 'morgan';
-import R from 'rethinkdbdash';
 import RDBStore from 'session-rethinkdb';
 import raven from 'raven';
 import App from './components/App';
@@ -20,7 +19,6 @@ import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import base64 from './core/base64';
-import schema from './data/schema';
 import routes from './routes';
 import { auth, port, database, sentry } from './config';
 import prefix from './api/v1/prefix';
@@ -32,6 +30,7 @@ import server from './api/v1/server';
 import avatarProxy from './api/v1/avatarProxy';
 import settings from './api/v1/settings';
 import authMiddleware from './core/auth';
+import r from './db/index.js';
 // noinspection JSFileReferences
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 
@@ -57,12 +56,6 @@ ravenClient.patchGlobal((err) => {
   console.error(err);
   process.exit(1);
 });
-
-const r = new R({ servers: [
-  database.reThinkDB,
-] });
-
-const db = { r, connPromise: r.connect(database.reThinkDB) };
 
 const app = express();
 
@@ -164,13 +157,13 @@ app.use('/graphql', expressGraphQL(req => ({
   rootValue: { request: req },
   pretty: __DEV__,
 })));
-prefix(app, db);
-user(app, db);
-permissions(app, db);
-music(app, db);
-oembed(app, db);
-server(app, db);
-settings(app, db);
+prefix(app, r);
+user(app, r);
+permissions(app, r);
+music(app, r);
+oembed(app, r);
+server(app, r);
+settings(app, r);
 avatarProxy(app);
 
 //

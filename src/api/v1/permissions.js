@@ -18,7 +18,7 @@ function checkServerAuth(req, res, next) {
   return true;
 }
 
-export default function register(app, { r }) {
+export default function register(app, r) {
   /*  "/api/v1/prefix/:id"
    *    GET: find contact by id
    *    PUT: update contact by id

@@ -15,19 +15,9 @@ export default {
 
   // Keep in mind, routes are evaluated in order
   children: [
+    require('./login').default,
+    require('./channels').default,
     require('./home').default,
-    require('./user').default,
-    require('./login').default,
-    require('./serverList').default,
-    require('./permissions').default,
-    require('./login').default,
-    require('./music').default,
-    require('./customConfig').default,
-
-    // place new routes before...
-    require('./server').default,
-    require('./content').default,
-    require('./notFound').default,
   ],
 
   async action({ next }) {

@@ -11,18 +11,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Layout.css';
-import Header from '../Header';
-import Content from '../Content';
-import Footer from '../Footer';
 
 function Layout({ children, user }) {
   return (
     <div>
-      <Header user={user} />
-      <Content>
-        {React.Children.only(children)}
-      </Content>
-      <Footer />
+      {React.Children.only(children)}
     </div>
   );
 }

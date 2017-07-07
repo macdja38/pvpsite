@@ -46,7 +46,7 @@ function shardToJson(shard) {
   return copy;
 }
 
-export default function register(app, { r }, eris) {
+export default function register(app, r, eris) {
   /*  "/api/v1/prefix/:id"
    *    GET: find contact by id
    *    PUT: update contact by id
