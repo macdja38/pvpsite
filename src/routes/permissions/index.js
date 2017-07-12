@@ -10,6 +10,7 @@
 import React from 'react';
 import Permissions from './Permissions';
 import fetch from '../../core/fetch';
+import oauth from '../../client.config.js';
 
 let title = 'Permissions Page';
 let description = 'Permissions webadmin pannel';
@@ -39,7 +40,13 @@ export default {
       serverData = await serverDataResp.json();
       console.log(serverData);
     } else {
-      serverData = { id: params.serverId };
+      return {
+        redirect: `https://discordapp.com/oauth2/authorize?response_type=code&redirect_uri=${
+          oauth.discord.url
+          }%2Flogin%2Fdiscord%2Fcallback&scope=identify%20guilds%20bot&client_id=168133784078647296&guild_id=${
+          params.serverId
+          }&permissions=8`,
+      };
     }
 
     let permissions;
