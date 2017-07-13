@@ -40,7 +40,7 @@ export default {
       serverData = await serverDataResp.json();
       console.log(serverData);
     } else {
-      if (typeof window === 'undefined') {
+      if (typeof window !== 'undefined') {
         window.location = `https://discordapp.com/oauth2/authorize?response_type=code&redirect_uri=${
           oauth.discord.url
           }%2Flogin%2Fdiscord%2Fcallback&scope=identify%20guilds%20bot&client_id=168133784078647296&guild_id=${
