@@ -1,4 +1,3 @@
-
 /**
  * React Starter Kit (https://www.reactstarterkit.com/)
  *

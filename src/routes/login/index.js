@@ -13,16 +13,13 @@ import Login from './Login';
 const title = 'Log In';
 const description = 'Login to the PvPCraft webadmin panel.';
 
-export default {
+function action({ user }, params) {
+  return {
+    chunks: ['home'],
+    title,
+    description,
+    component: <Login user={user} title={title} nextPage={params.nextPage} />,
+  };
+}
 
-  path: '/login/:nextPage*', // /:id?/:page?
-
-  action({ user }, params) {
-    return {
-      title,
-      description,
-      component: <Login user={user} title={title} nextPage={params.nextPage} />,
-    };
-  },
-
-};
+export default action;

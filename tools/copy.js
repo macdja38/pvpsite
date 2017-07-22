@@ -29,14 +29,13 @@ async function copy() {
       },
     }, null, 2)),
     copyFile('LICENSE.txt', 'build/LICENSE.txt'),
-    copyDir('src/content', 'build/content'),
-    copyDir('src/public', 'build/public'),
+    copyFile('yarn.lock', 'build/yarn.lock'),
+    copyDir('public', 'build/public'),
   ]);
 
   if (process.argv.includes('--watch')) {
     const watcher = chokidar.watch([
-      'src/content/**/*',
-      'src/public/**/*',
+      'public/**/*',
     ], { ignoreInitial: true });
 
     watcher.on('all', async (event, filePath) => {
@@ -58,7 +57,7 @@ async function copy() {
       }
       const end = new Date();
       const time = end.getTime() - start.getTime();
-      console.log(`[${format(end)}] ${event} '${dist}' after ${time} ms`);
+      console.info(`[${format(end)}] ${event} '${dist}' after ${time} ms`);
     });
   }
 }

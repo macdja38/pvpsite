@@ -1,15 +1,17 @@
 import React from 'react';
 import Home from './Home';
+import Layout from '../../components/Layout';
 
-export default {
+const title = 'PvPCraft - Home';
 
-  path: '/',
+function action({ fetch }) {
+  console.log(fetch);
+  return {
+    chunks: ['home'],
+    title,
+    component: <Home title={title} />,
+    status: 404,
+  };
+}
 
-  action({ user }) {
-    return {
-      title: 'Home',
-      description: 'Home Page',
-      component: <Home user={user} />,
-    };
-  },
-};
+export default action;

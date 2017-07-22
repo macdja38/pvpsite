@@ -3,22 +3,25 @@
  */
 
 import React from 'react';
-import User from './Channels';
+import Channels from './Channels';
 
 const title = 'Server';
 const description = 'Server';
 
-export default {
+function action({ user }, { channelId, guildId }) {
+  if (!user) {
+    if (channelId && guildId) {
+      return { redirect: `/login/channels/${guildId}/${channelId}` };
+    }
+    return { redirect: '/login/channels/' };
+  }
 
-  path: '/channels/',
-  auth: false,
+  return {
+    chunks: ['channels'],
+    title,
+    description,
+    component: <Channels user={user} channelId={channelId} guildId={guildId} />,
+  };
+}
 
-  async action({ user }) {
-    // if (!user) return { redirect: `/login/server/${params.serverId}/` };
-    return {
-      title,
-      description,
-      component: <User user={user} />,
-    };
-  },
-};
+export default action;

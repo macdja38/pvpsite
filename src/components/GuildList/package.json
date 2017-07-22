@@ -1,6 +1,6 @@
 {
-  "name": "ServerList",
+  "name": "GuildList",
   "version": "0.0.0",
   "private": true,
-  "main": "./ServerList.js"
+  "main": "./GuildList.js"
 }

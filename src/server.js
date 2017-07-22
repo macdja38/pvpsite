@@ -2,13 +2,12 @@ import 'babel-polyfill';
 import 'source-map-support/register';
 import path from 'path';
 import express from 'express';
+import fetch from 'node-fetch';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import expressGraphQL from 'express-graphql';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
 import logger from 'morgan';
@@ -16,11 +15,9 @@ import RDBStore from 'session-rethinkdb';
 import raven from 'raven';
 import App from './components/App';
 import Html from './components/Html';
-import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import base64 from './core/base64';
-import routes from './routes';
-import { auth, port, database, sentry } from './config';
+import { api, port, sentry } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
 import permissions from './api/v1/permissions';
@@ -30,30 +27,26 @@ import server from './api/v1/server';
 import avatarProxy from './api/v1/avatarProxy';
 import settings from './api/v1/settings';
 import authMiddleware from './core/auth';
-import r from './db/index.js';
+import r from './db/index';
 // noinspection JSFileReferences
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
+import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
+import createFetch from './createFetch';
+import router from './router';
 
-/* const eris = new Eris(auth.discord.token, {
-  autoreconnect: true,
-  cleanContent: false,
-  messageLimit: 0,
-  maxShards: parseInt(auth.discord.shards, 10) || 14,
-  disableEvents: {
-    VOICE_STATE_UPDATE: true,
-    TYPING_START: true,
-    MESSAGE_CREATE: true,
-    MESSAGE_DELETE: true,
-    MESSAGE_BULK_DELETE: true,
-    MESSAGE_UPDATE: true,
-    PRESENCE_UPDATE: true,
-  },
-});*/
+raven.config(sentry.serverDSN, {
+  environment: process.env.NODE_ENV,
+  captureUnhandledRejections: true,
 
-const ravenClient = new raven.Client(sentry.serverDSN, { environment: process.env.NODE_ENV });
-ravenClient.patchGlobal((err) => {
-  console.log('Raven caught an error and is exiting');
-  console.error(err);
+}).install((err, sendErr, eventId) => {
+  if (!sendErr) {
+    console.info(`Successfully sent fatal error with eventId ${eventId} to Sentry:`);
+    console.error(err.stack);
+  } else {
+    console.error('Error sending error ', err);
+    console.error('because of ', sendErr);
+  }
+  console.error('This is thy sheath; there rust, and let me die.');
   process.exit(1);
 });
 
@@ -80,13 +73,13 @@ app.set('trust proxy', true);
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
+app.use(raven.requestHandler());
 app.use(logger('combined'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(raven.middleware.express.requestHandler(sentry.serverDSN));
-app.use(raven.middleware.express.errorHandler(sentry.serverDSN));
+app.use(raven.errorHandler(sentry.serverDSN));
 
 //
 // Authentication
@@ -122,12 +115,12 @@ app.get(
   '/login/discord/callback',
   authMiddleware.authenticate('discord', { failureRedirect: '/login' }),
   (req, res) => {
-    if (req.query.hasOwnProperty('guild_id')) {
-      res.redirect(`/server/${req.query.guild_id}`);
-    } else if (req.query.hasOwnProperty('state')) {
+    if (Object.prototype.hasOwnProperty.call(req.query, 'guild_id')) {
+      res.redirect(`/channels/${req.query.guild_id}/${<req className="query guild_id" />}`);
+    } else if (Object.prototype.hasOwnProperty.call(req.query, 'state')) {
       res.redirect(`/${base64.toText(req.query.state)}`);
     } else {
-      res.redirect('/server/');
+      res.redirect('/channels/');
     }
   }, // auth success
 );
@@ -151,12 +144,6 @@ app.get('/info', checkAuth, (req, res) => {
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
-app.use('/graphql', expressGraphQL(req => ({
-  schema,
-  graphiql: __DEV__,
-  rootValue: { request: req },
-  pretty: __DEV__,
-})));
 prefix(app, r);
 user(app, r);
 permissions(app, r);
@@ -182,12 +169,17 @@ app.get('*', async (req, res, next) => {
         // eslint-disable-next-line no-underscore-dangle
         styles.forEach(style => css.add(style._getCss()));
       },
+      // Universal HTTP client
+      fetch: createFetch(fetch, {
+        baseUrl: api.serverUrl,
+        cookie: req.headers.cookie,
+      }),
     };
 
-    const route = await UniversalRouter.resolve(routes, {
+    const route = await router.resolve({
+      ...context,
       user: req.user,
       path: req.path,
-      headers: req.headers,
       query: req.query,
     });
 
@@ -201,18 +193,22 @@ app.get('*', async (req, res, next) => {
     data.styles = [
       { id: 'css', cssText: [...css].join('') },
     ];
-    data.scripts = [assets.vendor.js, assets.client.js];
-    data.chunk = assets[route.chunk] && assets[route.chunk].js;
-    const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
+    data.scripts = [assets.vendor.js];
+    if (route.chunks) {
+      data.scripts.push(...route.chunks.map(chunk => assets[chunk].js));
+    }
+    data.scripts.push(assets.client.js);
+    data.app = {
+      apiUrl: api.clientUrl,
+    };
 
+    const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
     res.status(route.status || 200);
     res.send(`<!doctype html>${html}`);
   } catch (err) {
     next(err);
   }
 });
-
-
 //
 // Error handling
 // -----------------------------------------------------------------------------
@@ -221,15 +217,14 @@ pe.skipNodeFiles();
 pe.skipPackage('express');
 
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  console.log(pe.render(err)); // eslint-disable-line no-console
-  ravenClient.captureError(err);
+  console.error(pe.render(err));
   const html = ReactDOM.renderToStaticMarkup(
     <Html
       title="Internal Server Error"
       description={err.message}
-      style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
+      styles={[{ id: 'css', cssText: errorPageStyle._getCss() }]} // eslint-disable-line no-underscore-dangle
     >
-      {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
+    {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
     </Html>,
   );
   res.status(err.status || 500);
@@ -239,26 +234,18 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 //
 // Launch the server
 // -----------------------------------------------------------------------------
-/* eslint-disable no-console */
-app.listen(port, () => {
-  console.log(`The server is running at http://localhost:${port}/`);
-});
-/* eslint-enable no-console */
+if (!module.hot) {
+  app.listen(port, () => {
+    console.info(`The server is running at http://localhost:${port}/`);
+  });
+}
 
-process.on('unhandledRejection', (reason, p) => {
-  if (ravenClient) {
-    ravenClient.captureError(reason, {
-      extra: { promise: p },
-    }, (result) => {
-      console.error(
-        'Unhandled Rejection at: Promise',
-        p,
-        'reason:',
-        reason,
-        ` sentry Id: ${ravenClient.getIdent(result)}`,
-      );
-    });
-  } else {
-    console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
-  }
-});
+//
+// Hot Module Replacement
+// -----------------------------------------------------------------------------
+if (module.hot) {
+  app.hot = module.hot;
+  module.hot.accept('./router');
+}
+
+export default app;

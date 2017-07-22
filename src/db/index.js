@@ -1,7 +1,7 @@
 /**
  * Created by macdja38 on 2016-07-25.
  */
-import { database } from '../config.js';
+import { database } from '../config';
 
 const r = require('rethinkdbdash')(database.reThinkDB);
 require('rethinkdb-init')(r);

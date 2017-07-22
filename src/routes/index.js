@@ -1,7 +1,7 @@
 /**
  * React Starter Kit (https://www.reactstarterkit.com/)
  *
- * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
+ * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
@@ -9,15 +9,31 @@
 
 /* eslint-disable global-require */
 
-export default {
+// The top-level (parent) route
+const routes = {
 
   path: '/',
 
   // Keep in mind, routes are evaluated in order
   children: [
-    require('./login').default,
-    require('./channels').default,
-    require('./home').default,
+    {
+      path: '/',
+      load: () => import(/* webpackChunkName: 'home' */ './home'),
+    },
+    {
+      path: '/channels/:guildId?/:channelId?/',
+      load: () => import(/* webpackChunkName: 'channels' */ './channels'),
+    },
+    {
+      path: '/login/:nextPage*',
+      load: () => import(/* webpackChunkName: 'login' */ './login'),
+    },
+
+    // Wildcard routes, e.g. { path: '*', ... } (must go last)
+    {
+      path: '*',
+      load: () => import(/* webpackChunkName: 'not-found' */ './not-found'),
+    },
   ],
 
   async action({ next }) {
@@ -25,10 +41,20 @@ export default {
     const route = await next();
 
     // Provide default values for title, description etc.
-    route.title = `${route.title || 'Untitled Page'}`;
+    route.title = route.title || 'Untitled Page';
     route.description = route.description || '';
 
     return route;
   },
 
 };
+
+// The error page is available by permanent url for development mode
+if (__DEV__) {
+  routes.children.unshift({
+    path: '/error',
+    action: require('./error').default,
+  });
+}
+
+export default routes;

@@ -11,7 +11,7 @@ export default function register(app) {
    *    DELETE: deletes contact by id
    */
   app.get('/api/v1/avatar/:id/:hash', /* checkServerAuth,*/ (req, res) => {
-    console.log(`https://cdn.discordapp.com/avatars/${req.params.id}/${req.params.hash}.jpg`);
+    console.info(`https://cdn.discordapp.com/avatars/${req.params.id}/${req.params.hash}.jpg`);
     request(`https://cdn.discordapp.com/avatars/${req.params.id}/${req.params.hash}.jpg`).pipe(res);
   });
 
