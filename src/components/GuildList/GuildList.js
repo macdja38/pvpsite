@@ -11,13 +11,15 @@ import s from './ServerList.css';
 function GuildList({ guilds }) {
   return (<div className={s.scroll}>
     {guilds.map(g => <div key={g.id}>
-      <Avatar src={`https://discordapp.com/api/guilds/${g.id}/icons/${g.icon}.jpg`} />
+      <Avatar src={g.icon ? `https://discordapp.com/api/guilds/${g.id}/icons/${g.icon}.jpg` : null}>
+        {g.icon ? '' : g.name}
+      </Avatar>
     </div>)}
   </div>);
 }
 
 GuildList.propTypes = {
-  guilds: PropTypes.object.isRequired,
+  guilds: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default WithStyles(s)(GuildList);
