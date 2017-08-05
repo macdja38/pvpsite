@@ -452,7 +452,8 @@ name of the role you want added to the user when they run `/rank join member`
 |---|---|---|
 | mcping \<server address> | Pings a Minecraft server and displays some info about it. | minecraft​.mcping |
 | mcavatar \<minecraft username> | Displays a user's Minecraft avatar | minecraft​.avatar  |
-| mcskin \<minecraft username> | Displays a user's Minecraft skin | minecraft​.mcskin | 
+| mcskin \<minecraft username> | Displays a user's Minecraft skin | minecraft​.mcskin |
+| mcwiki \<search term> | Searches the minecraft wiki with a supplied search term | minecraft​.mcwiki |
 
 <br>
 
