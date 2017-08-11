@@ -29,7 +29,7 @@ export const analytics = {
 
 export const sentry = {
   serverDSN: process.env.serverDSN || '',
-  clientDSN: process.env.clientDSN || 'https://1bdba2c5d0a3479bb4af538df734cba4@sentry.pvpcraft.ca/4',
+  clientDSN: process.env.clientDSN || 'https://ae3bf02edb44486ebce6d83664b311f2@sentry.dvguild.tk/23',
 };
 
 export const auth = {

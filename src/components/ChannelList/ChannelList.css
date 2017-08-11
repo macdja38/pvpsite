@@ -1,0 +1,20 @@
+.scroll {
+  overflow-y: scroll;
+  height: 100vh;
+  overflow-x: hidden;
+  padding: 18px 100px 18px 10px;
+  margin-right: -100px;
+}
+
+.scrollContainer {
+  overflow: hidden;
+}
+
+.channelBox {
+  display:flex;
+  align-items:center;
+}
+
+.channelText {
+
+}

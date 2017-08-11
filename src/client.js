@@ -153,6 +153,7 @@ async function onLocationChange(location, action) {
     }
 
     if (route.redirect) {
+      console.info(route.redirect);
       history.replace(route.redirect);
       return;
     }

@@ -1,49 +1,6 @@
 @import '../../components/variables.css';
 
-.root {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.container {
-  margin: 0 auto;
-  padding: 0 0 40px;
-  max-width: var(--max-content-width);
-}
-
-.userContainer {
-  display: flex;
-}
-
-.userAvatar {
-  padding: 10px;
-}
-
-.userInfo {
-  padding: 10px;
-}
-
-.server {
-  padding: 0;
-}
-
-.serverItem {
-  /* Safari 3-4, iOS 1-3.2, Android 1.6- */
-  -webkit-border-radius: 12px;
-
-  /* Firefox 1-3.6 */
-  -moz-border-radius: 12px;
-
-  /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
-  border-radius: 12px;
-  padding-bottom: 6px;
-}
-
-.serverTitle {
-  font-size: 1.125em;
-}
-
-.serverTitle,
-.serverDesc {
-  display: block;
+.gridBox {
+  display: grid;
+  grid-template-columns: 52px 240px auto;
 }

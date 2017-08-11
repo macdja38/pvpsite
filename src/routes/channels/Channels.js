@@ -5,31 +5,45 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { Row, Col } from 'antd';
 import GuildList from '../../components/GuildList';
-import GuildMenu from './GuildMenu/GuildMenu'
+import ChannelList from '../../components/ChannelList';
+import GuildMenu from './GuildMenu/GuildMenu';
 import s from './Channels.css';
 
 class Channels extends Component {
-  static PropTypes = {
+  static propTypes = {
     user: PropTypes.object.isRequired,
+    channelId: PropTypes.oneOf([PropTypes.string, PropTypes.bool]),
+    guildId: PropTypes.oneOf([PropTypes.string, PropTypes.bool]),
+    guildData: PropTypes.object,
+  };
+
+  static defaultProps = {
+    channelId: false,
+    guildId: false,
   };
 
   render() {
-    console.log(this.context);
-    console.log(this.props);
+    console.debug(this.context);
+    console.debug(this.props);
     return (
-      <Row style={{ overflow: 'hidden', height: '100vh' }}>
-        <Col span={1} style={{ overflow: 'hidden' }}><GuildList guilds={this.props.user.guilds} /></Col>
-        {this.props.channelId && this.props.guildId ? (<div><Col span={3}>
-          <div style={{ background: 'blue' }}>b</div>
-        </Col>
-        <Col span={20}>
-          <div>c</div>
-        </Col></div>) : (<GuildMenu></GuildMenu>)}
-      </Row>
-    )
-  };
+      <div className={s.gridBox}>
+        <div style={{ overflow: 'hidden' }}>
+          <GuildList guilds={this.props.user.guilds} />
+        </div>
+        {this.props.channelId && this.props.guildId && this.props.guildData ? (
+          <ChannelList
+            guildId={this.props.guildId}
+            channels={this.props.guildData.channels}
+            channelId={this.props.channelId}
+          >channels</ChannelList>
+        ) : ''}
+        {this.props.channelId && this.props.guildId ? (
+          <div>channel settings</div>
+        ) : (<GuildMenu />)}
+      </div>
+    );
+  }
 }
 
 export default withStyles(s)(Channels);
