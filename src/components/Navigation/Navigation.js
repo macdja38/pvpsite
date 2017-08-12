@@ -15,7 +15,7 @@ import s from './Navigation.css';
 import Link from '../Link';
 
 function Navigation({ className, user }) {
-  if (user == null || user.user == null) {
+  if (user == null) {
     return (
       <div className={cx(s.root, className)} role="navigation">
         <Link className={s.link} to="/about">About</Link>
@@ -36,14 +36,14 @@ function Navigation({ className, user }) {
       <Link className={s.link} to="/server">Servers</Link>
       <span className={s.spacer}> | </span>
       <div className={cx(s.link, s.highlight)} >
-        <Link className={s.username} to={`/user/${user.user.id}`}>
-          <span> {user.user.username}</span>
+        <Link className={s.username} to={`/user/${user.id}`}>
+          <span> {user.username}</span>
           <img
             role="presentation"
             className={s.avatar}
             height="32px"
             width="32px"
-            src={`https://discordapp.com/api/users/${user.user.id}/avatars/${user.user.avatar}.jpg`}
+            src={`https://discordapp.com/api/users/${user.id}/avatars/${user.avatar}.jpg`}
           />
         </Link>
         <a className={cx(s.link, s.highlight)} href="/logout">Log out</a>

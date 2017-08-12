@@ -3,7 +3,7 @@
  */
 
 import { oauth } from '../../config';
-import logoUrl from '../../components/Header/logo-small.png';
+import logoUrl from '../../components/Layout/logo-small.png';
 
 export default function register(app) {
   /*  '/api/v1/prefix/:id'
