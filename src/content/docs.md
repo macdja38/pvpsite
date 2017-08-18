@@ -478,6 +478,11 @@ Displays some misc info about servers and users and stuff.
 
 -----
 
+### Warning: Currently Disabled
+The API this uses is currently failing more than working, for status updates you can try their [slack](https://cleverbot.slack.com)
+
+### Normal functionality 
+
 If the user has the permission node `cleverbot.misc` respond to any messages in which they mention the bot with a 
 message from Cleverbot.
 
