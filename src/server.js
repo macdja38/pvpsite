@@ -35,22 +35,6 @@ import authMiddleware from './core/auth';
 // noinspection JSFileReferences
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 
-/* const eris = new Eris(auth.discord.token, {
-  autoreconnect: true,
-  cleanContent: false,
-  messageLimit: 0,
-  maxShards: parseInt(auth.discord.shards, 10) || 14,
-  disableEvents: {
-    VOICE_STATE_UPDATE: true,
-    TYPING_START: true,
-    MESSAGE_CREATE: true,
-    MESSAGE_DELETE: true,
-    MESSAGE_BULK_DELETE: true,
-    MESSAGE_UPDATE: true,
-    PRESENCE_UPDATE: true,
-  },
-});*/
-
 const ravenClient = new raven.Client(sentry.serverDSN, { environment: process.env.NODE_ENV });
 ravenClient.patchGlobal((err) => {
   console.log('Raven caught an error and is exiting');
