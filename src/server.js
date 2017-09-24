@@ -22,7 +22,7 @@ import errorPageStyle from './routes/error/ErrorPage.css';
 import base64 from './core/base64';
 import schema from './data/schema';
 import routes from './routes';
-import { auth, port, database, sentry } from './config';
+import { port, database, sentry } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
 import permissions from './api/v1/permissions';
