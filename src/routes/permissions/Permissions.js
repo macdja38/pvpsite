@@ -67,6 +67,7 @@ function toDivs(permissions, serverData, layer = 0) {
       let levelNode;
       switch (layer) {
         case 0:
+          if (key === 'id') return null;
           levelNode = s.channel;
           if (serverData && serverData.hasOwnProperty('channels') && key !== '*') {
             const channel = serverData.channels.find(c => c.id === key);
@@ -200,7 +201,7 @@ class Permissions extends Component {
   applyPermissionsChange(targetNode, value) {
     let server = this.state.permissions.server;
     server = recursiveAdd(server, targetNode.map(n => n.replace(/\u200B/g, '')), value);
-    fetch(`/api/v1/permissions/${server.id}`, {
+    fetch(`/api/v1/permissions/${this.props.serverId}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
