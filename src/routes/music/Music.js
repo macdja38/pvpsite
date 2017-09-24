@@ -22,10 +22,10 @@ function Music({ user, serverId, music, title }) {
       <tr key={position}>
         <td>{position}</td>
         <td>{song.title}</td>
-        <td>{song.author.name}</td>
+        <td>{song.author ? song.author.name : ''}</td>
         <td>{song.lengthSeconds}</td>
         <td>{song.user_name}</td>
-      </tr>
+      </tr>,
     );
   } catch (error) {
     items = [];
