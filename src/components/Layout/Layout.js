@@ -23,6 +23,13 @@ function Layout({ children, user }) {
   console.log(user);
   return (
     <div className={s.grid}>
+      <div className={s.left}>
+        <Link className={s.brand} to="/">
+          <img src={logoUrl} width="44" height="44" alt="PvPCraft" />
+          <span className={s.brandTxt}>PvPCraft</span>
+        </Link>
+      </div>
+      <Navigation className={s.right} user={user} />
       <div className={s.content}>
         <Link className={s.banner} to="/">
           <h1 className={s.bannerTitle}>PvPCraft</h1>
@@ -33,13 +40,6 @@ function Layout({ children, user }) {
         </Content>
       </div>
       <div className={s.background} />
-      <div className={s.left}>
-        <Link className={s.brand} to="/">
-          <img src={logoUrl} width="44" height="44" alt="PvPCraft" />
-          <span className={s.brandTxt}>PvPCraft</span>
-        </Link>
-      </div>
-      <Navigation className={s.right} user={user} />
       <Footer />
     </div>
   );

@@ -35,6 +35,23 @@
   z-index: 10;
 }
 
+@supports not (display: grid) {
+  .left {
+    float: left;
+  }
+
+  .right:after, .left:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  .content {
+    width: 100%;
+    clear: both;
+  }
+}
+
 @media (max-width: 1500px) {
   .grid {
     grid-template-columns: 25% 75%;
@@ -92,7 +109,8 @@
 
 .brand {
   display: block;
-  margin: 5px;
+  margin: 0;
+  padding: 5px;
   text-decoration: none;
   font-size: 1.75em; /* ~28px */
 }
