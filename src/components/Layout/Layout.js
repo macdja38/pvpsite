@@ -34,8 +34,10 @@ function Layout({ children, user }) {
       </div>
       <div className={s.background} />
       <div className={s.left}>
-        <img src={logoUrl} width="44" height="44" alt="PvPCraft" />
-        <span className={s.brandTxt}>PvPCraft</span>
+        <Link className={s.brand} to="/">
+          <img src={logoUrl} width="44" height="44" alt="PvPCraft" />
+          <span className={s.brandTxt}>PvPCraft</span>
+        </Link>
       </div>
       <Navigation className={s.right} user={user} />
       <Footer />

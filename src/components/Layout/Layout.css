@@ -4,7 +4,7 @@
   display: grid;
   padding: 0;
   margin: 0;
-  grid-template-columns: 1fr 240px 1fr;
+  grid-template-columns: 1fr 280px 1fr;
   grid-template-rows: 1fr 10fr;
   height: 100vh;
   width: 100vw;
@@ -67,16 +67,19 @@
 .banner {
   position: relative;
   text-align: center;
+  text-decoration: none;
   z-index: 0;
 }
 
 .bannerTitle {
   background-color: var(--discord-purple);
   margin: 0;
-  padding: 4px 0;
-  font-weight: normal;
   font-size: 4em;
   line-height: 1em;
+  padding: 10px;
+  font-weight: 400;
+  color: #fff;
+  text-decoration: none;
 }
 
 .bannerDesc {
@@ -88,13 +91,15 @@
 }
 
 .brand {
-  color: color(var(--discord-purple) lightness(+10%));
+  display: block;
+  margin: 5px;
   text-decoration: none;
   font-size: 1.75em; /* ~28px */
 }
 
 .brandTxt {
   margin-left: 10px;
+  color: #92e5fc;
 }
 
 .nav {
