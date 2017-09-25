@@ -510,6 +510,8 @@ Variables
 
 ## Chess
 
+-----
+
 #### Warning, chess module does not save the current games anywhere, if the bot restarts (which it does at least once a day) your current game will randomly get deleted. Issue that tracks this is [here](https://github.com/macdja38/pvpcraft/issues/22)
 
 Games are scooped to a channel, only one game can happen per channel at any time.
