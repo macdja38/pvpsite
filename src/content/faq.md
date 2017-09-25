@@ -1,6 +1,10 @@
-# FAQ
+---
+title: FAQ
+description: Frequently asked questions and answers
+component: ContentPage
+---
 
-Just a collection of frequently asked questions and their respective answers.
+A collection of frequently asked questions and their respective answers.
 If you have any suggestions feel free to suggest them [here](https://discord.gg/p2beFQq)
 
 ### Q
