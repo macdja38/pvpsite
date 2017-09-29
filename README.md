@@ -16,7 +16,7 @@ To build for release, run `npm run build --release`
 2. `cd pvpsite` to enter the project directory git just made
 3. `npm install` to install dependencies
 4. `cp src/config.example.js src/config.js` and `cp client.config.example.js client.config.js`
-5. `vim src/config.js` and `vim src/client.config.js` to edit the config files, alternatively if you are not familiar with a command line editor like vim you may edit the files in anything but notepad I like (windows)[https://notepad-plus-plus.org/] (mac)[https://www.barebones.com/products/bbedit/download.html]
+5. `vim src/config.js` and `vim src/client.config.js` to edit the config files, alternatively if you are not familiar with a command line editor like vim you may edit the files in anything but notepad. I like [windows](https://notepad-plus-plus.org/) or [macOS](https://www.barebones.com/products/bbedit/download.html)
 6. `npm run build --release` to build the project
 7. `node build/server.js` to run the project
 
