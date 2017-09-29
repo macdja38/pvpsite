@@ -1,19 +1,22 @@
 ## PvPCraft website for pvpcraft discord bot.
 
-Can be found at https://bot.pvpcraft.ca
+Can be found at [bot.pvpcraft.ca](https://bot.pvpcraft.ca)
 
-To build for release run `npm run build --release`
+To build for release, run `npm run build --release`
 
 ## Requirements 
-1. access to the same rethinkdb as pvpcraft
-2. have node.js and npm install.
-3. have git and node-gyp installed
+#### You must have:
+1. Access to the same RethinkDB as pvpcraft
+2. node.js and npm
+3. git and node-gyp
 
 ## Installation
-1. clone the repo `git clone https://github.com/macdja38/pvpsite.git`
-2. open the new directory: `cd pvpsite`.
-3. install the dependancies: `npm install`
-4. edit the config.js and client.config.js in the /src directory
-5. build the project: `npm run build --release`
-6. run the project: `node /build/server.js`
-7. Optionaly setup a caching reverse proxy to server the static files (js and pvpcraft logo are most important) and to forward from port 80 to 3000.
+#### In your command line of choice, enter:
+1. `git clone https://github.com/macdja38/pvpsite.git` to clone the repo
+2. `cd pvpsite` to enter the project directory git just made
+3. `npm install` to install dependencies
+4. `vim src/config.js` and `vim src/client.config.js` to edit the config files
+5. `npm run build --release` to build the project
+6. `node /build/server.js` to run the project
+
+Optionally, set up a caching reverse proxy to serve the static files (js and PvPCraft logo are the most important), and to forward from port 80 to 3000.
