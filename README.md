@@ -1,4 +1,4 @@
-## PvPCraft website for pvpcraft discord bot.
+## PvPCraft website for PvPCraft Discord bot
 
 Can be found at [bot.pvpcraft.ca](https://bot.pvpcraft.ca)
 
