@@ -14,6 +14,22 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
 import Link from '../Link';
 
+const DefaultAvatarHashes = [
+  '6debd47ed13483642cf09e832ed0bc1b',
+  '322c936a8c8be1b803cd94861bdfa868',
+  'dd4dbc0016779df1378e7812eabaa04d',
+  '0e291f67c9274a1abdddeb3fd919cbaa',
+  '1cbd08c76f8af6dddce02c5138971129',
+];
+
+function getUserAvatar(user) {
+  if (user.avatar) {
+    return `https://discordapp.com/api/users/${user.id}/avatars/${user.avatar}.jpg`;
+  }
+  const defaultAvatarHash = DefaultAvatarHashes[this.discriminator % DefaultAvatarHashes.length];
+  return `https://discordapp.com/assets/${defaultAvatarHash}.png`;
+}
+
 function Navigation({ className, user }) {
   if (user == null) {
     return (
@@ -35,15 +51,15 @@ function Navigation({ className, user }) {
       <Link className={s.link} to="/donate">Donate</Link>
       <Link className={s.link} to="/server">Servers</Link>
       <span className={s.spacer}> | </span>
-      <div className={cx(s.link, s.highlight)} >
+      <div className={cx(s.link, s.highlight)}>
         <Link className={s.username} to={`/user/${user.id}`}>
           <span> {user.username}</span>
           <img
-            role="presentation"
+            alt=""
             className={s.avatar}
             height="32px"
             width="32px"
-            src={`https://discordapp.com/api/users/${user.id}/avatars/${user.avatar}.jpg`}
+            src={getUserAvatar(user)}
           />
         </Link>
         <a className={cx(s.link, s.highlight)} href="/logout">Log out</a>
