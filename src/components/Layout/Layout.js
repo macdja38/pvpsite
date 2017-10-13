@@ -30,17 +30,21 @@ function Layout({ children, user }) {
         </Link>
       </div>
       <Navigation className={s.right} user={user} />
-      <div className={s.content}>
-        <Link className={s.banner} to="/">
-          <h1 className={s.bannerTitle}>PvPCraft</h1>
-          <p className={s.bannerDesc}>Just the best Discord bot</p>
-        </Link>
-        <Content>
-          {React.Children.only(children)}
-        </Content>
-      </div>
       <div className={s.background} />
-      <Footer />
+      <div className={s.contentDiv}>
+        <div className={s.bannerDiv}>
+          <Link className={s.banner} to="/">
+            <h1 className={s.bannerTitle}>PvPCraft</h1>
+            <p className={s.bannerDesc}>Just the best Discord bot</p>
+          </Link>
+        </div>
+        <div className={s.content}>
+          <Content>
+            {React.Children.only(children)}
+          </Content>
+        </div>
+        <Footer />
+      </div>
     </div>
   );
 }
