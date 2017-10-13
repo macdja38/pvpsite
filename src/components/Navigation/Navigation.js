@@ -26,7 +26,7 @@ function getUserAvatar(user) {
   if (user.avatar) {
     return `https://discordapp.com/api/users/${user.id}/avatars/${user.avatar}.jpg`;
   }
-  const defaultAvatarHash = DefaultAvatarHashes[this.discriminator % DefaultAvatarHashes.length];
+  const defaultAvatarHash = DefaultAvatarHashes[user.discriminator % DefaultAvatarHashes.length];
   return `https://discordapp.com/assets/${defaultAvatarHash}.png`;
 }
 
