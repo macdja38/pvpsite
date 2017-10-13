@@ -9,8 +9,6 @@
 
 .root {
   padding: 10px 5px;
-  position: relative;
-  z-index: 1;
 }
 
 .link {
