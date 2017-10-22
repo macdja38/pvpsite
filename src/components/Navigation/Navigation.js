@@ -34,6 +34,7 @@ function Navigation({ className, user }) {
   if (user == null) {
     return (
       <div className={cx(s.root, className)} role="navigation">
+        <a className={cx(s.link, s.highlight)} href="https://invite.pvpcraft.ca">Invite</a>
         <Link className={s.link} to="/about">About</Link>
         <Link className={s.link} to="/contact">Contact</Link>
         <Link className={s.link} to="/docs">Docs</Link>
@@ -45,6 +46,7 @@ function Navigation({ className, user }) {
   }
   return (
     <div className={cx(s.root, className)} role="navigation">
+      <a className={cx(s.link, s.highlight)} href="https://invite.pvpcraft.ca">Invite</a>
       <Link className={s.link} to="/about">About</Link>
       <Link className={s.link} to="/contact">Contact</Link>
       <Link className={s.link} to="/docs">Docs</Link>
@@ -66,16 +68,6 @@ function Navigation({ className, user }) {
       </div>
     </div>
   );
-  /*
-  return (
-    <div className={cx(s.root, className)} role="navigation">
-      <Link className={s.link} to="/about">About</Link>
-      <Link className={s.link} to="/contact">Contact</Link>
-      <span className={s.spacer}> | </span>
-      <Link className={cx(s.link, s.highlight)} to="/login">Log in</Link>
-    </div>
-  );
-  */
 }
 
 Navigation.propTypes = {
