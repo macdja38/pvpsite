@@ -1,0 +1,35 @@
+.box {
+  box-shadow: 1px 1px 4px #ebebeb;
+  -moz-box-shadow: 1px 1px 4px #ebebeb;
+  -webkit-box-shadow: 1px 1px 4px #ebebeb;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+}
+
+.headerTitle {
+  display: grid;
+  grid-template-columns: min-content auto min-content;
+}
+
+.headerTitleOpen {
+
+}
+
+.headerTitleText {
+
+}
+
+.headerTitleLock {
+  margin: 10px;
+}
+
+.dividerLine {
+
+}
+
+.childBox {
+  margin-left: 20px;
+}
