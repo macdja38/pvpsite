@@ -18,13 +18,13 @@ function checkServerAuth(req, res, next) {
   return true;
 }
 
-export default function register(app, { r }) {
+export default function register(app, r) {
   /*  "/api/v1/prefix/:id"
    *    GET: find contact by id
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
-  app.get('/api/v1/permissions/:id', /* checkServerAuth,*/ (req, res) => {
+  app.get('/api/v1/permissions/:id', /* checkServerAuth, */ (req, res) => {
     const serverPermissions = r.table('permissions').get(req.params.id).run();
     const defaultPermissions = r.table('permissions').get('*').run();
     Promise.all([serverPermissions, defaultPermissions])

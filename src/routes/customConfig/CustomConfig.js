@@ -7,6 +7,7 @@ import ServerMenu from '../../components/ServerMenu';
 import CustomServerMenu from '../../components/menuItems/ServerMenu';
 import Layout from '../../components/Layout';
 import InputBox from '../../components/menuItems/InputBox';
+import CommandMenu from '../../components/menuItems/CommandMenu';
 import fetch from '../../core/fetch';
 
 function childOrObject(item, key) {
@@ -31,6 +32,22 @@ function duplicateAndPush(array, ...params) {
   const newArray = array.slice(0);
   newArray.push(...params);
   return newArray;
+}
+
+/**
+ * Possible add a permission node to an already partially formed permission node
+ * @param permNode
+ * @param settingsMap
+ * @returns {string}
+ */
+function maybeAddPerm(permNode, settingsMap) {
+  return `${
+    permNode || ''
+  }${
+    settingsMap.permNode && permNode ? '.' : ''
+  }${
+    settingsMap.permNode || ''
+  }`;
 }
 
 class CustomConfig extends Component {
@@ -84,12 +101,45 @@ class CustomConfig extends Component {
     event.preventDefault();
   }
 
-  toDivs(settingsMap, settings, delta, serverId, botId, urlLocation, currentPath) {
-    console.log('and another one');
+  /**
+   * Convert a settingsMap along with the settings that belong inside it to a react element
+   * @param {Object} settingsMap
+   * @param {Object} settings
+   * @param {Object} delta
+   * @param {string} serverId
+   * @param {string} botId
+   * @param {Array<string>} urlLocation
+   * @param {Array<string>} currentPath
+   * @param {String} permNode
+   * @returns {*}
+   */
+  toDivs(settingsMap, settings, delta, serverId, botId, urlLocation, currentPath, permNode) {
+    console.log('and another one', settingsMap.type);
     console.log(settingsMap);
     console.log(settings);
     console.log(delta);
-    if (settingsMap.type === 'pageSelector') {
+    if (settingsMap.type === 'commands') {
+      console.log(Object.values(settingsMap.children));
+      return (<div key={settingsMap.key}>
+        <CommandMenu
+          botId={botId}
+          serverId={serverId}
+          settingsMap={settingsMap}
+          permNode={permNode}
+          guild={this.props.guild}
+        >
+          {Object.values(settingsMap.children).map(child => this.toDivs(child,
+            childOrObject(settings, child.key),
+            childOrObject(delta, child.key),
+            serverId,
+            botId,
+            urlLocation.slice(1),
+            duplicateAndPush(currentPath, child.key),
+            maybeAddPerm(permNode, child),
+          ))}
+        </CommandMenu>
+      </div>);
+    } else if (settingsMap.type === 'pageSelector') {
       return (<div key={settingsMap.key}>
         <CustomServerMenu
           botId={botId}
@@ -103,7 +153,9 @@ class CustomConfig extends Component {
           serverId,
           botId,
           urlLocation.slice(1),
-          duplicateAndPush(currentPath, urlLocation[0]))}
+          duplicateAndPush(currentPath, urlLocation[0]),
+          maybeAddPerm(permNode, settingsMap.children[urlLocation[0]]),
+        )}
       </div>);
     } else if (settingsMap.type === 'category') {
       return (<InputBox key={settingsMap.key}>
@@ -115,7 +167,8 @@ class CustomConfig extends Component {
               serverId,
               botId,
               urlLocation,
-              duplicateAndPush(currentPath, key)))
+              duplicateAndPush(currentPath, key),
+              maybeAddPerm(permNode, settingsMap.children[key])))
         }</div>
       </InputBox>);
     } else if (settingsMap.type === 'boolean') {

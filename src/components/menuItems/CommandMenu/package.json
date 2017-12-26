@@ -1,6 +1,6 @@
 {
-  "name": "Link",
+  "name": "CommandMenu",
   "version": "0.0.0",
   "private": true,
-  "main": "./InputBox.js"
+  "main": "./CommandMenu.js"
 }

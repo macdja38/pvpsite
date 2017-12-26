@@ -54,6 +54,7 @@ class Html extends Component {
               dangerouslySetInnerHTML={{ __html: style.cssText }}
             />,
           )}
+          <script src="https://use.fontawesome.com/324f823ba9.js" />
         </head>
         <body>
           <div

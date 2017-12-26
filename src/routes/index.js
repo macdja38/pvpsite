@@ -23,6 +23,7 @@ export default {
     require('./login').default,
     require('./music').default,
     require('./customConfig').default,
+    require('./setup').default,
 
     // place new routes before...
     require('./server').default,

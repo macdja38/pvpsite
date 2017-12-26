@@ -10,14 +10,14 @@ export default function register(app) {
    *    PUT: update contact by id
    *    DELETE: deletes contact by id
    */
-  app.get('/api/v1/avatar/:id/:hash', /* checkServerAuth,*/ (req, res) => {
+  app.get('/api/v1/avatar/:id/:hash', /* checkServerAuth, */ (req, res) => {
     console.log(`https://cdn.discordapp.com/avatars/${req.params.id}/${req.params.hash}.jpg`);
     request(`https://cdn.discordapp.com/avatars/${req.params.id}/${req.params.hash}.jpg`).pipe(res);
   });
 
-  app.get('/api/v1/attachments/:id/:hash/:filename', /* checkServerAuth,*/ (req, res) => {
+  app.get('/api/v1/attachments/:id/:hash/:filename', /* checkServerAuth, */ (req, res) => {
     request(`https://cdn.discordapp.com/attachments/${
       req.params.id}/${req.params.hash}/${req.params.filename}`)
-    .pipe(res);
+      .pipe(res);
   });
 }

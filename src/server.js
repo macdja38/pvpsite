@@ -12,9 +12,9 @@ import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
 import logger from 'morgan';
-import R from 'rethinkdbdash';
 import RDBStore from 'session-rethinkdb';
-import raven from 'raven';
+import Raven from 'raven';
+import r from './db';
 import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
@@ -22,7 +22,7 @@ import errorPageStyle from './routes/error/ErrorPage.css';
 import base64 from './core/base64';
 import schema from './data/schema';
 import routes from './routes';
-import { port, database, sentry } from './config';
+import { port, sentry } from './config';
 import prefix from './api/v1/prefix';
 import user from './api/v1/user';
 import permissions from './api/v1/permissions';
@@ -35,18 +35,7 @@ import authMiddleware from './core/auth';
 // noinspection JSFileReferences
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 
-const ravenClient = new raven.Client(sentry.serverDSN, { environment: process.env.NODE_ENV });
-ravenClient.patchGlobal((err) => {
-  console.log('Raven caught an error and is exiting');
-  console.error(err);
-  process.exit(1);
-});
-
-const r = new R({ servers: [
-  database.reThinkDB,
-] });
-
-const db = { r, connPromise: r.connect(database.reThinkDB) };
+Raven.config(sentry.serverDSN, { environment: process.env.NODE_ENV }).install();
 
 const app = express();
 
@@ -71,13 +60,13 @@ app.set('trust proxy', true);
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
+app.use(Raven.requestHandler());
 app.use(logger('combined'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(raven.middleware.express.requestHandler(sentry.serverDSN));
-app.use(raven.middleware.express.errorHandler(sentry.serverDSN));
+app.use(Raven.errorHandler());
 
 //
 // Authentication
@@ -148,13 +137,13 @@ app.use('/graphql', expressGraphQL(req => ({
   rootValue: { request: req },
   pretty: __DEV__,
 })));
-prefix(app, db);
-user(app, db);
-permissions(app, db);
-music(app, db);
-oembed(app, db);
-server(app, db);
-settings(app, db);
+prefix(app, r);
+user(app, r);
+permissions(app, r);
+music(app, r);
+oembed(app, r);
+server(app, r);
+settings(app, r);
 avatarProxy(app);
 
 //
@@ -213,7 +202,7 @@ pe.skipPackage('express');
 
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.log(pe.render(err)); // eslint-disable-line no-console
-  ravenClient.captureError(err);
+  Raven.captureException(err);
   const html = ReactDOM.renderToStaticMarkup(
     <Html
       title="Internal Server Error"
@@ -237,8 +226,8 @@ app.listen(port, () => {
 /* eslint-enable no-console */
 
 process.on('unhandledRejection', (reason, p) => {
-  if (ravenClient) {
-    ravenClient.captureError(reason, {
+  if (Raven) {
+    Raven.captureException(reason, {
       extra: { promise: p },
     }, (result) => {
       console.error(
@@ -246,7 +235,7 @@ process.on('unhandledRejection', (reason, p) => {
         p,
         'reason:',
         reason,
-        ` sentry Id: ${ravenClient.getIdent(result)}`,
+        ` sentry Id: ${Raven.getIdent(result)}`,
       );
     });
   } else {

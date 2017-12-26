@@ -60,7 +60,7 @@ async function getCachingInfoLink(r, link, options = {}) {
   return getCachingInfoHash(r, hashedLink, link, options);
 }
 
-export default function register(app, { r }) {
+export default function register(app, r) {
   /*  "/api/v1/prefix/:id"
    *    GET: find contact by id
    *    PUT: update contact by id

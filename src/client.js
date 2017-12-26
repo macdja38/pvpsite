@@ -176,7 +176,7 @@ async function onLocationChange(location) {
       return;
     }
 
-    ReactDOM.render(
+    ReactDOM.hydrate(
       <App context={context}>{route.component}</App>,
       container,
       () => onRenderComplete(route, location),
@@ -201,7 +201,7 @@ onLocationChange(currentLocation);
 // Display the error in full-screen for development mode
 if (__DEV__) {
   window.addEventListener('error', (event) => {
-    appInstance = null;
+    window.appInstance = null;
     document.title = `Runtime Error: ${event.error.message}`;
     ReactDOM.render(<ErrorReporter error={event.error} />, container);
   });
@@ -212,12 +212,12 @@ if (module.hot) {
   module.hot.accept('./routes', () => {
     routes = require('./routes').default; // eslint-disable-line global-require
 
-    if (appInstance) {
+    if (window.appInstance) {
       try {
         // Force-update the whole tree, including components that refuse to update
-        deepForceUpdate(appInstance);
+        deepForceUpdate(window.appInstance);
       } catch (error) {
-        appInstance = null;
+        window.appInstance = null;
         document.title = `Hot Update Error: ${error.message}`;
         ReactDOM.render(<ErrorReporter error={error} />, container);
         return;

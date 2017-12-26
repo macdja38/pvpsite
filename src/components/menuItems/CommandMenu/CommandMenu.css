@@ -8,3 +8,28 @@
   padding: 1px;
   margin: 1px;
 }
+
+.headerTitle {
+  display: grid;
+  grid-template-columns: min-content auto min-content;
+}
+
+.headerTitleOpen {
+
+}
+
+.headerTitleText {
+
+}
+
+.headerTitleLock {
+  margin: 10px;
+}
+
+.dividerLine {
+
+}
+
+.childBox {
+  margin-left: 20px;
+}
