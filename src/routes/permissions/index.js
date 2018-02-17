@@ -12,7 +12,7 @@ import Permissions from './Permissions';
 import fetch from '../../core/fetch';
 import { oauth } from '../../client.config.js';
 
-let title = 'Permissions Page';
+let title = 'Permissions Page | PvPCraft Discord Bot';
 let description = 'Permissions webadmin pannel';
 
 export default {

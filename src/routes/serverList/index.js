@@ -11,7 +11,7 @@ import React from 'react';
 import ServerList from './ServerList';
 import fetch from '../../core/fetch';
 
-let title = 'Server List';
+let title = 'Server List | PvPCraft Discord Bot';
 const description = 'Server List Page';
 
 export default {

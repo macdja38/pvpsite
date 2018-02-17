@@ -10,7 +10,7 @@
 import React from 'react';
 import NotFound from './NotFound';
 
-const title = 'Page Not Found';
+const title = 'Page Not Found | PvPCraft Discord Bot';
 
 export default {
 

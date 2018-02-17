@@ -1,5 +1,5 @@
 ---
-title: Index
+title: Index | PvPCraft Discord Bot
 description: The ingredients to the PvPCraft discord bot.
 component: ContentPage
 ---

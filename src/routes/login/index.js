@@ -10,7 +10,7 @@
 import React from 'react';
 import Login from './Login';
 
-const title = 'Log In';
+const title = 'Log In | PvPCraft Discord Bot';
 const description = 'Login to the PvPCraft webadmin panel.';
 
 export default {

@@ -7,7 +7,7 @@ export default {
 
   action({ user }) {
     return {
-      title: 'Home',
+      title: 'Home | PvPCraft Discord Bot',
       description: 'Home Page',
       component: <Home user={user} />,
     };

@@ -10,7 +10,7 @@
 import React from 'react';
 import User from './User';
 
-const title = 'Profile page';
+const title = 'Profile page | PvPCraft Discord Bot';
 const description = 'Profile page';
 
 export default {

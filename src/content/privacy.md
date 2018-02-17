@@ -1,5 +1,5 @@
 ---
-title: Privacy Policy
+title: Privacy Policy | PvPCraft Discord Bot
 description: Privacy Policy for the PvPCraft discord bot.
 component: ContentPage
 ---

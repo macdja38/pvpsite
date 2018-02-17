@@ -11,7 +11,7 @@ import React from 'react';
 import Server from './Server';
 import fetch from '../../core/fetch';
 
-let title = 'Admin Panel';
+let title = 'Admin Panel | PvPCraft Discord Bot';
 let description = 'Server admin panel';
 
 export default {

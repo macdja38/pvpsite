@@ -1,5 +1,5 @@
 ---
-title: Documentation
+title: Documentation | PvPCraft Discord Bot
 description: Instructions for usage of PvPCraft Discord bot.
 component: ContentPage
 ---

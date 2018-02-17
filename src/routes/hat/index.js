@@ -7,7 +7,7 @@ export default {
 
   action({ user }, params) {
     return {
-      title: 'Hat',
+      title: 'Hat | PvPCraft Discord Bot',
       description: 'Hat Page',
       component: <Hat user={user} userId={params.id} userHash={params.hash} />,
     };

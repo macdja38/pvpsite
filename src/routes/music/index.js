@@ -11,7 +11,7 @@ import React from 'react';
 import Music from './Music';
 import fetch from '../../core/fetch';
 
-let title = 'Music';
+let title = 'Music | PvPCraft Discord Bot';
 let description = 'Queued music';
 
 export default {

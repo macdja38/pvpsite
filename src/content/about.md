@@ -1,5 +1,5 @@
 ---
-title: About Us
+title: About Us | PvPCraft Discord Bot
 description: About the PvPCraft Discord bot.
 component: ContentPage
 ---

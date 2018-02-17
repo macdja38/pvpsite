@@ -242,7 +242,7 @@ class CustomConfig extends Component {
                   this.state.delta,
                   serverId,
                   botId,
-                  urlLocation.split('/'),
+                  (urlLocation || '').split('/'),
                   [])}
                 <input className={s.save} type="submit" value="Save" name="save" />
               </form>

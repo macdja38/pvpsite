@@ -1,5 +1,5 @@
 ---
-title: Contact
+title: Contact | PvPCraft Discord Bot
 description: Contact PvPCraft
 component: ContentPage
 ---

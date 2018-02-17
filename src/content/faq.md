@@ -1,5 +1,5 @@
 ---
-title: FAQ
+title: FAQ | PvPCraft Discord Bot
 description: Frequently asked questions and answers
 component: ContentPage
 ---

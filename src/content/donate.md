@@ -1,5 +1,5 @@
 ---
-title: Donate
+title: Donate | PvPCraft Discord Bot
 description: Help Fund PvPCraft
 component: ContentPage
 ---
