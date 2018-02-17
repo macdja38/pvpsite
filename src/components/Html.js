@@ -46,6 +46,8 @@ class Html extends Component {
           <link rel="shortcut icon" href="/favicon.ico" />
           <meta name="msapplication-config" content="/browserconfig.xml" />
           <meta name="theme-color" content="#ffffff" />
+          <meta name="description" content="PvPCraft Discord Bot and Music Bot" />
+          <meta name="keywords" content="Discord, Bot, Music, Moderation, Games, Chess, Auto, Warframe" />
           {styles.map(style =>
             <style
               key={style.id}
