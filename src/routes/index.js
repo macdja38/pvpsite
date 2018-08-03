@@ -22,6 +22,7 @@ export default {
     require('./permissions').default,
     require('./login').default,
     require('./music').default,
+    require('./languages').default,
     require('./customConfig').default,
     require('./setup').default,
 

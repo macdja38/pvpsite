@@ -29,6 +29,7 @@ import permissions from './api/v1/permissions';
 import music from './api/v1/music';
 import oembed from './api/v1/oembed';
 import server from './api/v1/server';
+import languages from './api/v1/languages';
 import avatarProxy from './api/v1/avatarProxy';
 import settings from './api/v1/settings';
 import authMiddleware from './core/auth';
@@ -144,6 +145,7 @@ music(app, r);
 oembed(app, r);
 server(app, r);
 settings(app, r);
+languages(app, r);
 avatarProxy(app);
 
 //

@@ -1,0 +1,211 @@
+/**
+ * React Starter Kit (https://www.reactstarterkit.com/)
+ *
+ * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.txt file in the root directory of this source tree.
+ */
+
+@import '../../components/variables.css';
+
+.root {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 0 40px;
+  max-width: var(--max-content-width);
+}
+
+.entry {
+  /* reserved */
+}
+
+.permissionItem {
+  /* reserved */
+}
+
+.channel {
+  border: solid #99aab5;
+  margin: 5px 0;
+  padding: 10px 5px;
+}
+
+.user {
+  border: none;
+  border-left: solid #7289da;
+  margin: 0 5px;
+  padding: 5px;
+}
+
+.group {
+  border: none;
+  border-left: solid #7289da;
+  margin: 0 5px;
+  padding: 5px;
+}
+
+.allGroupsAndUsers {
+  border: none;
+  border-left: solid #7289da;
+  margin: 0 5px;
+  padding: 5px;
+}
+
+.nodeStart {
+  border: none;
+  margin: 0 5px;
+  border-left: solid #2c2f33;
+}
+
+.node {
+  margin: 0 5px;
+  padding: 0 15px;
+}
+
+.button {
+  height: 40px;
+  padding: 0 16px;
+  background-color: var(--menu-dark-white);
+  cursor: pointer;
+  border: lightgrey 1px solid;
+}
+
+.button:hover {
+  background-color: grey;
+}
+
+.buttonAllowed {
+  color: #007f00;
+}
+
+.buttonDenied {
+  color: #7f0000;
+}
+
+.buttonDisabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.editEnabled {
+  background-color: var(--discord-purple);
+  border-color: var(--discord-purple);
+  color: var(--discord-white);
+  float: right;
+}
+
+.editDisabled {
+  float: right;
+}
+
+.denied::before {
+  content: '\2613\0020';
+  margin-right: 3px;
+  color: #7f0000;
+}
+
+.denied {
+  color: #7f0000;
+}
+
+.allowed::before {
+  content: '\2713\0020';
+  margin-right: 3px;
+  color: #007f00;
+}
+
+.allowed {
+  color: #007f00;
+}
+
+.clearFix::after {
+  clear: both;
+  content: '.';
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+
+.clearFix {
+  display: inline-block;
+}
+
+.clearFix {
+  display: block;
+}
+
+.hoverText:hover::after {
+  position: absolute;
+  top: auto;
+  content: attr(alt);
+  background-color: var(--menu-dark-white);
+  color: #000;
+  line-height: 1.4em;
+  border: none;
+  padding: 2px 8px;
+  box-shadow: 5px 5px 5px var(--discord-black);
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 300px;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 300px;
+  }
+}
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+    height: auto;
+    max-height: 300px;
+  }
+  to {
+    opacity: 0;
+    height: 0;
+    max-height: 0;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    height: auto;
+    max-height: 300px;
+  }
+  to {
+    opacity: 0;
+    height: 0;
+    max-height: 0;
+  }
+}
+
+.hidden {
+  animation: fadeOut 1s;
+  opacity: 0;
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.active {
+  opacity: 1;
+  max-height: 300px;
+  height: auto;
+  animation: fadeIn 1s;
+}

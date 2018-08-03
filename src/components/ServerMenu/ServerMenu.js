@@ -29,6 +29,12 @@ function ServerMenu({ className, user, serverId, page }) {
           >
             Permissions
           </Link>
+          <Link
+            className={page === 'languages' ? cx(s.link, s.active) : s.link}
+            to={`/server/${serverId}/languages`}
+          >
+            Languages
+          </Link>
           <Link className={s.link} to="/docs">Docs</Link>
         </div>
       </div>

@@ -6,7 +6,7 @@
  if (req.isAuthenticated()) return next();
  res.redirect('/');
  return true;
- }*/
+ } */
 
 function checkServerAuth(req, res, next) {
   if (req.isAuthenticated()) {
