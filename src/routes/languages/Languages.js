@@ -9,7 +9,7 @@ import fetch from '../../core/fetch';
 
 const languageMap = {
   en: 'English',
-  fr: 'French',
+  de: 'German',
 };
 
 class Languages extends Component {
