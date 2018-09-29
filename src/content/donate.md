@@ -5,11 +5,10 @@ component: ContentPage
 ---
 ### Donate
 
-So, basically running a discord bot like this costs a decent amount of
-<img src="https://canary.discordapp.com/assets/ccebe0b729ff7530c5e37dbbd9f9938c.svg" alt="Money" title="Money" style="width: 14px;"/>
-every month. At the moment it's costing a decent amount of cash  just for the server space and it's not enough
-to support crystal clear music streams for all the users, their is simply too much load on the bot.
-More money will help improve the quality of streaming by simply distributing it over more servers.
+Every day more and more people start using PvPCraft on their discord servers. And that's why I need your help!
 
-If you want to help the bot has a [Patreon](https://www.patreon.com/macdja38)
-and a [Paypal](https://www.paypal.me/pvpcraftbot)
+From PvPCraft's inception I've been hosting it on my own dime and investing an immense amount of work into improvements, modifications and bugfixes. However as a full-time University student I have very limited funds and time. PvPCraft is on thousands and thousands of discord servers and that requires a ton of work. Hosting costs become immense especially with custom music.
+
+Contribution to PvPCraft will fund additional servers to bear the load, meaning higher quality streams for PvPCraft users.
+
+Your contributions are welcome both at my [Patreon](https://www.patreon.com/macdja38), or alternatively through [PayPal](https://www.paypal.me/pvpcraftbot).
