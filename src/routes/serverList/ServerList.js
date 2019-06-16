@@ -57,7 +57,7 @@ function ServerList({ user, /* commonServers,*/ title }) {
           {guild.icon != null ? <img
             alt=""
             className={s.serverGuildIcon}
-            src={`https://discordapp.com/api/guilds/${guild.id}/icons/${guild.icon}.jpg`}
+            src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
           /> : ''}
         </div>
         <div className={s.serverLabel}>
