@@ -53,7 +53,7 @@
     "request": "^2.78.0",
     "rethinkdb-init": "^0.2.2",
     "rethinkdbdash": "^2.3.23",
-    "sequelize": "3.30.1",
+    "sequelize": "5.15.1",
     "session-rethinkdb": "^2.0.0",
     "source-map-support": "0.4.11",
     "universal-router": "2.0.0",
