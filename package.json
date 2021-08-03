@@ -58,7 +58,7 @@
     "source-map-support": "0.4.11",
     "universal-router": "2.0.0",
     "whatwg-fetch": "2.0.3",
-    "xmldom": "^0.1.22"
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",
