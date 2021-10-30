@@ -112,7 +112,7 @@ This example builds on top of the previous channel specific permission. If you w
 
 -----
 
-**Note: Music is disabled at the moment due to youtube decreasing our api limits**
+**Note: Music is disabled at the moment due to youtube decreasing our api limits, and due to them taking action against other music bots it will likely not return.**
 
 The Music module allows you to setup the bot to play a queue of songs in a voice channel.
 
