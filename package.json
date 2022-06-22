@@ -33,7 +33,7 @@
     "history": "4.6.1",
     "imports-loader": "^0.6.5",
     "isomorphic-style-loader": "^4.0.0",
-    "jsdom": "^9.8.3",
+    "jsdom": "^16.5.0",
     "jsonwebtoken": "7.1.9",
     "markdown-it": "8.3.1",
     "morgan": "^1.7.0",
