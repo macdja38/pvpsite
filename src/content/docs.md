@@ -457,12 +457,13 @@ name of the role you want added to the user when they run `/rank join member`
 
 -----
 
-| command | description  | node  |
-|---|---|---|
-| mcping \<server address> | Pings a Minecraft server and displays some info about it. | minecraft​.mcping |
-| mcavatar \<minecraft username> | Displays a user's Minecraft avatar | minecraft​.avatar  |
-| mcskin \<minecraft username> | Displays a user's Minecraft skin | minecraft​.mcskin |
-| mcwiki \<search term> | Searches the minecraft wiki with a supplied search term | minecraft​.mcwiki |
+| command                                                                                                                                               | description                                              | node             |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|------------------|
+| mcping \<server address>                                                                                                                              | Pings a Minecraft server and displays some info about it. | minecraft​.mcping |
+| mcavatar \<minecraft username>                                                                                                                        | Displays a user's Minecraft avatar                       | minecraft​.avatar |
+| mcskin \<minecraft username>                                                                                                                          | Displays a user's Minecraft skin                         | minecraft​.mcskin |
+| mcwiki \<search term>                                                                                                                                 | Searches the minecraft wiki with a supplied search term  | minecraft​.mcwiki |
+| mcauth --host \<host> --username \<username> --password \<password> [--https \<true or false>][--port <\port>][--bridgeAllMessages \<true or false>] | Links a minecraft server with JSONApi installed on it to discord | admin.minecraft.mcauth |
 
 <br>
 
