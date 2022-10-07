@@ -219,6 +219,13 @@ This is similar to the permissions system but for events like Warframe alerts an
 
 <br>
 
+### Warning: Privacy
+Make sure to inform users if message content could be included in logs from channels they are a part of.
+As the server admin you are responsible for doing so.
+If you want to log content in all channels we suggest setting up a welcome message to let users know.
+
+<br>
+
 ### Available feeds
 <!--
 | feed node | description | permission node |
